@@ -30,8 +30,10 @@ public class SlideshowService {
 //      统计商品id和序号
         int countProduct = slideshowDao.countProduct(slideshowInfo);
         int countSort = slideshowDao.countSort(slideshowInfo);
-        if (0 != countProduct && 0 != countSort) {
-            return AppResponse.bizError("新增商品或者序号已经存在，请重新选择！");
+        if (0 != countProduct) {
+            return AppResponse.bizError("新增商品已经存在，请重新输入！");
+        }else if (0 != countSort){
+            return AppResponse.bizError("新增序号已经存在，请重新输入！");
         }
         slideshowInfo.setSlideshowId(StringUtil.getCommonCode(2));
 //        新增轮播图

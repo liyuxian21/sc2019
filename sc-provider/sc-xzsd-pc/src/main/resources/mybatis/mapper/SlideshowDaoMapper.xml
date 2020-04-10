@@ -25,7 +25,7 @@
             #{startTime},
             #{endTime},
             #{goodsId},
-            1,
+            0,
             0,
             #{createPeople},
             now(),
@@ -40,7 +40,12 @@
         where product_id=#{goodsId} and is_deleted=0
     </select>
 <!--    统计新增序号-->
-<!--    修改状态-->
+    <select id="countSort" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo" resultType="int">
+        select count(sort)
+        from t_sys_slideshow
+        where sort=#{sort} and is_deleted=0
+    </select>
+<!--    修改轮播图状态-->
     <update id="enableDisable" parameterType="java.lang.String">
         update t_sys_slideshow
         set
@@ -65,7 +70,7 @@
         <if test="slideshowStatus != null and slideshowStatus != ''">
             and a.image_status like concat('%', #{slideshowStatus}, '%')
         </if>
-        order by update_time desc
+        order by sort asc
     </select>
 <!--    删除轮播图-->
     <delete id="deleteSlideshow" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo">
@@ -84,19 +89,26 @@
     <select id="goodsListVOyPage" parameterType="com.xzsd.pc.slideshow.entity.GoodsListVO" resultType="com.xzsd.pc.slideshow.entity.GoodsListVO">
         select
             a.product_id          goodsId,
-            a.class_first_name    classFirstName,
-            a.class_second_name   classSecondName,
+            b.class_name          classFirstName,
+            c.class_name          classSecondName,
             a.product_name         goodsName,
             a.product_code         goodsCode,
-            a.product_status      goodsStatus
-        from t_sys_product a
-        where a.is_deleted=0 and a.product_status=1
+            a.product_status       goodsStatus
+        from
+            t_sys_product a,
+            t_sys_product_class b,
+            t_sys_product_class c
+        where a.is_deleted=0
+        and a.product_status=1
+        and a.class_first_id=b.class_id
+        and a.class_second_id=c.class_id
         <if test="goodsName != null and goodsName != ''">
             and a.product_name like concat('%',#{goodsName},'%')
         </if>
         <if test="goodsCode != null and goodsCode != ''">
             and a.product_code like concat('%',#{goodsCode},'%')
         </if>
+        order by a.update_time desc
     </select>
 
 </mapper>

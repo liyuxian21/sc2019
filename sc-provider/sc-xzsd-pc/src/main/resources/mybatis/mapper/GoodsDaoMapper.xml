@@ -108,7 +108,10 @@
            a.stock          store,
            a.price_now      inPrice,
            a.product_idc    goodsIntroduction
-        from t_sys_product a,t_sys_product_class b,t_sys_product_class c
+        from
+            t_sys_product a,
+            t_sys_product_class b,
+            t_sys_product_class c
         where product_id=#{goodsId}
         and a.is_deleted=0 and a.class_first_id=b.class_id and  a.class_second_id=c.class_id
 
