@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzsd.pc.slideshow.dao.SlideshowDao">
+<!--新增轮播图片-->
+    <insert id="addSlideshow" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo">
+        insert into t_sys_slideshow
+            (image_id,
+             image_url,
+             sort,
+             start_time,
+             end_time,
+             product_id,
+             image_status,
+             is_deleted,
+             create_people,
+             create_time,
+             update_people,
+             update_time,
+             version
+            )
+        values(
+            #{slideshowId},
+            #{slideshowUrl},
+            #{sort},
+            #{startTime},
+            #{endTime},
+            #{goodsId},
+            1,
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0)
+    </insert>
+<!--统计新增商品id数量-->
+    <select id="countProduct" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo" resultType="int">
+        select count(product_id)
+        from t_sys_slideshow
+        where product_id=#{goodsId} and is_deleted=0
+    </select>
+<!--    统计新增序号-->
+<!--    修改状态-->
+    <update id="enableDisable" parameterType="java.lang.String">
+        update t_sys_slideshow
+        set
+           image_status = #{slideshowStatus},
+           update_time  = now(),
+           version =version+1
+        where image_id in
+        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+<!--    查询轮播图列表-->
+    <select id="listSlideshowByPage" parameterType="com.xzsd.pc.slideshow.entity.SlideshowVO" resultType="com.xzsd.pc.slideshow.entity.SlideshowVO">
+        select
+            a.image_id      slideshowId,
+            a.image_url     slideshowUrl,
+            a.image_status  slideshowStatus,
+            a.start_time    startTime,
+            a.end_time       endTime
+        from t_sys_slideshow a
+        where is_deleted=0
+        <if test="slideshowStatus != null and slideshowStatus != ''">
+            and a.image_status like concat('%', #{slideshowStatus}, '%')
+        </if>
+        order by update_time desc
+    </select>
+<!--    删除轮播图-->
+    <delete id="deleteSlideshow" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo">
+        update t_sys_slideshow
+        set
+            is_deleted  =   1,
+            update_time =   now(),
+            update_people = #{userId},
+            version     =   version+1
+        where image_id in
+        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+<!--    查询商品-->
+    <select id="goodsListVOyPage" parameterType="com.xzsd.pc.slideshow.entity.GoodsListVO" resultType="com.xzsd.pc.slideshow.entity.GoodsListVO">
+        select
+            a.product_id          goodsId,
+            a.class_first_name    classFirstName,
+            a.class_second_name   classSecondName,
+            a.product_name         goodsName,
+            a.product_code         goodsCode,
+            a.product_status      goodsStatus
+        from t_sys_product a
+        where a.is_deleted=0 and a.product_status=1
+        <if test="goodsName != null and goodsName != ''">
+            and a.product_name like concat('%',#{goodsName},'%')
+        </if>
+        <if test="goodsCode != null and goodsCode != ''">
+            and a.product_code like concat('%',#{goodsCode},'%')
+        </if>
+    </select>
+
+</mapper>

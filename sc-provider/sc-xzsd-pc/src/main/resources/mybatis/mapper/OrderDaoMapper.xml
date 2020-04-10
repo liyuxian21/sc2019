@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzsd.pc.order.dao.OrderDao">
+<!--    获取订单详情-->
+    <select id="findOrderDetailsById" parameterType="java.lang.String" resultType="com.xzsd.pc.order.entity.OrderAllVO">
+        select
+            a.order_id      orderId,
+            a.order_code    orderCode,
+            a.order_price   countPrice,
+            b.goods_count   buyNumber,
+            c.product_name  goodsName,
+            c.product_code  goodsCode,
+            c.price         costPrice,
+            c.price_now     inPrice
+        from
+            t_sys_order a,
+            t_sys_order_detail b,
+            t_sys_product c
+        where a.order_id=#{orderId} and a.order_id=b.order_id and b.product_id=c.product_id
+    </select>
+
+    <!--查询订单列表-->
+    <select id="findOrderList" parameterType="com.xzsd.pc.order.entity.OrderListVo" resultType="com.xzsd.pc.order.entity.OrderListVo">
+        select
+            a.user_name     orderName,
+            a.phone         phone,
+            b.order_id      orderId,
+            b.order_code    orderCode,
+            b.order_status  orderStatus,
+            b.order_price   countPrice,
+            b.paid_time     paidTime,
+            c.store_num     storeCode
+        from
+            t_sys_user a,
+            t_sys_order b,
+            t_sys_store c
+        where a.user_code=b.user_code and b.store_id=c.store_id and b.is_deleted=0
+        <if test="orderName != null and orderName != ''">
+            and a.user_name like concat('%', #{orderName}, '%')
+        </if>
+        <if test="phone != null and phone != ''">
+            and a.phone like concat('%', #{phone}, '%')
+        </if>
+        <if test="orderCode != null and orderCode != ''">
+            and b.order_code like concat('%',#{orderCode},'%')
+        </if>
+        <if test="orderStatus != null and orderStatus!= ''">
+            and b.order_status like concat('%',#{orderStatus},'%')
+        </if>
+        <if test="paidTime != null and paidTime!= ''">
+            and b.paid_time like concat('%',#{paidTime},'%')
+        </if>
+    </select>
+<!--    修改订单状态-->
+    <update id="updateOrderStatus" parameterType="java.lang.String">
+        update t_sys_order
+        set
+        order_status  = #{orderStatus},
+        update_time    = now(),
+        update_people  = #{userId},
+        version        = version+1
+        where
+        order_id  in
+        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+</mapper>

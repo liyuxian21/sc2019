@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzsd.pc.goodsClass.dao.GoodsClassDao">
+    <!--新增商品分类-->
+    <insert id="addGoodsClass" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassInfo">
+        insert into t_sys_product_class
+        (class_id,
+         class_name,
+         comment,
+         is_parent,
+         parent_class_code,
+         is_deleted,
+         create_people,
+         create_time,
+         update_people,
+         update_time,
+         version)
+        values
+           (#{classId},
+            #{className},
+            #{comment},
+            #{isParent},
+            #{parentClassCode},
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0)
+     </insert>
+    <!--统计商品分类名称-->
+    <select id="countClassName" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassInfo" resultType="int">
+       select count(class_name)
+       from
+        t_sys_product_class
+       where class_name = #{className} and is_deleted=0
+    </select>
+    <!--查询商品分类详情-->
+    <select id="findGoodsClassById" parameterType="java.lang.String"
+            resultType="com.xzsd.pc.goodsClass.entity.GoodsClassDetail">
+        select
+            class_name className,
+            comment    comment
+        from
+            t_sys_product_class
+        where
+            class_id=#{classId}
+        and
+            is_deleted=0
+    </select>
+    <!--    修改商品分类-->
+    <update id="updateGoodsClassById" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassInfo">
+        update t_sys_product_class
+        set
+            class_name       = #{className},
+            comment          = #{comment},
+            update_people    = #{updatePeople},
+            update_time      = now(),
+            version          = version+1
+        where class_id=#{classId}
+        and   version=#{version}
+    </update>
+    <!--    查询分类列表-->
+    <select id="selectAllMenus"  resultMap="ModuleResultMap">
+    select
+        a.class_id as id,
+        a.class_name as name,
+        b.class_id as id2,
+        b.class_name as name2
+    from
+        t_sys_product_class a,
+        t_sys_product_class b
+    where a.class_id=b.parent_class_code and a.is_deleted=0
+    </select>
+
+    <resultMap id="ModuleResultMap" type="com.xzsd.pc.goodsClass.entity.GoodsClassList">
+        <id column="id" property="classId" />
+        <result column="name" property="className"/>
+        <collection property="secondGoodsClassList" ofType="com.xzsd.pc.goodsClass.entity.GoodsClassList">
+            <id column="id2" property="classId"/>
+            <result column="name2" property="className"/>
+        </collection>
+    </resultMap>
+
+    <!--    删除商品分类-->
+    <delete id="deleteGoodsClass" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassDetail">
+        update t_sys_product_class
+        set
+        is_deleted=1,
+        update_people = #{userId},
+        update_time = now(),
+        version =version+1
+        where class_id in
+        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+</mapper>

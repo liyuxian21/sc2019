@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xzsd.pc.driver.dao.DriverDao">
+    <!--统计用户账户数量-->
+    <select id="countUserAccount" parameterType="com.xzsd.pc.driver.entity.DriverInfo" resultType="int">
+        select count(user_account)
+        from t_sys_user
+        where user_account=#{driverAccount} and is_deleted=0
+    </select>
+    <!--统计手机号数量-->
+    <select id="countUserPhone" parameterType="com.xzsd.pc.driver.entity.DriverInfo" resultType="int">
+        select count(phone)
+        from t_sys_user
+        where phone=#{phone} and is_deleted=0
+    </select>
+<!--    新增司机-->
+    <insert id="addDriver" parameterType="com.xzsd.pc.driver.entity.DriverInfo">
+        insert into t_sys_driver
+        (
+         driver_id,
+         driver_num,
+         provice_id,
+         city_id,
+         area_id,
+         user_id,
+         is_deleted,
+         create_people,
+         create_time,
+         update_people,
+         update_time,
+         version)
+        values
+        (
+            #{driverId},
+            #{driverCode},
+            #{provienceId},
+            #{cityId},
+            #{areaId},
+            #{userId},
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0)
+    </insert>
+<!--    新增司机-->
+    <insert id="addDriver2" parameterType="com.xzsd.pc.driver.entity.DriverInfo">
+        insert into t_sys_user
+        (
+         user_name,
+         user_account,
+         user_code,
+         phone,
+         id_card,
+         user_pwd,
+         role,
+         is_deleted,
+         create_people,
+         create_time,
+         update_people,
+         update_time,
+         version)
+        values
+        (
+            #{driverName},
+            #{driverAccount},
+            #{userId},
+            #{phone},
+            #{idCard},
+            #{password},
+            3,
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0)
+    </insert>
+<!--    查询司机详情-->
+    <select id="findDriverDetailsById" parameterType="java.lang.String" resultType="com.xzsd.pc.driver.entity.DriverDetailVo">
+        select
+            a.driver_id     driverId,
+            a.driver_num    driverCode,
+            b.user_name     driverName,
+            b.user_account  driverAccount,
+            b.phone         phone,
+            b.id_card       idCard,
+            e.dict_name       provienceName,
+            c.dict_name       cityName,
+            d.dict_name       areaName
+        from
+            t_sys_driver a,
+            t_sys_user b,
+            dictionaries e,
+            dictionaries c,
+            dictionaries d
+        where a.driver_id=#{driverId}
+        AND a.user_id = b.user_code
+        AND a.provice_id = e.dictionaries_id
+        AND a.city_id = c.dictionaries_id
+        AND a.area_id = d.dictionaries_id
+        and a.is_deleted=0
+    </select>
+
+<!--    修改司机-->
+    <update id="updateDriverById" parameterType="com.xzsd.pc.driver.entity.DriverInfo">
+        update t_sys_driver
+        set
+            driver_num      =#{driverCode},
+            provice_id      =#{provienceId},
+            city_id         =#{cityId},
+            area_id         =#{areaId},
+            update_people   =#{updatePeople},
+            update_time     =now(),
+            version         =version+1
+        where driver_id=#{driverId}
+        and version=#{version}
+    </update>
+    <update id="updateDriverById2" parameterType="com.xzsd.pc.driver.entity.DriverInfo">
+        update t_sys_user
+        set
+            user_name       =#{driverName},
+            phone           =#{phone},
+            id_card         =#{idCard},
+            update_people   =#{updatePeople},
+            update_time     =now(),
+            version         =version+1
+        where user_code=#{userId}
+        and version=#{version}
+    </update>
+<!--    查询司机列表-->
+    <select id="listDriver" parameterType="com.xzsd.pc.driver.entity.DriverListVo" resultType="com.xzsd.pc.driver.entity.DriverListVo">
+        select
+            a.driver_id     driverId,
+            b.user_code     userId,
+            b.user_name     driverName,
+            a.driver_num    driverCode,
+            b.user_account  driverAccount,
+            b.phone         phone,
+            b.id_card       idCard,
+            a.provice_id  provienceId,
+            a.city_id     cityId,
+            a.area_id     areaId,
+            a.version     version
+        from t_sys_driver a
+        left join t_sys_user b on a.user_id=b.user_code
+        where a.is_deleted=0
+        <if test="driverName != null and driverName != ''">
+            and b.user_name like concat('%', #{driverName}, '%')
+        </if>
+        <if test="driverCode != null and driverCode != ''">
+            and a.driver_num like concat('%', #{driverCode}, '%')
+        </if>
+        <if test="provienceId != null and provienceId != ''">
+            and a.provice_id like concat('%', #{provienceId}, '%')
+        </if>
+        <if test="cityId != null and cityId != ''">
+            and a.city_id like concat('%', #{cityId}, '%')
+        </if>
+        <if test="areaId != null and areaId != ''">
+            and a.area_id like concat('%', #{areaId}, '%')
+        </if>
+        order by a.update_time desc
+    </select>
+<!--删除司机-->
+    <delete id="deleteDriver" parameterType="java.lang.String">
+        update t_sys_driver
+        set
+        is_deleted=1,
+        update_time=now(),
+        update_people=#{userId1},
+        version=version+1
+        where user_id in
+        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+    <delete id="delete" parameterType="java.lang.String">
+        update t_sys_user
+        set
+        is_deleted=1,
+        update_time=now(),
+        update_people=#{userId1},
+        version=version+1
+        where user_code in
+        <foreach item="item" index="index" collection="listId2" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+</mapper>
