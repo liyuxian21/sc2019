@@ -2,6 +2,9 @@ package com.xzsd.pc.goodsHot.entity;
 
 /**
  * 热门商品详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-05
  */
 public class GoodsHotDetailVO {
     /**

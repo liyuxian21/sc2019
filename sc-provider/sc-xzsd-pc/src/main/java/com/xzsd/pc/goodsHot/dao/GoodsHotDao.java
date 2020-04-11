@@ -3,6 +3,7 @@ package com.xzsd.pc.goodsHot.dao;
 import com.xzsd.pc.goodsHot.entity.GoodsHotDetailVO;
 import com.xzsd.pc.goodsHot.entity.GoodsHotInfo;
 import com.xzsd.pc.goodsHot.entity.GoodsHotListVo;
+import com.xzsd.pc.goodsHot.entity.GoodsHotNumberVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,6 +13,7 @@ import java.util.List;
 public interface GoodsHotDao {
     /**
      * 统计商品id
+     *
      * @param goodsHotInfo
      * @return
      */
@@ -19,6 +21,7 @@ public interface GoodsHotDao {
 
     /**
      * 新增热门商品
+     *
      * @param goodsHotInfo
      * @return
      */
@@ -26,6 +29,7 @@ public interface GoodsHotDao {
 
     /**
      * 查询热门商品详情
+     *
      * @param goodsHotId
      * @return
      */
@@ -33,6 +37,7 @@ public interface GoodsHotDao {
 
     /**
      * 修改热门商品
+     *
      * @param goodsHotInfo
      * @return
      */
@@ -40,6 +45,7 @@ public interface GoodsHotDao {
 
     /**
      * 删除热门商品
+     *
      * @param listId
      * @param userId
      * @return
@@ -48,6 +54,7 @@ public interface GoodsHotDao {
 
     /**
      * 查询热门商品列表
+     *
      * @param goodsHotListVo
      * @return
      */
@@ -55,8 +62,24 @@ public interface GoodsHotDao {
 
     /**
      * 展示商品数量设置
+     *
      * @param number
      * @return
      */
     int setGoodsHot(String number);
+
+    /**
+     * 统计新增序号
+     *
+     * @param goodsHotInfo
+     * @return
+     */
+    int countSort(GoodsHotInfo goodsHotInfo);
+
+    /**
+     * 查询热门商品展示数量
+     * @param goodsHotNumberVO
+     * @return
+     */
+    GoodsHotNumberVO getGoodsHotNumber(GoodsHotNumberVO goodsHotNumberVO);
 }

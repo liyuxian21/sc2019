@@ -1,7 +1,10 @@
 package com.xzsd.pc.goodsHot.entity;
 
 /**
- * 查询热门商品实体类
+ * 查询热门商品列表实体类
+ *
+ * @author liyuxian
+ * @time2020-04-05
  */
 public class GoodsHotListVo {
     /**
@@ -36,6 +39,18 @@ public class GoodsHotListVo {
      * 商品介绍
      */
     private String goodsIntroduction;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getGoodsHotId() {
         return goodsHotId;
