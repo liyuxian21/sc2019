@@ -75,6 +75,11 @@ public class UserService {
         }else if (0 != countUserPhone) {
             return AppResponse.bizError("手机号已存在，请重新输入！");
         }
+        // 密码加密 默认为123456
+        String pwd = PasswordUtils.generatePassword("123456");
+        userInfo.setPassword(pwd);
+        // 修改密码
+        userInfo.setPassword(PasswordUtils.generatePassword(userInfo.getPassword()));
         // 用户修改
         int count = userDao.updateUserById(userInfo);
         if (0 == count) {
