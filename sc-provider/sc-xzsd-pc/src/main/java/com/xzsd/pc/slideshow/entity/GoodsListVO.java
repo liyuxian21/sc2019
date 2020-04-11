@@ -1,5 +1,10 @@
 package com.xzsd.pc.slideshow.entity;
 
+/**
+ * 查询商品实体类
+ * @author liyuxian
+ * @time 2020-04-04
+ */
 public class GoodsListVO {
     /**
      * 页码

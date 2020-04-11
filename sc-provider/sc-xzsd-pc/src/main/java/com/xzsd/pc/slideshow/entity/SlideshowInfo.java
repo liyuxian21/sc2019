@@ -1,5 +1,10 @@
 package com.xzsd.pc.slideshow.entity;
 
+/**
+ * 轮播图实体类
+ * @author liyuxian
+ * @time 2020-04-04
+ */
 public class SlideshowInfo {
     /**
      * 轮播图id

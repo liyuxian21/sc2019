@@ -25,7 +25,8 @@ public interface SlideshowDao {
     int countProduct(SlideshowInfo slideshowInfo);
 
     /**
-     * 修改状态
+     * 修改轮播图状态
+     * @param listId
      * @param slideshowId
      * @param slideshowStatus
      * @return
@@ -38,9 +39,11 @@ public interface SlideshowDao {
      * @return
      */
     List<SlideshowVO> listSlideshowByPage(SlideshowVO slideshowVO);
+
     /**
      * 删除轮播图
      * @param listId
+     * @param userId
      * @return
      */
     int deleteSlideshow(@Param("listId") List<String> listId, @Param("userId") String userId);

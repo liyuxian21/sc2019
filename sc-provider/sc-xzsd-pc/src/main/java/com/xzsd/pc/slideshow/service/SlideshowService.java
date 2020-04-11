@@ -15,6 +15,11 @@ import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 轮播图CIRD
+ * @author liyuxian
+ * @time 2020-04-04
+ */
 @Service
 public class SlideshowService {
     @Resource
@@ -32,7 +37,7 @@ public class SlideshowService {
         int countSort = slideshowDao.countSort(slideshowInfo);
         if (0 != countProduct) {
             return AppResponse.bizError("新增商品已经存在，请重新输入！");
-        }else if (0 != countSort){
+        } else if (0 != countSort) {
             return AppResponse.bizError("新增序号已经存在，请重新输入！");
         }
         slideshowInfo.setSlideshowId(StringUtil.getCommonCode(2));
@@ -45,7 +50,7 @@ public class SlideshowService {
     }
 
     /**
-     * 轮播图启用、禁用修改
+     * 轮播图启用、禁用修改 0禁用 1启用
      *
      * @param slideshowId
      * @param slideshowStatus
@@ -100,7 +105,7 @@ public class SlideshowService {
     }
 
     /**
-     * 选择轮播图查询商品
+     * 查询商品
      *
      * @param goodsListVO
      * @return
