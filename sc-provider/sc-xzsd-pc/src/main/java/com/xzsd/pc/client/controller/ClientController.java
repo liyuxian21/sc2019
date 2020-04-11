@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 
 /**
  * 查询客户列表
+ *
  * @author liyuxian
  * @time 2020-03-29
  */
@@ -26,14 +27,15 @@ public class ClientController {
 
     /**
      * 客户列表查询
+     *
      * @param clientInfo
      * @return
      */
     @PostMapping("listClient")
-    public AppResponse listClient(ClientInfo clientInfo){
-        try{
+    public AppResponse listClient(ClientInfo clientInfo) {
+        try {
             return clientService.listClient(clientInfo);
-        }catch(Exception e){
+        } catch (Exception e) {
             logger.error("查询客户列表错误", e);
             System.out.println(e.toString());
             throw e;

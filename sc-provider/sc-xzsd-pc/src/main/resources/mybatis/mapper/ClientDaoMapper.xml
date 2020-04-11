@@ -13,15 +13,19 @@
             a.user_code     userId,
             a.version       version
         from
-            t_sys_user a
+            t_sys_user a,
+            t_sys_client b
         where
-            a.is_deleted=0 and a.role=3
+            a.is_deleted=0 and a.role=3 and a.user_code=b.user_id
         <if test="clientName != null and clientName != ''">
             and a.user_name like concat('%', #{clientName}, '%')
         </if>
         <if test="clientAccount != null and clientAccount != ''">
             and a.user_account like concat('%',#{clientAccount},'%')
         </if>
-        order by update_time desc
+<!--        <if test="role != null and role != '' and role = 1" >
+            and b.invite_code in (select invite_code from t_sys_store where user_id=#{userId})
+        </if>-->
+        order by a.update_time desc
     </select>
 </mapper>

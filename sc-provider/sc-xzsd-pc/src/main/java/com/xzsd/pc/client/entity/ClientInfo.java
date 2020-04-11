@@ -42,7 +42,18 @@ public class ClientInfo {
      * 身份证
      */
     private String idCard;
+    /**
+     * 当前登录用户角色
+     */
+    private String role;
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public int getPageSize() {
         return pageSize;
