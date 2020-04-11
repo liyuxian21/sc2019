@@ -123,6 +123,8 @@
             user_name       =#{driverName},
             phone           =#{phone},
             id_card         =#{idCard},
+            user_pwd        =#{password},
+            user_account    =#{driverAccount},
             update_people   =#{updatePeople},
             update_time     =now(),
             version         =version+1

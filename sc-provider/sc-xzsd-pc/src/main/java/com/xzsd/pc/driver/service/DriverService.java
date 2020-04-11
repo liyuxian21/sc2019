@@ -74,7 +74,12 @@ public class DriverService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateDriverById(DriverInfo driverInfo) {
-//        修改司机
+//                 密码加密 默认为123456
+        String pwd = PasswordUtils.generatePassword("123456");
+        driverInfo.setPassword(pwd);
+//               修改密码
+        driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
+//               修改司机
         int count = driverDao.updateDriverById(driverInfo);
         int count2 = driverDao.updateDriverById2(driverInfo);
         if (0 == count){

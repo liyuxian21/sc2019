@@ -21,7 +21,7 @@ public class DriverInfo {
     /**
      *司机账户
      */
-    private String driverAccount;
+        private String driverAccount;
     /**
      * 司机姓名
      */
