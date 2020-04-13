@@ -23,7 +23,7 @@
         <if test="clientAccount != null and clientAccount != ''">
             and a.user_account like concat('%',#{clientAccount},'%')
         </if>
-<!--        <if test="role != null and role != '' and role = 1" >
+      <!--  <if test="role != null and role != '' and role = 1" >
             and b.invite_code in (select invite_code from t_sys_store where user_id=#{userId})
         </if>-->
         order by a.update_time desc

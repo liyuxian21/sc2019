@@ -64,6 +64,7 @@ public class ClientService {
 
     /**
      * 查询轮播图
+     *
      * @param slideShowInfo
      * @return
      */
@@ -78,6 +79,7 @@ public class ClientService {
 
     /**
      * 查询热门商品
+     *
      * @param goodsHotVO
      * @return
      */
@@ -92,39 +94,81 @@ public class ClientService {
 
     /**
      * 查询商品详情
+     *
      * @param goodsId
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse findGoodsById(String goodsId,String userId) {
-        GoodsDetialVo goodsDetialVo=clientDao.findGoodsById(goodsId,userId);
-        return AppResponse.success("查询成功",goodsDetialVo);
+    public AppResponse findGoodsById(String goodsId, String userId) {
+        GoodsDetialVo goodsDetialVo = clientDao.findGoodsById(goodsId, userId);
+        return AppResponse.success("查询成功", goodsDetialVo);
     }
 
     /**
      * 查询商品一级分类
+     *
      * @param goodsFirstClassVO
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse firstClassGoodsList(GoodsFirstClassVO goodsFirstClassVO) {
         List<GoodsFirstClassVO> goodsFirstClassList = clientDao.firstClassGoodsList(goodsFirstClassVO);
-        return AppResponse.success("查询成功！",goodsFirstClassList);
+        return AppResponse.success("查询成功！", goodsFirstClassList);
     }
 
     /**
      * 查询商品二级分类
+     *
      * @param goodsSecondClassVO
      * @param parentClassCode
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO,String parentClassCode) {
+    public AppResponse secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO, String parentClassCode) {
 //          判断是否有父类编码
-        if (parentClassCode == null){
+        if (parentClassCode == null) {
             return AppResponse.bizError("查询为空");
         }
-        List<GoodsSecondClassVO> goodsList = clientDao.secondClassGoodsList(goodsSecondClassVO,parentClassCode);
-        return AppResponse.success("查询成功！",goodsList);
+        List<GoodsSecondClassVO> goodsList = clientDao.secondClassGoodsList(goodsSecondClassVO, parentClassCode);
+        return AppResponse.success("查询成功！", goodsList);
+    }
+
+    /**
+     * 查询登录用户详情
+     *
+     * @param userId
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public AppResponse loginDetails(String userId) {
+//        获取用户详情
+        LoginUserVO loginUserVO = clientDao.loginDetails(userId);
+        return AppResponse.success("查询成功!", loginUserVO);
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param userVO
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public AppResponse updatePassword(UserVO userVO) {
+//        校验原密码是否正确
+        if (null != userVO.getUserPassword() && !"".equals(userVO.getUserPassword())) {
+            String startPassword = PasswordUtils.generatePassword(userVO.getUserPassword());
+//            获取用户密码信息
+            UserVO userDetail = clientDao.findUserById(userVO.getUserId());
+            if (!startPassword.equals(userDetail.getUserPassword())) {
+                return AppResponse.bizError("原密码不匹配，请重新输入！");
+            }
+        }
+//        修改密码
+        userVO.setUserPassword(PasswordUtils.generatePassword(userVO.getUserPassword()));
+        int count = clientDao.updatePassword(userVO);
+        if (0 == count) {
+            return AppResponse.bizError("修改失败！");
+        }
+        return AppResponse.success("修改成功！");
     }
 }

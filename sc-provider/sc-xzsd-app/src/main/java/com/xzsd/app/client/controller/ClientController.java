@@ -120,4 +120,37 @@ public class ClientController {
             throw e;
         }
     }
+
+    /**
+     * 查询登录用户详情
+     * @param userId
+     * @return
+     */
+    @PostMapping("loginDetails")
+    public AppResponse loginDetails(String userId) {
+        try {
+            return clientService.loginDetails(userId);
+        } catch (Exception e) {
+            logger.error("查询错误", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+
+    /**
+     * 修改密码
+     * @param userVO
+     * @return
+     */
+    @PostMapping("updatePassword")
+    public AppResponse updatePassword(UserVO userVO) {
+        try {
+            return clientService.updatePassword(userVO);
+        } catch (Exception e) {
+            logger.error("修改错误", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+
 }

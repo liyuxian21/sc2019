@@ -48,6 +48,7 @@ public interface ClientDao {
 
     /**
      * 查询轮播图列表
+     *
      * @param slideShowInfo
      * @return
      */
@@ -55,6 +56,7 @@ public interface ClientDao {
 
     /**
      * 查询热门商品
+     *
      * @param goodsHotVO
      * @return
      */
@@ -62,14 +64,16 @@ public interface ClientDao {
 
     /**
      * 查询商品详情
+     *
      * @param goodsId
      * @param userId
      * @return
      */
-    GoodsDetialVo findGoodsById(@Param("goodsId") String goodsId,@Param("userId")String userId);
+    GoodsDetialVo findGoodsById(@Param("goodsId") String goodsId, @Param("userId") String userId);
 
     /**
      * 查询商品一级分类
+     *
      * @param goodsFirstClassVO
      * @return
      */
@@ -77,9 +81,32 @@ public interface ClientDao {
 
     /**
      * 查询商品二级分类
+     *
      * @param goodsSecondClassVO
      * @param parentClassCode
      * @return
      */
-    List<GoodsSecondClassVO> secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO,@Param("parentClassCode") String parentClassCode);
+    List<GoodsSecondClassVO> secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO, @Param("parentClassCode") String parentClassCode);
+
+    /**
+     * 获取登录用户详情
+     *
+     * @param userId
+     * @return
+     */
+    LoginUserVO loginDetails(String userId);
+
+    /**
+     * 获取用户详情
+     * @param userId
+     * @return
+     */
+    UserVO findUserById(String userId);
+
+    /**
+     * 修改用户密码
+     * @param userVO
+     * @return
+     */
+    int updatePassword(UserVO userVO);
 }
