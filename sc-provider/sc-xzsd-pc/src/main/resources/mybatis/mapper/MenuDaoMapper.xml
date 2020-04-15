@@ -66,6 +66,9 @@
             version     version
         from t_sys_menu
         where  is_deleted=0
+        <if test=" role == 1">
+            and menu_name in ('菜单管理','客户管理','订单管理','门店信息管理','司机信息管理')
+        </if>
     </select>
 <!--    删除菜单-->
     <delete id="deleteMenu" parameterType="com.xzsd.pc.menu.entity.MenuInfo">
