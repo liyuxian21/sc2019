@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
@@ -21,6 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.Resource;
+import javax.servlet.MultipartConfigElement;
 import java.io.IOException;
 
 /**
@@ -82,5 +84,18 @@ public class ScApiGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(ScApiGatewayApplication.class, args);
     }
-
+    /**
+     * 文件上传配置
+     *
+     * @return
+     */
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        MultipartConfigFactory factory = new MultipartConfigFactory();
+        //  单个数据大小
+        factory.setMaxFileSize("10240KB");
+        /// 总上传数据大小
+        factory.setMaxRequestSize("102400KB");
+        return factory.createMultipartConfig();
+    }
 }

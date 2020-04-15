@@ -35,7 +35,6 @@ public class StoreListVO {
     private String inviteCode;
     /**
      * 门店账户
-     * @return
      */
     private String storeAccount;
     /**
@@ -58,6 +57,30 @@ public class StoreListVO {
      * 版本号
      */
     private String version;
+    /**
+     * 角色
+     */
+    private int role;
+    /**
+     * 当前登录店长用户id
+     */
+    private String userId;
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getVersion() {
         return version;

@@ -163,6 +163,9 @@
         <if test="areaId != null and areaId != ''">
             and a.area_id like concat('%', #{areaId}, '%')
         </if>
+        <if test="role == 1">
+            AND a.area_id in (select area_id from t_sys_store where user_id = #{storeUserId})
+        </if>
         order by a.update_time desc
     </select>
 <!--删除司机-->

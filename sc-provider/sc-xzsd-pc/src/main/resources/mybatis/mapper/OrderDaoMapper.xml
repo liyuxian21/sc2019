@@ -50,6 +50,9 @@
         <if test="paidTime != null and paidTime!= ''">
             and b.paid_time like concat('%',#{paidTime},'%')
         </if>
+        <if test="role == 1">
+            and c.user_id=#{userId}
+        </if>
     </select>
 <!--    修改订单状态-->
     <update id="updateOrderStatus" parameterType="java.lang.String">

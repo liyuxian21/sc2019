@@ -3,29 +3,33 @@
 <mapper namespace="com.xzsd.pc.client.dao.ClientDao">
 <!--    查询客户列表-->
     <select id="listClient" parameterType="com.xzsd.pc.client.entity.ClientInfo" resultType="com.xzsd.pc.client.entity.ClientInfo">
-        select
-            a.user_account  clientAccount,
-            a.user_name     clientName,
-            a.sex           sex,
-            a.phone         phone,
-            a.email         clientEmail,
-            a.id_card       idCard,
-            a.user_code     userId,
+        SELECT
+            a.user_account clientAccount,
+            a.user_name clientName,
+            a.sex sex,
+            a.phone phone,
+            a.email clientEmail,
+            a.id_card idCard,
+            a.user_code userId,
             a.version       version
-        from
+        FROM
             t_sys_user a,
-            t_sys_client b
-        where
-            a.is_deleted=0 and a.role=3 and a.user_code=b.user_id
+            t_sys_client b,
+            t_sys_store c
+        WHERE
+            a.is_deleted = 0
+        AND a.role = 3
+        AND a.user_code = b.user_id
+        AND b.invite_code = c.invite_code
         <if test="clientName != null and clientName != ''">
             and a.user_name like concat('%', #{clientName}, '%')
         </if>
         <if test="clientAccount != null and clientAccount != ''">
             and a.user_account like concat('%',#{clientAccount},'%')
         </if>
-      <!--  <if test="role != null and role != '' and role = 1" >
-            and b.invite_code in (select invite_code from t_sys_store where user_id=#{userId})
-        </if>-->
+        <if test="role == 1">
+            and c.user_id=#{userId}
+        </if>
         order by a.update_time desc
     </select>
 </mapper>

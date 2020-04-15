@@ -155,6 +155,9 @@
         <if test="areaId != null and areaId != ''">
             and a.area_id like concat('%', #{areaId}, '%')
         </if>
+        <if test="role == 1">
+            and a.user_id=#{userId}
+        </if>
         order by a.update_time desc
     </select>
 <!--    删除门店-->

@@ -53,6 +53,30 @@ public class DriverListVo {
      * 版本号
      */
     private String version;
+    /**
+     * 角色
+     */
+    private int role;
+    /**
+     * 当前登录店长用户id
+     */
+    private String storeUserId;
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getStoreUserId() {
+        return storeUserId;
+    }
+
+    public void setStoreUserId(String storeUserId) {
+        this.storeUserId = storeUserId;
+    }
 
     public String getVersion() {
         return version;

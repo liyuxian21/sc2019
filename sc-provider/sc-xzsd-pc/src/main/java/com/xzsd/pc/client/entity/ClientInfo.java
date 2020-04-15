@@ -15,7 +15,7 @@ public class ClientInfo {
      */
     private int pageNum;
     /**
-     * 客户用户id
+     * 登录用户id
      */
     private String userId;
     /**
@@ -46,6 +46,18 @@ public class ClientInfo {
      * 当前登录用户角色
      */
     private String role;
+    /**
+     * 当前登录店长id
+     */
+    private String storeId;
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
 
     public String getRole() {
         return role;

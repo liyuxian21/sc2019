@@ -46,6 +46,30 @@ public class OrderListVo {
      * 下单人手机号
      */
     private String phone;
+    /**
+     * 角色
+     */
+    private int role;
+    /**
+     * 当前登录店长用户id
+     */
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
 
     public String getOrderId() {
         return orderId;
