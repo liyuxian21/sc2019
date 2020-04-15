@@ -36,7 +36,7 @@ public class ShoppingService {
 //        新增购物车
         int count = shoppingDao.addShopping(shoppingInfo);
         if (0 == count){
-            return AppResponse.bizError("新增失败！");
+            return AppResponse.versionError("新增失败！");
         }
         return AppResponse.success("新增成功！");
     }
@@ -62,7 +62,7 @@ public class ShoppingService {
 //        设置购买数量
         int count = shoppingDao.set(shoppingInfo);
         if (0 == count){
-            return AppResponse.bizError("设置失败！");
+            return AppResponse.versionError("设置失败！");
         }
         return AppResponse.success("设置成功！");
     }
@@ -79,7 +79,7 @@ public class ShoppingService {
 //        删除购物车商品
         int count = shoppingDao.deleteShopping(listId,userId);
         if (0 == count){
-            return AppResponse.bizError("设删除失败！");
+            return AppResponse.versionError("设删除失败！");
         }
         return AppResponse.success("删除成功！");
     }
