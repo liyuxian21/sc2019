@@ -36,15 +36,15 @@ public class SlideshowService {
         int countProduct = slideshowDao.countProduct(slideshowInfo);
         int countSort = slideshowDao.countSort(slideshowInfo);
         if (0 != countProduct) {
-            return AppResponse.bizError("新增商品已经存在，请重新输入！");
+            return AppResponse.success("新增商品已经存在，请重新输入！");
         } else if (0 != countSort) {
-            return AppResponse.bizError("新增序号已经存在，请重新输入！");
+            return AppResponse.success("新增序号已经存在，请重新输入！");
         }
         slideshowInfo.setSlideshowId(StringUtil.getCommonCode(2));
 //        新增轮播图
         int count = slideshowDao.addSlideshow(slideshowInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试");
+            return AppResponse.versionError("新增失败，请重试");
         }
         return AppResponse.success("新增成功");
     }
@@ -64,7 +64,7 @@ public class SlideshowService {
 //       修改状态
         int count = slideshowDao.enableDisable(listId, slideshowId, slideshowStatus);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试");
+            return AppResponse.versionError("修改失败，请重试");
         }
         return appResponse;
     }
@@ -98,7 +98,7 @@ public class SlideshowService {
 //        删除轮播图
         int count = slideshowDao.deleteSlideshow(listId, userId);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return appResponse;
 

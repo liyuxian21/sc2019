@@ -39,16 +39,16 @@ public class GoodsHotService {
         int countProduct = goodsHotDao.countProduct(goodsHotInfo);
         int countSort = goodsHotDao.countSort(goodsHotInfo);
         if (0 != countProduct) {
-            return AppResponse.bizError("新增商品已经存在，请重新输入！");
+            return AppResponse.success("新增商品已经存在，请重新输入！");
         }else if (0 != countSort){
-            return AppResponse.bizError("新增序号已存在，请重新输入！");
+            return AppResponse.success("新增序号已存在，请重新输入！");
         }
 //        给热门商品设置随机编码
         goodsHotInfo.setGoodsHotId(StringUtil.getCommonCode(2));
 //        新增热门商品
         int count = goodsHotDao.addGoodsHot(goodsHotInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功");
     }
@@ -78,9 +78,9 @@ public class GoodsHotService {
         int countProduct = goodsHotDao.countProduct(goodsHotInfo);
         int countSort = goodsHotDao.countSort(goodsHotInfo);
         if (0 != countProduct) {
-            return AppResponse.bizError("新增商品已经存在，请重新输入！");
+            return AppResponse.success("新增商品已经存在，请重新输入！");
         }else if (0 != countSort){
-            return AppResponse.bizError("新增序号已存在，请重新输入！");
+            return AppResponse.success("新增序号已存在，请重新输入！");
         }
 //        修改商品
         int count = goodsHotDao.updateGoodsHotById(goodsHotInfo);
@@ -104,7 +104,7 @@ public class GoodsHotService {
         //删除商品
         int count = goodsHotDao.deleteGoodsHot(listId, userId);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功");
     }
@@ -135,7 +135,7 @@ public class GoodsHotService {
         //        修改商品展示数量
         int count = goodsHotDao.setGoodsHot(number);
         if (0 == count) {
-            return AppResponse.bizError("修改失败！");
+            return AppResponse.versionError("修改失败！");
         }
         return AppResponse.success("修改成功！");
 

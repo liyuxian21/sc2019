@@ -42,9 +42,9 @@ public class UserService {
         int countUserAccount = userDao.countUserAccount(userInfo);
         int countUserPhone = userDao.countUserPhone(userInfo);
         if (0 != countUserAccount) {
-            return AppResponse.bizError("用户账户已存在，请重新输入！");
+            return AppResponse.success("用户账户已存在，请重新输入！");
         } else if (0 != countUserPhone) {
-            return AppResponse.bizError("手机号已存在，请重新输入！");
+            return AppResponse.success("手机号已存在，请重新输入！");
         }
         // 密码加密 默认为123456
         String pwd = PasswordUtils.generatePassword("123456");
@@ -53,7 +53,7 @@ public class UserService {
         userInfo.setUserId(StringUtil.getCommonCode(2));
         int count = userDao.addUser(userInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
 
@@ -71,9 +71,9 @@ public class UserService {
         int countUserAccount = userDao.countUserAccount(userInfo);
         int countUserPhone = userDao.countUserPhone(userInfo);
         if (0 != countUserAccount) {
-            return AppResponse.bizError("用户账户已存在，请重新输入！");
+            return AppResponse.success("用户账户已存在，请重新输入！");
         }else if (0 != countUserPhone) {
-            return AppResponse.bizError("手机号已存在，请重新输入！");
+            return AppResponse.success("手机号已存在，请重新输入！");
         }
         // 密码加密 默认为123456
         String pwd = PasswordUtils.generatePassword("123456");
@@ -101,7 +101,7 @@ public class UserService {
 //        删除用户
         int count = userDao.deleteUser(listId, userId1);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return appResponse;
 

@@ -58,7 +58,7 @@ public class OrderService {
 //        修改订单状态
         int count = orderDao.updateOrderStatus(listId,userId,orderStatus);
         if (0 == count){
-            return AppResponse.bizError("修改失败，请重试！");
+            return AppResponse.versionError("修改失败，请重试！");
         }
         return AppResponse.success("修改成功");
     }

@@ -32,9 +32,9 @@ public class DriverService {
         int countUserAccount = driverDao.countUserAccount(driverInfo);
         int countUserPhone = driverDao.countUserPhone(driverInfo);
         if (0 != countUserAccount) {
-            return AppResponse.bizError("用户账户已存在，请重新输入！");
+            return AppResponse.success("用户账户已存在，请重新输入！");
         } else if (0 != countUserPhone) {
-            return AppResponse.bizError("手机号已存在，请重新输入！");
+            return AppResponse.success("手机号已存在，请重新输入！");
         }
 //        给司机id和司机编码和司机用户id设置随机数
         driverInfo.setDriverId(StringUtil.getCommonCode(2));
@@ -47,9 +47,9 @@ public class DriverService {
         int count = driverDao.addDriver(driverInfo);
         int count2 = driverDao.addDriver2(driverInfo);
         if (0 == count){
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }else if (0 == count2){
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
     }
@@ -118,9 +118,9 @@ public class DriverService {
         int count = driverDao.deleteDriver(listId,userId1);
         int count2 = driverDao.delete(listId2,userId1);
         if (0 == count){
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }else if (0 == count2){
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功！");
     }

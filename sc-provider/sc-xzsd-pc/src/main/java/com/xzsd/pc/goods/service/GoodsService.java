@@ -43,7 +43,7 @@ public class GoodsService {
 //        统计书号是否存在
         int countIsbn=goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
-            return AppResponse.bizError("书号已存在，请重新输入！");
+            return AppResponse.success("书号已存在，请重新输入！");
         }
 //       给商品编码和商品id设置随机数
         goodsInfo.setGoodsCode(StringUtil.getCommonCode(2));
@@ -51,7 +51,7 @@ public class GoodsService {
         // 新增商品
         int count = goodsDao.addGoods(goodsInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
     }
@@ -69,7 +69,7 @@ public class GoodsService {
         //        统计书号是否存在
         int countIsbn=goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
-            return AppResponse.bizError("书号已存在，请重新输入！");
+            return AppResponse.success("书号已存在，请重新输入！");
         }
         AppResponse appResponse = AppResponse.success("修改成功");
         // 商品修改
@@ -96,7 +96,7 @@ public class GoodsService {
         //删除商品
         int count = goodsDao.deleteGoods(listId, userId);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return appResponse;
     }
@@ -145,7 +145,7 @@ public class GoodsService {
         //修改商品状态
         int count = goodsDao.status(listId1, userId,goodsStatus);
         if (0 == count) {
-            return AppResponse.bizError("修改失败，请重试！");
+            return AppResponse.versionError("修改失败，请重试！");
         }
         return appResponse;
     }
@@ -170,7 +170,7 @@ public class GoodsService {
     public AppResponse secondClassGoodsList(GoodsClass goodsClass,String parentClassCode) {
 //          判断是否有父类编码
         if (parentClassCode == null){
-            return AppResponse.bizError("查询为空");
+            return AppResponse.notFound("查询为空");
         }
         List<GoodsClass> goodsClassList = goodsDao.secondClassGoodsList(goodsClass,parentClassCode);
         return AppResponse.success("查询成功！",goodsClassList);

@@ -29,9 +29,9 @@ public class StoreService {
 //              统计门店电话
         int countPhone = storeDao.countPhone(storeInfo);
         if (0 != countUserId) {
-            return AppResponse.bizError("新增店长用户已经存在，请重新选择！");
+            return AppResponse.success("新增店长用户已经存在，请重新选择！");
         } else if (0 != countPhone) {
-            return AppResponse.bizError("新增联系电话已经存在，请重新选择！");
+            return AppResponse.success("新增联系电话已经存在，请重新选择！");
         }
 //        给门店id和门店编号设置随机编号
         storeInfo.setStoreId(StringUtil.getCommonCode(2));
@@ -41,7 +41,7 @@ public class StoreService {
 //               新增门店
         int count = storeDao.addStore(storeInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功");
     }
@@ -67,7 +67,7 @@ public class StoreService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse cityStoreList(ChinaVo chinaVo, String parentCode) {
         if (parentCode == null) {
-            return AppResponse.success("查询为空");
+            return AppResponse.notFound("查询为空");
         }
         List<ChinaVo> chinaVoList = storeDao.cityStoreList(chinaVo,parentCode);
         return AppResponse.success("查询成功！", chinaVoList);
@@ -82,7 +82,7 @@ public class StoreService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse areaStoreList(ChinaVo chinaVo,String parentCode) {
         if (parentCode == null) {
-            return AppResponse.success("查询为空");
+            return AppResponse.notFound("查询为空");
         }
         List<ChinaVo> chinaVoList = storeDao.areaStoreList(chinaVo,parentCode);
         return AppResponse.success("查询成功！", chinaVoList);
@@ -113,7 +113,7 @@ public class StoreService {
 //                    统计门店电话
         int countPhone2 = storeDao.countPhone2(storeInfo);
         if (0 != countPhone2) {
-            return AppResponse.bizError("修改电话已经存在，请重新选择！");
+            return AppResponse.success("修改电话已经存在，请重新选择！");
         }
 //        修改门店
         int count = storeDao.updateStoreById(storeInfo);
@@ -152,7 +152,7 @@ public class StoreService {
 //        删除门店
         int count = storeDao.deleteStore(listId, userId);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功！");
     }

@@ -29,7 +29,7 @@ public class MenuService {
 //                统计菜单名称
         int countMenuName = menuDao.countMenuName(menuInfo);
         if (0 != countMenuName) {
-            return AppResponse.bizError("菜单名称名称已存在，请重新输入！");
+            return AppResponse.success("菜单名称名称已存在，请重新输入！");
         }
 
 //        给菜单id设置随机编码
@@ -37,7 +37,7 @@ public class MenuService {
 //        新增菜单
         int count=menuDao.addMenu(menuInfo);
         if (0 == count){
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
     }
@@ -94,7 +94,7 @@ public class MenuService {
 //        删除菜单
         int count=menuDao.deleteMenu(listId,userId);
         if (0 == count){
-            return AppResponse.bizError("删除失败！");
+            return AppResponse.versionError("删除失败！");
         }
         return AppResponse.success("删除成功！");
     }

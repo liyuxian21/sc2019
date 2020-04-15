@@ -37,7 +37,7 @@ public class GoodsClassService {
 //        统计分类名称
         int countClassName = goodsClassDao.countClassName(goodsClassInfo);
         if (0 != countClassName) {
-            return AppResponse.bizError("商品分类名称已存在，请重新输入！");
+            return AppResponse.success("商品分类名称已存在，请重新输入！");
         }
 
 //判断父类编码是否存在，存在isParent设置为1，代表二级分类；若不存在设置为0，代表一级分类
@@ -52,7 +52,7 @@ public class GoodsClassService {
         // 新增商品分类
         int count = goodsClassDao.addGoodsClass(goodsClassInfo);
         if (0 == count) {
-            return AppResponse.bizError("新增失败，请重试！");
+            return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
     }
@@ -82,12 +82,12 @@ public class GoodsClassService {
 //              统计分类名称
         int countClassName = goodsClassDao.countClassName(goodsClassInfo);
         if (0 != countClassName) {
-            return AppResponse.bizError("商品分类名称已存在，请重新输入！");
+            return AppResponse.success("商品分类名称已存在，请重新输入！");
         }
 //        修改商品分类
         int count = goodsClassDao.updateGoodsClassById(goodsClassInfo);
         if (0 == count) {
-            return AppResponse.bizError("数据有变化，请刷新");
+            return AppResponse.versionError("数据有变化，请刷新");
         }
         return AppResponse.success("商品分类修改成功！");
     }
@@ -115,7 +115,7 @@ public class GoodsClassService {
 //        删除商品
         int count = goodsClassDao.deleteGoodsClass(listId, userId);
         if (0 == count) {
-            return AppResponse.bizError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功！");
 
