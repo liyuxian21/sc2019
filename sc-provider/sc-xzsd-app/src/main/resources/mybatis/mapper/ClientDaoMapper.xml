@@ -170,11 +170,16 @@
 <!--    获取登录用户详情-->
     <select id="loginDetails" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.LoginUserVO">
         select
-            user_name userName,
-            user_image  userPhoto
+            a.user_name   userName,
+            a.user_image  userPhoto,
+            c.store_id    storeId
         from
-            t_sys_user
+             t_sys_user a,
+			 t_sys_client b,
+			 t_sys_store c
         where user_code=#{userId}
+        and a.user_code=b.user_id
+        and b.invite_code=c.invite_code
         and is_deleted=0 and role=3
     </select>
 <!--    获取用户详情-->
@@ -195,5 +200,19 @@
             update_time     =now(),
             version         =version+1
         where user_code=#{userId}
+    </update>
+<!--    统计店铺邀请码-->
+    <select id="countInviteCode" parameterType="com.xzsd.app.client.entity.UserVO" resultType="int">
+        select count(invite_code)
+        from t_sys_store
+        where invite_code=#{storeInviteCode}
+        and is_deleted=0
+    </select>
+<!--    修改店铺邀请码-->
+    <update id="updateStoreInviteCode" parameterType="java.lang.String">
+        update t_sys_client
+        set
+            invite_code=#{storeInviteCode}
+        where user_id=#{userId}
     </update>
 </mapper>
