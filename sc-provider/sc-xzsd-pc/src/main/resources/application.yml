@@ -68,8 +68,8 @@ tengxun:
   path: https://test-1301644127.cos.ap-guangzhou.myqcloud.com
 sc:
   cloud:
-#   debug:true
-    dev: true
+    debug: true
+#    dev: true
     task:
       core-pool-size: 20
       max-pool-size: 50

@@ -69,7 +69,7 @@
             #{phone},
             #{idCard},
             #{password},
-            3,
+            2,
             0,
             #{createPeople},
             now(),
