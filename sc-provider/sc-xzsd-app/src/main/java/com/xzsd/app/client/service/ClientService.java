@@ -149,17 +149,17 @@ public class ClientService {
      * 修改密码
      *
      * @param userId
-     * @param startPassword 输入原密码
+     * @param userPassword 输入原密码
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse updatePassword(String userId, String startPassword) {
+    public AppResponse updatePassword(String userId, String userPassword) {
 //        校验原密码是否正确
-        if (null != startPassword && !"".equals(startPassword)) {
+        if (null != userPassword && !"".equals(userPassword)) {
 //            获取用户原密码加密密文
             UserVO userDetail = clientDao.findUserById(userId);
 //            判断原密码是否相同
-            boolean password = PasswordUtils.Password(startPassword, userDetail.getUserPassword());
+            boolean password = PasswordUtils.Password(userPassword, userDetail.getUserPassword());
             if (!password) {
                 return AppResponse.success("原密码不匹配，请重新输入！");
             }

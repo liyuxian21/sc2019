@@ -187,7 +187,7 @@
 <!--    获取用户详情-->
     <select id="findUserById" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.UserVO">
         select
-            user_pwd userPassword
+                user_pwd userPassword
         from
             t_sys_user
         where user_code=#{userId}
