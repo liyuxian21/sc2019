@@ -49,7 +49,7 @@ public class UserService {
 //             给用户编码设置随机数
         userInfo.setUserId(StringUtil.getCommonCode(2));
 //              密码加密
-      userInfo.setPassword(PasswordUtils.generatePassword(userInfo.getPassword()));
+        userInfo.setPassword(PasswordUtils.generatePassword(userInfo.getPassword()));
         int count = userDao.addUser(userInfo);
         if (0 == count) {
             return AppResponse.versionError("新增失败，请重试！");
