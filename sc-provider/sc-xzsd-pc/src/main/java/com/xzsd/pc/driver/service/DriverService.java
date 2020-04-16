@@ -40,9 +40,8 @@ public class DriverService {
         driverInfo.setDriverId(StringUtil.getCommonCode(2));
         driverInfo.setDriverCode(StringUtil.getCommonCode(2));
         driverInfo.setUserId(StringUtil.getCommonCode(2));
-//         密码加密 默认为123456
-        String pwd = PasswordUtils.generatePassword("123456");
-        driverInfo.setPassword(pwd);
+//         密码加密
+        driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
 //        新增司机
         int count = driverDao.addDriver(driverInfo);
         int count2 = driverDao.addDriver2(driverInfo);
