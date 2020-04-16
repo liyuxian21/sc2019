@@ -18,6 +18,18 @@ public class LoginUserVO {
      * 登录用户id
      */
     private String userId;
+    /**
+     * 登录用户绑定门店id
+     */
+    private String storeId;
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
+    }
 
     public String getUserName() {
         return userName;

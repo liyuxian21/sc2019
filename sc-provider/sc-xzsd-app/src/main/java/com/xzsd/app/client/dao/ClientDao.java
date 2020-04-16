@@ -97,16 +97,31 @@ public interface ClientDao {
     LoginUserVO loginDetails(String userId);
 
     /**
-     * 获取用户详情
+     * 统计店铺邀请码
+     * @param storeInviteCode
+     * @return
+     */
+    int countInviteCode(String storeInviteCode);
+
+    /**
+     * 修改店铺邀请码
+     * @param userId
+     * @param storeInviteCode
+     * @return
+     */
+    int updateStoreInviteCode(@Param("userId") String userId, @Param("storeInviteCode") String storeInviteCode);
+
+    /**
+     * 获取用户原密码密文
      * @param userId
      * @return
      */
-    UserVO findUserById(String userId);
+    UserVO findUserById(@Param("userId") String userId);
 
     /**
-     * 修改用户密码
-     * @param userVO
+     * 修改密码
+     * @param us
      * @return
      */
-    int updatePassword(UserVO userVO);
+    int updatePassword(UserVO us);
 }

@@ -35,6 +35,7 @@
             phone,
             email,
             role,
+            user_image,
             is_deleted,
             create_people,
             create_time,
@@ -52,6 +53,7 @@
             #{phone},
             #{email},
             3,
+            #{userPhoto},
             0,
             #{createPeople},
             now(),
@@ -195,10 +197,7 @@
     <update id="updatePassword" parameterType="com.xzsd.app.client.entity.UserVO">
         update t_sys_user
         set
-            user_pwd        =#{newPassword},
-            update_people   =#{updatePeople},
-            update_time     =now(),
-            version         =version+1
+            user_pwd   = #{newPassword}
         where user_code=#{userId}
     </update>
 <!--    统计店铺邀请码-->

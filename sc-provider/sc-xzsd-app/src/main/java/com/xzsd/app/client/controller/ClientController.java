@@ -139,13 +139,31 @@ public class ClientController {
 
     /**
      * 修改密码
-     * @param userVO
+     * @param userId
+     * @param startPassword 原密码
      * @return
      */
     @PostMapping("updatePassword")
-    public AppResponse updatePassword(UserVO userVO) {
+    public AppResponse updatePassword(String userId,String startPassword) {
         try {
-            return clientService.updatePassword(userVO);
+            return clientService.updatePassword(userId,startPassword);
+        } catch (Exception e) {
+            logger.error("修改错误", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+
+    /**
+     * 修改店铺邀请码
+     * @param userId
+     * @param storeInviteCode
+     * @return
+     */
+    @PostMapping("updateStoreInviteCode")
+    public AppResponse updateStoreInviteCode(String userId,String storeInviteCode) {
+        try {
+            return clientService.updateStoreInviteCode(userId,storeInviteCode);
         } catch (Exception e) {
             logger.error("修改错误", e);
             System.out.println(e.toString());

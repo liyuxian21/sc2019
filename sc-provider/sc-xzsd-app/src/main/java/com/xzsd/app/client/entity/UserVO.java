@@ -16,9 +16,17 @@ public class UserVO {
      */
     private String userPassword;
     /**
+     * 用户原密码
+     */
+    private String startPassword;
+    /**
      * 用户新密码
      */
     private String newPassword;
+    /**
+     * 店铺新邀请码
+     */
+    private String storeInviteCode;
     /**
      * 删除标记 0未删 1 已删
      */
@@ -60,12 +68,28 @@ public class UserVO {
         this.userPassword = userPassword;
     }
 
+    public String getStartPassword() {
+        return startPassword;
+    }
+
+    public void setStartPassword(String startPassword) {
+        this.startPassword = startPassword;
+    }
+
     public String getNewPassword() {
         return newPassword;
     }
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    public String getStoreInviteCode() {
+        return storeInviteCode;
+    }
+
+    public void setStoreInviteCode(String storeInviteCode) {
+        this.storeInviteCode = storeInviteCode;
     }
 
     public String getIsDeleted() {

@@ -46,11 +46,10 @@ public class UserService {
         } else if (0 != countUserPhone) {
             return AppResponse.success("手机号已存在，请重新输入！");
         }
-        // 密码加密 默认为123456
-        String pwd = PasswordUtils.generatePassword("123456");
-        userInfo.setPassword(pwd);
-//        给用户编码设置随机数
+//             给用户编码设置随机数
         userInfo.setUserId(StringUtil.getCommonCode(2));
+//              密码加密
+      userInfo.setPassword(PasswordUtils.generatePassword(userInfo.getPassword()));
         int count = userDao.addUser(userInfo);
         if (0 == count) {
             return AppResponse.versionError("新增失败，请重试！");
@@ -75,15 +74,12 @@ public class UserService {
         }else if (0 != countUserPhone) {
             return AppResponse.success("手机号已存在，请重新输入！");
         }
-        // 密码加密 默认为123456
-        String pwd = PasswordUtils.generatePassword("123456");
-        userInfo.setPassword(pwd);
-        // 修改密码
+        // 修改密码并且加密
         userInfo.setPassword(PasswordUtils.generatePassword(userInfo.getPassword()));
         // 用户修改
         int count = userDao.updateUserById(userInfo);
         if (0 == count) {
-            return  AppResponse.versionError("数据有变化，请刷新！");
+            return  AppResponse.versionError("版本有变化，请刷新！");
         }
         return AppResponse.success("修改成功！");
     }

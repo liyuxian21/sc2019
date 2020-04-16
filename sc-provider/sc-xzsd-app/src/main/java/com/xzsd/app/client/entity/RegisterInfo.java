@@ -48,6 +48,10 @@ public class RegisterInfo {
      */
     private String storeInviteCode;
     /**
+     *用户头像路径
+     */
+    private String userPhoto;
+    /**
      * 删除标记 0未删 1 已删
      */
     private String isDeleted;
@@ -71,6 +75,14 @@ public class RegisterInfo {
      * 版本号
      */
     private String version;
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
+    }
 
     public String getUserId() {
         return userId;

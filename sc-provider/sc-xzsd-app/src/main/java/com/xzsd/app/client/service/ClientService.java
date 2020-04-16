@@ -36,9 +36,9 @@ public class ClientService {
         int countUserAccount = clientDao.countUserAccount(registerInfo);
         int countUserPhone = clientDao.countUserPhone(registerInfo);
         if (0 != countUserAccount) {
-            return AppResponse.bizError("用户账户已存在，请重新输入！");
+            return AppResponse.success("用户账户已存在，请重新输入！");
         } else if (0 != countUserPhone) {
-            return AppResponse.bizError("手机号已存在，请重新输入！");
+            return AppResponse.success("手机号已存在，请重新输入！");
         }
 //        判断门店邀请码是否存在
         int countInviteCode = clientDao.countInciteCode(registerInfo);
@@ -48,16 +48,15 @@ public class ClientService {
 //        给用户编码和司机id设置随机编号
         registerInfo.setUserId(StringUtil.getCommonCode(2));
         registerInfo.setClientId(StringUtil.getCommonCode(2));
-//         密码加密 默认为123456
-        String pwd = PasswordUtils.generatePassword("123456");
-        registerInfo.setUserPassword(pwd);
+//         密码加密
+        registerInfo.setUserPassword(PasswordUtils.generatePassword(registerInfo.getUserPassword()));
 //        新增用户
         int count = clientDao.register(registerInfo);
         int count2 = clientDao.register2(registerInfo);
         if (0 == count) {
-            return AppResponse.bizError("注册失败，请重试！");
+            return AppResponse.versionError("注册失败，请重试！");
         } else if (0 == count2) {
-            return AppResponse.bizError("注册失败，请重试！");
+            return AppResponse.versionError("注册失败，请重试！");
         }
         return AppResponse.success("注册成功！");
     }
@@ -127,7 +126,7 @@ public class ClientService {
     public AppResponse secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO, String parentClassCode) {
 //          判断是否有父类编码
         if (parentClassCode == null) {
-            return AppResponse.bizError("查询为空");
+            return AppResponse.notFound("查询为空");
         }
         List<GoodsSecondClassVO> goodsList = clientDao.secondClassGoodsList(goodsSecondClassVO, parentClassCode);
         return AppResponse.success("查询成功！", goodsList);
@@ -149,25 +148,50 @@ public class ClientService {
     /**
      * 修改密码
      *
-     * @param userVO
+     * @param userId
+     * @param startPassword 输入原密码
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse updatePassword(UserVO userVO) {
+    public AppResponse updatePassword(String userId, String startPassword) {
 //        校验原密码是否正确
-        if (null != userVO.getUserPassword() && !"".equals(userVO.getUserPassword())) {
-            String startPassword = PasswordUtils.generatePassword(userVO.getUserPassword());
-//            获取用户密码信息
-            UserVO userDetail = clientDao.findUserById(userVO.getUserId());
-            if (!startPassword.equals(userDetail.getUserPassword())) {
-                return AppResponse.bizError("原密码不匹配，请重新输入！");
+        if (null != startPassword && !"".equals(startPassword)) {
+//            获取用户原密码加密密文
+            UserVO userDetail = clientDao.findUserById(userId);
+//            判断原密码是否相同
+            boolean password = PasswordUtils.Password(startPassword, userDetail.getUserPassword());
+            if (!password) {
+                return AppResponse.success("原密码不匹配，请重新输入！");
             }
         }
-//        修改密码
-        userVO.setUserPassword(PasswordUtils.generatePassword(userVO.getUserPassword()));
-        int count = clientDao.updatePassword(userVO);
+//        修改密码并且加密
+        UserVO us = new UserVO();
+        us.setNewPassword(PasswordUtils.generatePassword(us.getNewPassword()));
+        int count = clientDao.updatePassword(us);
         if (0 == count) {
-            return AppResponse.bizError("修改失败！");
+            return AppResponse.versionError("修改失败！");
+        }
+        return AppResponse.success("修改成功！");
+    }
+
+    /**
+     * 修改店铺邀请码
+     *
+     * @param userId
+     * @param storeInviteCode
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public AppResponse updateStoreInviteCode(String userId, String storeInviteCode) {
+//        统计门店邀请码
+        int countInviteCode = clientDao.countInviteCode(storeInviteCode);
+        if (0 == countInviteCode) {
+            return AppResponse.success("修改店铺邀请码不存在，请重新输入！");
+        }
+//        修改店铺邀请码
+        int count = clientDao.updateStoreInviteCode(userId, storeInviteCode);
+        if (0 == count) {
+            return AppResponse.versionError("修改失败请重试！");
         }
         return AppResponse.success("修改成功！");
     }
