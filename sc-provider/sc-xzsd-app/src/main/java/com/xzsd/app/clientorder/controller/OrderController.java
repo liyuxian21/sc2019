@@ -2,12 +2,15 @@ package com.xzsd.app.clientorder.controller;
 
 import com.neusoft.core.restful.AppResponse;
 import com.neusoft.security.client.utils.SecurityUtils;
+import com.xzsd.app.clientorder.entity.AppraiseList;
+import com.xzsd.app.clientorder.entity.OrderAppraise;
 import com.xzsd.app.clientorder.entity.OrderInfo;
 import com.xzsd.app.clientorder.entity.OrderListVO;
 import com.xzsd.app.clientorder.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -98,4 +101,39 @@ public class OrderController {
         }
     }
 
+    /**
+     * 新增订单评价
+     * @param orderAppraise
+     * @return
+     */
+    @PostMapping("addOrderAppraise")
+    public AppResponse addOrderAppraise(@RequestBody OrderAppraise orderAppraise) {
+        try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            orderAppraise.setCreatePeople(userId);
+            orderAppraise.setUpdatePeople(userId);
+            return orderService.addOrderAppraise(orderAppraise);
+        } catch (Exception e) {
+            logger.error("新增失败", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+
+    /**
+     * 查询商品评价列表
+     * @param appraiseList
+     * @return
+     */
+    @PostMapping("listAppraiseGoods")
+    public AppResponse listAppraiseGoods(AppraiseList appraiseList) {
+        try {
+            return orderService.listAppraiseGoods(appraiseList);
+        } catch (Exception e) {
+            logger.error("查询失败", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
 }

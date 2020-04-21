@@ -3,10 +3,7 @@ package com.xzsd.app.clientorder.service;
 import com.neusoft.core.restful.AppResponse;
 import com.neusoft.util.StringUtil;
 import com.xzsd.app.clientorder.dao.OrderDao;
-import com.xzsd.app.clientorder.entity.OrderDetailVO;
-import com.xzsd.app.clientorder.entity.OrderInfo;
-import com.xzsd.app.clientorder.entity.OrderListVO;
-import com.xzsd.app.clientorder.entity.OrderStoreVO;
+import com.xzsd.app.clientorder.entity.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +53,7 @@ public class OrderService {
             //计算总价
             orderInfo.setCountPrice(orderInfo.getCountPrice() + price * Integer.parseInt(countList.get(i)));
             //统计一个订单内购买商品总数量
-            orderInfo.setGoodsNumber(Integer.parseInt(countList.get(i))+orderInfo.getGoodsNumber());
+            orderInfo.setGoodsNumber(Integer.parseInt(countList.get(i)) + orderInfo.getGoodsNumber());
             //添加到list
             orderDetailVOList.add(orderDetailVO);
         }
@@ -67,7 +64,7 @@ public class OrderService {
             return AppResponse.versionError("移除购物车失败！");
         }
         //修改商品库存和销售量
-        int update= orderDao.update(orderDetailVOList);
+        int update = orderDao.update(orderDetailVOList);
         if (0 == update) {
             return AppResponse.versionError("购买失败");
         }
@@ -126,4 +123,53 @@ public class OrderService {
         return AppResponse.success("修改成功！");
     }
 
+    /**
+     * 新增订单评价
+     *
+     * @param orderAppraise
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public AppResponse addOrderAppraise(OrderAppraise orderAppraise) {
+        //构建评价图片列表
+        List<AppraiseImage> appraiseImageList = new ArrayList<>();
+        for (int i = 0; i < orderAppraise.getAppraiseList().size(); i++) {
+            //设置评价信息集合
+            orderAppraise.getAppraiseList().get(i).setAppraiseId(StringUtil.getCommonCode(2));
+            //获取评价信息
+            AppraiseInfo appraiseInfo = orderAppraise.getAppraiseList().get(i);
+            //设置图片信息集合
+            for (int j = 0; j < appraiseInfo.getAppraisePhotoList().size(); j++) {
+                //获取图片信息
+                AppraiseImage appraiseImage = appraiseInfo.getAppraisePhotoList().get(j);
+                //设置评价图片信息
+                appraiseImage.setAppraiseImageId(StringUtil.getCommonCode(2));
+                appraiseImage.setAppraiseId(appraiseInfo.getAppraiseId());
+                //添加到图片list里
+                appraiseImageList.add(appraiseImage);
+            }
+        }
+        //新增评价信息集合
+        int addAppraiseCount=orderDao.addAppraise(orderAppraise);
+        if (addAppraiseCount != orderAppraise.getAppraiseList().size()){
+            return AppResponse.versionError("评价失败");
+        }
+        //新增评价图片信息集合
+        int addAppraiseImageCount=orderDao.addAppraiseImage(appraiseImageList);
+        if (addAppraiseImageCount != appraiseImageList.size()){
+            return AppResponse.versionError("评价失败");
+        }
+        return AppResponse.success("评价成功！");
+    }
+
+    /**
+     * 查询商品评价列表
+     * @param appraiseList
+     * @return
+     */
+    public AppResponse listAppraiseGoods(AppraiseList appraiseList){
+        // 查询商品评价列表
+        List<AppraiseList> appraiseListList = orderDao.listAppraiseByPage(appraiseList);
+        return AppResponse.success("查询成功", getPageInfo(appraiseListList));
+    }
 }

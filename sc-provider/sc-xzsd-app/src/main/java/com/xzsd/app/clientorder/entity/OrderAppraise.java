@@ -20,7 +20,11 @@ public class OrderAppraise implements Serializable {
     /**
      * 评价信息集合
      */
-    private List<AppraiseInfo> appraiseInfoList;
+    private List<AppraiseInfo> appraiseList;
+    /**
+     * 删除标记 0未删 1 已删
+     */
+    private String isDeleted;
     /**
      * 创建人
      */
@@ -42,6 +46,14 @@ public class OrderAppraise implements Serializable {
      */
     private String version;
 
+    public String getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public String getOrderId() {
         return orderId;
     }
@@ -58,12 +70,12 @@ public class OrderAppraise implements Serializable {
         this.userId = userId;
     }
 
-    public List<AppraiseInfo> getAppraiseInfoList() {
-        return appraiseInfoList;
+    public List<AppraiseInfo> getAppraiseList() {
+        return appraiseList;
     }
 
-    public void setAppraiseInfoList(List<AppraiseInfo> appraiseInfoList) {
-        this.appraiseInfoList = appraiseInfoList;
+    public void setAppraiseList(List<AppraiseInfo> appraiseList) {
+        this.appraiseList = appraiseList;
     }
 
     public String getCreatePeople() {

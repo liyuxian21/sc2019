@@ -228,11 +228,9 @@
             appraise_content,
             user_id,
             product_id,
-            satrt_level,
+            start_level,
             is_deleted,
-            create_peoplee,
             create_time,
-            update_people,
             update_time,
             version
         )values
@@ -245,9 +243,7 @@
             #{item.goodsId},
             #{item.level},
             0,
-            #{createPeople},
             now(),
-            #{updatePeople},
             now(),
             0
          )
@@ -262,9 +258,7 @@
             image,
             sort,
             is_deleted,
-            create_peoplee,
             create_time,
-            update_people,
             update_time,
             version
         )values
@@ -275,9 +269,7 @@
             #{item.photoUrl},
             #{item.sort},
             0,
-            #{createPeople},
             now(),
-            #{updatePeople},
             now(),
             0
         )

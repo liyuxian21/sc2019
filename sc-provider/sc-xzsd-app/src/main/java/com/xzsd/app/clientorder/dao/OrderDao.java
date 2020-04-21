@@ -64,4 +64,25 @@ public interface OrderDao {
      * @return
      */
     int deleteGoods(@Param("goodsIdList") List<String> goodsIdList);
+
+    /**
+     * 新增评价信息
+     * @param orderAppraise
+     * @return
+     */
+    int addAppraise(OrderAppraise orderAppraise);
+
+    /**
+     * 新增评价图片集合
+     * @param appraiseImageList
+     * @return
+     */
+    int addAppraiseImage(@Param("appraiseImageList") List<AppraiseImage> appraiseImageList);
+
+    /**
+     * 查询商品评价列表
+     * @param appraiseList
+     * @return
+     */
+    List<AppraiseList> listAppraiseByPage(AppraiseList appraiseList);
 }
