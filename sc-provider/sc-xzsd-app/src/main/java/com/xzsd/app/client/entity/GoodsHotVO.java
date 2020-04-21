@@ -8,14 +8,6 @@ package com.xzsd.app.client.entity;
  */
 public class GoodsHotVO {
     /**
-     * 页码
-     */
-    private int pageSize;
-    /**
-     * 页数
-     */
-    private int pageNum;
-    /**
      * 热门商品id
      */
     private String goodsHotId;
@@ -39,21 +31,17 @@ public class GoodsHotVO {
      * 商品图片路径
      */
     private String photoUrl;
+    /**
+     * 热门商品展示数量
+     */
+    private String number;
 
-    public int getPageSize() {
-        return pageSize;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getGoodsHotId() {

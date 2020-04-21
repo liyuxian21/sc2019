@@ -1,36 +1,51 @@
-package com.xzsd.app.shopping.entity;
+package com.xzsd.app.clientorder.entity;
 
 /**
- * 购物车实体类
- *
+ * 客户端订单实体类
  * @author liyuxian
- * @time 2020-04-13
+ * @time 2020-04-14
  */
-public class ShoppingInfo {
-    /**
-     * 购物车id
-     */
-    private String shoppingId;
+public class OrderInfo {
     /**
      * 用户id
      */
     private String userId;
     /**
+     * 订单id
+     */
+    private String orderId;
+    /**
+     * 订单编码
+     */
+    private String orderCode;
+    /**
+     * 订单总价
+     */
+    private float countPrice;
+    /**
+     * 订单状态
+     */
+    private String orderStatus;
+    /**
+     * 支付时间
+     */
+    private String paidTime;
+    /**
+     * 门店id
+     */
+    private String storeId;
+    /**
      * 商品id
      */
     private String goodsId;
     /**
-     * 购买商品数量
+     *购买商品数量
      */
     private String goodsShoppingNumber;
     /**
-     * 购买商品的总价
+     * 一个订单购买商品总数量
      */
-    private String total;
-    /**
-     * 商品在售价
-     */
-    private String price;
+    private int goodsNumber;
     /**
      * 删除标记 0未删 1 已删
      */
@@ -56,28 +71,12 @@ public class ShoppingInfo {
      */
     private String version;
 
-    public String getTotal() {
-        return total;
+    public int getGoodsNumber() {
+        return goodsNumber;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getShoppingId() {
-        return shoppingId;
-    }
-
-    public void setShoppingId(String shoppingId) {
-        this.shoppingId = shoppingId;
+    public void setGoodsNumber(int goodsNumber) {
+        this.goodsNumber = goodsNumber;
     }
 
     public String getUserId() {
@@ -86,6 +85,54 @@ public class ShoppingInfo {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public float getCountPrice() {
+        return countPrice;
+    }
+
+    public void setCountPrice(float countPrice) {
+        this.countPrice = countPrice;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getPaidTime() {
+        return paidTime;
+    }
+
+    public void setPaidTime(String paidTime) {
+        this.paidTime = paidTime;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 
     public String getGoodsId() {

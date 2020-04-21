@@ -1,36 +1,39 @@
-package com.xzsd.app.shopping.entity;
-
+package com.xzsd.app.clientorder.entity;
 /**
- * 购物车实体类
+ * 订单详情和商品信息实体类
  *
  * @author liyuxian
- * @time 2020-04-13
+ * @time 2020-04-17
  */
-public class ShoppingInfo {
+public class OrderDetailVO {
     /**
-     * 购物车id
+     * 订单明细id
      */
-    private String shoppingId;
+    private String orderClearId;
     /**
-     * 用户id
+     * 订单id
      */
-    private String userId;
+    private String orderId;
     /**
      * 商品id
      */
     private String goodsId;
     /**
-     * 购买商品数量
+     *购买商品数量
      */
-    private String goodsShoppingNumber;
+    private int goodsShoppingNumber;
     /**
-     * 购买商品的总价
+     * 商品单价
      */
-    private String total;
+    private float price;
     /**
-     * 商品在售价
+     * 商品名称
      */
-    private String price;
+    private String goodsName;
+    /**
+     * 商品图片路径
+     */
+    private String photoUrl;
     /**
      * 删除标记 0未删 1 已删
      */
@@ -56,36 +59,30 @@ public class ShoppingInfo {
      */
     private String version;
 
-    public String getTotal() {
-        return total;
+    public OrderDetailVO(){
+
+    }
+    public OrderDetailVO(String orderClearId,String goodsId, int goodsShoppingNumber,float price){
+        this.orderClearId=orderClearId;
+        this.goodsId=goodsId;
+        this.goodsShoppingNumber=goodsShoppingNumber;
+        this.price=price;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
+    public String getOrderClearId() {
+        return orderClearId;
     }
 
-    public String getPrice() {
-        return price;
+    public void setOrderClearId(String orderClearId) {
+        this.orderClearId = orderClearId;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public String getShoppingId() {
-        return shoppingId;
-    }
-
-    public void setShoppingId(String shoppingId) {
-        this.shoppingId = shoppingId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getGoodsId() {
@@ -96,12 +93,20 @@ public class ShoppingInfo {
         this.goodsId = goodsId;
     }
 
-    public String getGoodsShoppingNumber() {
+    public int getGoodsShoppingNumber() {
         return goodsShoppingNumber;
     }
 
-    public void setGoodsShoppingNumber(String goodsShoppingNumber) {
+    public void setGoodsShoppingNumber(int goodsShoppingNumber) {
         this.goodsShoppingNumber = goodsShoppingNumber;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public String getIsDeleted() {
@@ -150,5 +155,21 @@ public class ShoppingInfo {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 }

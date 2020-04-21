@@ -8,14 +8,6 @@ package com.xzsd.app.client.entity;
  */
 public class SlideShowInfo {
     /**
-     * 每页显示多少条
-     */
-    private int pageSize;
-    /**
-     * 当前页是第几页
-     */
-    private int pageNum;
-    /**
      * 轮播图id
      */
     private String slideshowId;
@@ -52,19 +44,4 @@ public class SlideShowInfo {
         this.slideshowUrl = slideshowUrl;
     }
 
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    public int getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(int pageNum) {
-        this.pageNum = pageNum;
-    }
 }

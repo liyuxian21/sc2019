@@ -1,40 +1,26 @@
-package com.xzsd.app.shopping.entity;
+package com.xzsd.app.clientorder.entity;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- * 购物车实体类
+ * 订单评价实体类
  *
  * @author liyuxian
- * @time 2020-04-13
+ * @time 2020-04-14
  */
-public class ShoppingInfo {
+public class OrderAppraise implements Serializable {
     /**
-     * 购物车id
+     * 订单id
      */
-    private String shoppingId;
+    private String orderId;
     /**
      * 用户id
      */
     private String userId;
     /**
-     * 商品id
+     * 评价信息集合
      */
-    private String goodsId;
-    /**
-     * 购买商品数量
-     */
-    private String goodsShoppingNumber;
-    /**
-     * 购买商品的总价
-     */
-    private String total;
-    /**
-     * 商品在售价
-     */
-    private String price;
-    /**
-     * 删除标记 0未删 1 已删
-     */
-    private String isDeleted;
+    private List<AppraiseInfo> appraiseInfoList;
     /**
      * 创建人
      */
@@ -56,28 +42,12 @@ public class ShoppingInfo {
      */
     private String version;
 
-    public String getTotal() {
-        return total;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getShoppingId() {
-        return shoppingId;
-    }
-
-    public void setShoppingId(String shoppingId) {
-        this.shoppingId = shoppingId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getUserId() {
@@ -88,28 +58,12 @@ public class ShoppingInfo {
         this.userId = userId;
     }
 
-    public String getGoodsId() {
-        return goodsId;
+    public List<AppraiseInfo> getAppraiseInfoList() {
+        return appraiseInfoList;
     }
 
-    public void setGoodsId(String goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    public String getGoodsShoppingNumber() {
-        return goodsShoppingNumber;
-    }
-
-    public void setGoodsShoppingNumber(String goodsShoppingNumber) {
-        this.goodsShoppingNumber = goodsShoppingNumber;
-    }
-
-    public String getIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(String isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setAppraiseInfoList(List<AppraiseInfo> appraiseInfoList) {
+        this.appraiseInfoList = appraiseInfoList;
     }
 
     public String getCreatePeople() {

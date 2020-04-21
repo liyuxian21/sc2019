@@ -33,6 +33,9 @@ public class ShoppingService {
     public AppResponse addShopping(ShoppingInfo shoppingInfo) {
 //        给购物车id设置随机编号
         shoppingInfo.setShoppingId(StringUtil.getCommonCode(2));
+//        设置购买商品总价
+        shoppingInfo.setTotal(String.valueOf(Float.parseFloat(shoppingInfo.getGoodsShoppingNumber())*
+                Float.parseFloat(shoppingInfo.getPrice())));
 //        新增购物车
         int count = shoppingDao.addShopping(shoppingInfo);
         if (0 == count){
@@ -59,7 +62,10 @@ public class ShoppingService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse setShoppingNumber(ShoppingInfo shoppingInfo) {
-//        设置购买数量
+        //修改单个商品总价
+        shoppingInfo.setTotal(String.valueOf(Float.parseFloat(shoppingInfo.getGoodsShoppingNumber())*
+                Float.parseFloat(shoppingInfo.getPrice())));
+        //设置购买数量
         int count = shoppingDao.set(shoppingInfo);
         if (0 == count){
             return AppResponse.versionError("设置失败！");

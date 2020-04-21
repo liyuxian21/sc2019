@@ -116,12 +116,11 @@ public interface ClientDao {
      * @param userId
      * @return
      */
-    UserVO findUserById(@Param("userId") String userId);
+    UserVO findUserById(String userId);
 
     /**
      * 修改密码
-     * @param us
      * @return
      */
-    int updatePassword(UserVO us);
+    int updatePassword(UserVO userVO);
 }

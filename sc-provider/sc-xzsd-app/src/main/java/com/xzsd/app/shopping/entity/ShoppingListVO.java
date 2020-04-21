@@ -31,6 +31,18 @@ public class ShoppingListVO {
      * 购买商品数量
      */
     private String goodsShoppingNumber;
+    /**
+     * 购买商品的总价
+     */
+    private String total;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
 
     public String getUserId() {
         return userId;

@@ -69,11 +69,8 @@ public class ClientService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse listSlideshow(SlideShowInfo slideShowInfo) {
-        PageHelper.startPage(slideShowInfo.getPageNum(), slideShowInfo.getPageSize());
         List<SlideShowInfo> slideShowInfoList = clientDao.listSlideshow(slideShowInfo);
-//        包装对象
-        PageInfo<SlideShowInfo> pageData = new PageInfo<>(slideShowInfoList);
-        return AppResponse.success("查询成功！", pageData);
+        return AppResponse.success("查询成功！", slideShowInfoList);
     }
 
     /**
@@ -84,11 +81,8 @@ public class ClientService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse listGoodsHot(GoodsHotVO goodsHotVO) {
-        PageHelper.startPage(goodsHotVO.getPageNum(), goodsHotVO.getPageSize());
         List<GoodsHotVO> goodsHotList = clientDao.listGoodsHot(goodsHotVO);
-        //包装对象
-        PageInfo<GoodsHotVO> pageData = new PageInfo<>(goodsHotList);
-        return AppResponse.success("查询成功", pageData);
+        return AppResponse.success("查询成功", goodsHotList);
     }
 
     /**
@@ -148,26 +142,23 @@ public class ClientService {
     /**
      * 修改密码
      *
-     * @param userId
-     * @param userPassword 输入原密码
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse updatePassword(String userId, String userPassword) {
+    public AppResponse updatePassword(UserVO userVO) {
 //        校验原密码是否正确
-        if (null != userPassword && !"".equals(userPassword)) {
+        if (null != userVO.getStartPassword() && !"".equals(userVO.getNewPassword())) {
 //            获取用户原密码加密密文
-            UserVO userDetail = clientDao.findUserById(userId);
+            UserVO userDetail = clientDao.findUserById(userVO.getUserId());
 //            判断原密码是否相同
-            boolean password = PasswordUtils.Password(userPassword, userDetail.getUserPassword());
+            boolean password = PasswordUtils.Password(userVO.getStartPassword(), userDetail.getUserPassword());
             if (!password) {
                 return AppResponse.success("原密码不匹配，请重新输入！");
             }
         }
 //        修改密码并且加密
-        UserVO us = new UserVO();
-        us.setNewPassword(PasswordUtils.generatePassword(us.getNewPassword()));
-        int count = clientDao.updatePassword(us);
+        userVO.setNewPassword(PasswordUtils.generatePassword(userVO.getNewPassword()));
+        int count = clientDao.updatePassword(userVO);
         if (0 == count) {
             return AppResponse.versionError("修改失败！");
         }

@@ -139,14 +139,12 @@ public class ClientController {
 
     /**
      * 修改密码
-     * @param userId
-     * @param userPassword 原密码
      * @return
      */
     @PostMapping("updatePassword")
-    public AppResponse updatePassword(String userId,String userPassword) {
+    public AppResponse updatePassword(UserVO userVO) {
         try {
-            return clientService.updatePassword(userId,userPassword);
+            return clientService.updatePassword(userVO);
         } catch (Exception e) {
             logger.error("修改错误", e);
             System.out.println(e.toString());
