@@ -10,6 +10,10 @@ public class UserList {
      */
     private int pageNum;
     /**
+     * 用户id
+     */
+    private String userId;
+    /**
      * 用户姓名
      */
     private String userName;
@@ -41,6 +45,14 @@ public class UserList {
      * 版本号
      */
     private String version;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getVersion() {
         return version;

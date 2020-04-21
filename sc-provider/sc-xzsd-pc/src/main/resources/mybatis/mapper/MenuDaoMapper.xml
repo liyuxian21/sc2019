@@ -13,7 +13,6 @@
         (
             menu_id,
             menu_name,
-            parent_menu_code,
             menu_route,
             comment,
             is_deleted,
@@ -25,7 +24,6 @@
         values(
             #{menuId},
             #{menuName},
-            #{parentMenuCode},
             #{menuRouter},
             #{menuComment},
             0,

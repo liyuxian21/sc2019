@@ -34,6 +34,18 @@ public class SlideshowVO {
      * 轮播图路径
      */
     private String slideshowUrl;
+    /**
+     * 排序
+     */
+    private String sort;
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
 
     public String getSlideshowId() {
         return slideshowId;

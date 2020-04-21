@@ -64,7 +64,8 @@
             a.image_url     slideshowUrl,
             a.image_status  slideshowStatus,
             a.start_time    startTime,
-            a.end_time       endTime
+            a.end_time       endTime,
+            a.sort           sort
         from t_sys_slideshow a
         where is_deleted=0
         <if test="slideshowStatus != null and slideshowStatus != ''">
