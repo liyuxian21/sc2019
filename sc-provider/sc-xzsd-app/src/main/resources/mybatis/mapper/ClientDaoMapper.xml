@@ -182,10 +182,10 @@
         where user_code=#{userId}
         and a.user_code=b.user_id
         and b.invite_code=c.invite_code
-        and is_deleted=0 and role=3
+        and a.is_deleted=0 and role=3
     </select>
 <!--    获取用户详情-->
-    <select id="findUserById" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.UserVO">
+    <select id="findUserById" parameterType="com.xzsd.app.client.entity.UserVO" resultType="com.xzsd.app.client.entity.UserVO">
         select
                 user_pwd userPassword
         from

@@ -9,6 +9,7 @@
            product_id,
            user_id,
            number,
+           sum_price,
            is_deleted,
            create_people,
            create_time,
@@ -21,6 +22,7 @@
             #{goodsId},
             #{userId},
             #{goodsShoppingNumber},
+            #{total},
             0,
             #{createPeople},
             now(),
@@ -33,6 +35,7 @@
     <select id="listShoppingByPage" parameterType="com.xzsd.app.shopping.entity.ShoppingListVO" resultType="com.xzsd.app.shopping.entity.ShoppingListVO">
         select
             a.number        goodsShoppingNumber,
+            a.sum_price     total,
             b.product_name  goodsName,
             b.price_now     price,
             b.product_image photoUrl,
@@ -48,7 +51,8 @@
     <update id="set" parameterType="com.xzsd.app.shopping.entity.ShoppingInfo">
         update t_sys_shopping
         set
-            number=#{goodsShoppingNumber}
+            number       =#{goodsShoppingNumber},
+            sum_price    =#{total}
         where product_id=#{goodsId} and user_id=#{userId}
         and   is_deleted=0
     </update>

@@ -9,10 +9,10 @@
             order_code,
             order_price,
             order_status,
-            product_id,
             store_id,
             user_code,
             paid_time,
+            count,
             is_deleted,
             create_people,
             create_time,
@@ -25,10 +25,10 @@
             #{orderCode},
             #{countPrice},
             0,
-            #{goodsId},
             #{storeId},
             #{userId},
-            #{paidTime},
+            now(),
+            #{goodsNumber},
             0,
             #{createPeople},
             now(),
@@ -37,43 +37,186 @@
             0
         )
     </insert>
+<!--    查询商品详情-->
+    <select id="getGoods" parameterType="java.lang.String" resultType="com.xzsd.app.clientorder.entity.GoodsVO">
+        select
+            product_id      goodsId,
+            price_now       price
+        from
+            t_sys_product
+        where product_id=#{goodsId}
+        and is_deleted=0
+    </select>
 <!--    新增订单明细-->
-    <insert id="addOrderDetail" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
+    <insert id="addOrderDetail" parameterType="java.util.List">
         insert into t_sys_order_detail (
             order_clear_id,
-            user_code,
             order_id,
             product_id,
             goods_count,
             price_one,
+            sum_price,
             is_deleted,
             create_people,
             create_time,
             update_people,
             update_time,
             version
-        ) values (
-            #{orderClearId},
-            #{userId},
-            #{orderId},
-            #{goodsId},
-            #{goodsShoppingNumber},
-            #{price},
+        ) values
+        <foreach collection="orderDetailVOList" index="index" item="item" open="" separator="," close="">
+        (
+            #{item.orderClearId},
+            #{item.orderId},
+            #{item.goodsId},
+            #{item.goodsShoppingNumber},
+            #{item.price},
+            #{item.goodsShoppingNumber} * #{item.price},
             0,
-            #{createPeople},
+            #{item.createPeople},
             now(),
-            #{updatePeople},
+            #{item.updatePeople},
             now(),
             0
         )
+        </foreach>
     </insert>
-<!--    更新商品库存-->
-    <update id="updateStock" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
-        update t_sys_product
-        set
-            stock=stock-#{goodsShoppingNumber},
-            sale_num=sale_num+#{goodsShoppingNumber}
-        where product_id=#{goodsId}
+    <!--    更新商品库存和数量-->
+    <update id="update" parameterType="java.util.List">
+        <foreach collection="orderDetailVOList" index="index" item="item" open="" separator=";" close="">
+            update t_sys_product
+            set
+            sale_num = sale_num + #{item.goodsShoppingNumber},
+            stock = stock - #{item.goodsShoppingNumber}
+            where product_id=#{item.goodsId}
+            and is_deleted=0
+        </foreach>
+    </update>
+<!--    将商品从购物车移除-->
+    <delete id="deleteGoods" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
+       update t_sys_shopping
+       set
+        is_deleted =1
+       where product_id in
+        <foreach collection="goodsIdList" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+<!--    查询订单列表-->
+    <resultMap id="orderListResultMap" type="com.xzsd.app.clientorder.entity.OrderListVO">
+        <id column="order_id" property="orderId"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="order_price" property="countPrice"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="count" property="goodsNumber"/>
+        <collection property="goodsList" ofType="com.xzsd.app.clientorder.entity.OrderDetailVO" select="selectOrderDetail" column="order_id">
+            <id column="order_clear_id" property="orderClearId"/>
+            <result column="product_id" property="goodsId"/>
+            <result column="product_name" property="goodsName"/>
+            <result column="goods_count" property="goodsShoppingNumber"/>
+            <result column="price_one" property="price"/>
+            <result column="product_image" property="photoUrl"/>
+        </collection>
+    </resultMap>
+    <select id="listOrderByPage" parameterType="com.xzsd.app.clientorder.entity.OrderListVO" resultMap="orderListResultMap">
+        select
+            order_id,
+            order_code,
+            order_price,
+            order_status,
+            count
+        from
+            t_sys_order
+        where user_code=#{userId}
         and is_deleted=0
+        <if test="orderStatus != null and orderStatus != ''">
+            and order_status like concat('%', #{orderStatus}, '%')
+        </if>
+        order by update_time desc
+    </select>
+    <select id="selectOrderDetail" parameterType="com.xzsd.app.clientorder.entity.OrderDetailVO" resultType="com.xzsd.app.clientorder.entity.OrderDetailVO">
+        select
+            a.order_clear_id orderClearId,
+            a.product_id    goodsId,
+            b.product_name  goodsName,
+            a.goods_count   goodsShoppingNumber,
+            a.price_one     price,
+            b.product_image photoUrl
+        from
+            t_sys_order_detail a,
+            t_sys_product b
+        where
+            a.order_id=#{orderId}
+            and a.product_id=b.product_id
+            and a.is_deleted=0
+        order by a.update_time desc
+    </select>
+<!--    获取订单详情-->
+    <resultMap id="orderMap" type="com.xzsd.app.clientorder.entity.OrderStoreVO">
+        <id column="order_id" property="orderId"/>
+        <result column="order_code" property="orderCode"/>
+        <result column="order_price" property="countPrice"/>
+        <result column="order_status" property="orderStatus"/>
+        <result column="count" property="goodsNumber"/>
+        <result column="paid_time" property="createTime"/>
+        <result column="store_name" property="storeName"/>
+        <result column="address" property="address"/>
+        <collection property="goodsList" ofType="com.xzsd.app.clientorder.entity.OrderDetailVO" select="selectOrder" column="order_id">
+            <id column="order_clear_id" property="orderClearId"/>
+            <result column="product_id" property="goodsId"/>
+            <result column="product_name" property="goodsName"/>
+            <result column="goods_count" property="goodsShoppingNumber"/>
+            <result column="price_one" property="price"/>
+            <result column="product_image" property="photoUrl"/>
+        </collection>
+    </resultMap>
+    <select id="findOrderById" parameterType="java.lang.String" resultMap="orderMap">
+        SELECT
+            a.order_id,
+            a.order_code,
+            a.order_price,
+            a.order_status,
+            a.count,
+            a.paid_time,
+            CONCAT_WS( ' ', c.dict_name, d.dict_name, e.dict_name, b.store_address ) AS address,
+            b.store_name
+        FROM
+            t_sys_order a,
+            t_sys_store b,
+            dictionaries c,
+            dictionaries d,
+            dictionaries e
+        WHERE
+            a.order_id = #{orderId}
+            AND a.store_id = b.store_id
+            AND b.provice_id = c.dictionaries_id
+            AND b.city_id = d.dictionaries_id
+            AND b.area_id = e.dictionaries_id
+            AND a.is_deleted =0
+       </select>
+    <select id="selectOrder" parameterType="com.xzsd.app.clientorder.entity.OrderDetailVO" resultType="com.xzsd.app.clientorder.entity.OrderDetailVO">
+        select
+            a.order_clear_id orderClearId,
+            a.product_id    goodsId,
+            b.product_name  goodsName,
+            a.goods_count   goodsShoppingNumber,
+            a.price_one     price,
+            b.product_image photoUrl
+        from
+            t_sys_order_detail a,
+            t_sys_product b
+        where
+            a.order_id=#{orderId}
+            and a.product_id=b.product_id
+            and a.is_deleted=0
+        order by a.update_time desc
+    </select>
+<!--    客户修改订单状态-->
+    <update id="updateOrder" parameterType="java.lang.String">
+        update t_sys_order
+        set
+            order_status    =   #{orderStatus},
+            update_people   =   #{userId}
+        where order_id=#{orderId}
+        and   is_deleted=0
     </update>
 </mapper>
