@@ -219,4 +219,120 @@
         where order_id=#{orderId}
         and   is_deleted=0
     </update>
+<!--   新增评价信息-->
+    <insert id="addAppraise" parameterType="com.xzsd.app.clientorder.entity.OrderAppraise">
+        insert  into t_sys_appraise
+        (
+            appraise_id,
+            order_id,
+            appraise_content,
+            user_id,
+            product_id,
+            satrt_level,
+            is_deleted,
+            create_peoplee,
+            create_time,
+            update_people,
+            update_time,
+            version
+        )values
+        <foreach collection="appraiseList" index="index" item="item" open="" separator="," close="">
+         (
+            #{item.appraiseId},
+            #{orderId},
+            #{item.appraiseComment},
+            #{userId},
+            #{item.goodsId},
+            #{item.level},
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0
+         )
+        </foreach>
+    </insert>
+<!--    新增评价图片信息-->
+    <insert id="addAppraiseImage" parameterType="com.xzsd.app.clientorder.entity.AppraiseImage">
+        insert  into t_sys_appraise_image
+        (
+            appraise_image_id,
+            appraise_id,
+            image,
+            sort,
+            is_deleted,
+            create_peoplee,
+            create_time,
+            update_people,
+            update_time,
+            version
+        )values
+        <foreach collection="appraiseImageList" index="index" item="item" open="" separator="," close="">
+        (
+            #{item.appraiseImageId},
+            #{item.appraiseId},
+            #{item.photoUrl},
+            #{item.sort},
+            0,
+            #{createPeople},
+            now(),
+            #{updatePeople},
+            now(),
+            0
+        )
+        </foreach>
+    </insert>
+<!--    查询商品评价列表-->
+    <resultMap id="appraiseResultMap" type="com.xzsd.app.clientorder.entity.AppraiseList">
+        <id column="appraise_id" property="appraiseId"/>
+        <result column="product_id" property="goodsId"/>
+        <result column="user_account" property="userAccount"/>
+        <result column="appraise_content" property="appraiseComment"/>
+        <result column="start_level" property="level"/>
+        <result column="create_time" property="appraiseTime"/>
+        <collection property="appraisePhotoList" ofType="com.xzsd.app.clientorder.entity.AppraiseImage" select="selectAppraise" column="appraise_id">
+            <id column="appraise_image_id" property="appraiseImageId"/>
+            <result column="image" property="photoUrl"/>
+        </collection>
+    </resultMap>
+    <select id="listAppraiseByPage" parameterType="com.xzsd.app.clientorder.entity.AppraiseList" resultMap="appraiseResultMap">
+        SELECT
+            a.appraise_id,
+            a.product_id,
+            b.user_account,
+            a.appraise_content,
+            a.start_level,
+            a.create_time
+        FROM
+            t_sys_appraise a
+            LEFT JOIN t_sys_user b ON a.user_id = b.user_code
+        WHERE
+            a.product_id = #{goodsId}
+            AND a.is_deleted =0
+        <if test="appraiseGoodsLevel == 0">
+            and a.start_level in(1,2)
+        </if>
+        <if test="appraiseGoodsLevel == 1">
+            and a.start_level in(3,4)
+        </if>
+        <if test="appraiseGoodsLevel == 2">
+            and a.start_level = 5
+        </if>
+        order by a.update_time desc
+    </select>
+    <select id="selectAppraise" parameterType="com.xzsd.app.clientorder.entity.AppraiseImage" resultType="com.xzsd.app.clientorder.entity.AppraiseImage">
+        SELECT
+            a.appraise_image_id appraiseImageId,
+            a.image photoUrl
+        FROM
+            t_sys_appraise_image a,
+            t_sys_appraise b
+        WHERE
+            a.appraise_id = #{appraiseId}
+            AND a.appraise_id = b.appraise_id
+            AND a.is_deleted = 0
+        ORDER BY
+            a.sort asc
+    </select>
 </mapper>

@@ -97,8 +97,14 @@
         where is_deleted=0
         order by sort asc
     </select>
+<!--    查询热门商品展示数量-->
+    <select id="getNumber" resultType="java.lang.Integer">
+          select
+            number number
+        from t_sys_number
+    </select>
 <!--    查询热门商品-->
-    <select id="listGoodsHot" parameterType="com.xzsd.app.client.entity.GoodsHotVO" resultType="com.xzsd.app.client.entity.GoodsHotVO">
+    <select id="listGoodsHot" parameterType="java.lang.Integer" resultType="com.xzsd.app.client.entity.GoodsHotVO">
         select
         a.product_hot_id    goodsHotId,
         a.product_id        goodsId,
@@ -110,6 +116,7 @@
         left join t_sys_product b on a.product_id=b.product_id
         where a.is_deleted=0
         order by a.hot_sort asc
+        LIMIT 0,#{number}
     </select>
 <!--    查询商品详情-->
     <select id="findGoodsById" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.GoodsDetialVo">

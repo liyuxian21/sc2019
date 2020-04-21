@@ -53,15 +53,6 @@ public interface ClientDao {
      * @return
      */
     List<SlideShowInfo> listSlideshow(SlideShowInfo slideShowInfo);
-
-    /**
-     * 查询热门商品
-     *
-     * @param goodsHotVO
-     * @return
-     */
-    List<GoodsHotVO> listGoodsHot(GoodsHotVO goodsHotVO);
-
     /**
      * 查询商品详情
      *
@@ -123,4 +114,17 @@ public interface ClientDao {
      * @return
      */
     int updatePassword(UserVO userVO);
+
+    /**
+     * 查询热门商品展示数量
+     * @return
+     */
+    int getNumber();
+
+    /**
+     * 查询热门商品
+     * @param number
+     * @return
+     */
+    List<GoodsHotVO> listGoodsHot(int number);
 }

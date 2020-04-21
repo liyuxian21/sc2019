@@ -76,12 +76,13 @@ public class ClientService {
     /**
      * 查询热门商品
      *
-     * @param goodsHotVO
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse listGoodsHot(GoodsHotVO goodsHotVO) {
-        List<GoodsHotVO> goodsHotList = clientDao.listGoodsHot(goodsHotVO);
+    public AppResponse listGoodsHot() {
+        //查询热门商品展示数量
+        int number=Integer.valueOf(clientDao.getNumber());
+        List<GoodsHotVO> goodsHotList = clientDao.listGoodsHot(number);
         return AppResponse.success("查询成功", goodsHotList);
     }
 

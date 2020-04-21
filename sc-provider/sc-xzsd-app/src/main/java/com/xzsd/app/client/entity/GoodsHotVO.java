@@ -31,18 +31,6 @@ public class GoodsHotVO {
      * 商品图片路径
      */
     private String photoUrl;
-    /**
-     * 热门商品展示数量
-     */
-    private String number;
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
 
     public String getGoodsHotId() {
         return goodsHotId;

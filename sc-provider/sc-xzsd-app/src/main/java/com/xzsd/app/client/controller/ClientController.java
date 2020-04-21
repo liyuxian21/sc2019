@@ -58,13 +58,12 @@ public class ClientController {
 
     /**
      * 查询热门商品
-     * @param goodsHotVO
      * @return
      */
     @PostMapping("listGoodsHot")
-    public AppResponse listGoodsHot(GoodsHotVO goodsHotVO) {
+    public AppResponse listGoodsHot() {
         try {
-            return clientService.listGoodsHot(goodsHotVO);
+            return clientService.listGoodsHot();
         } catch (Exception e) {
             logger.error("商品查询失败", e);
             System.out.printf(e.toString());
