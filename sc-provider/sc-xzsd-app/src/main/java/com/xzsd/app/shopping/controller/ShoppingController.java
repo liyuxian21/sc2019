@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * 购物车操作
+ *
  * @author liyuxian
  * @time 2020-04-13
  */
@@ -26,6 +27,7 @@ public class ShoppingController {
 
     /**
      * 新增购物车
+     *
      * @param shoppingInfo
      * @return
      */
@@ -42,6 +44,7 @@ public class ShoppingController {
 
     /**
      * 查询购物车列表
+     *
      * @param shoppingListVO
      * @return
      */
@@ -58,6 +61,7 @@ public class ShoppingController {
 
     /**
      * 购买商品数量设置
+     *
      * @param shoppingInfo
      * @return
      */
@@ -74,14 +78,15 @@ public class ShoppingController {
 
     /**
      * 删除购物车里的商品
+     *
      * @param goodsId
      * @param userId
      * @return
      */
     @PostMapping("deleteShopping")
-    public AppResponse deleteShopping(String goodsId,String userId) {
+    public AppResponse deleteShopping(String goodsId, String userId) {
         try {
-            return shoppingService.deleteShopping(goodsId,userId);
+            return shoppingService.deleteShopping(goodsId, userId);
         } catch (Exception e) {
             logger.error("删除失败", e);
             System.out.println(e.toString());

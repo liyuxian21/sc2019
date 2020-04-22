@@ -22,7 +22,7 @@ public class ShoppingListVO {
     /**
      * 商品价格（在售价）
      */
-    private String price;
+    private String inPrice;
     /**
      * 商品图片路径
      */
@@ -68,12 +68,12 @@ public class ShoppingListVO {
         this.goodsName = goodsName;
     }
 
-    public String getPrice() {
-        return price;
+    public String getInPrice() {
+        return inPrice;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setInPrice(String inPrice) {
+        this.inPrice = inPrice;
     }
 
     public String getPhotoUrl() {

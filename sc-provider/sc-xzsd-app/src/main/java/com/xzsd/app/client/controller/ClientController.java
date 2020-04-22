@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 
 /**
  * 客户端注册，商品查询，个人信息修改以及查询
+ *
  * @author liyuxian
  * @time 2020-04-12
  */
@@ -26,6 +27,7 @@ public class ClientController {
 
     /**
      * 注册
+     *
      * @param registerInfo
      * @return
      */
@@ -42,6 +44,7 @@ public class ClientController {
 
     /**
      * 查询轮播图
+     *
      * @param slideShowInfo
      * @return
      */
@@ -58,6 +61,7 @@ public class ClientController {
 
     /**
      * 查询热门商品
+     *
      * @return
      */
     @PostMapping("listGoodsHot")
@@ -73,13 +77,14 @@ public class ClientController {
 
     /**
      * 查询商品详情
+     *
      * @param goodsId
      * @return
      */
     @PostMapping("findGoodsById")
-    public AppResponse findGoodsById(String goodsId,String userId) {
+    public AppResponse findGoodsById(String goodsId, String userId) {
         try {
-            return clientService.findGoodsById(goodsId,userId);
+            return clientService.findGoodsById(goodsId, userId);
         } catch (Exception e) {
             logger.error("商品查询错误", e);
             System.out.println(e.toString());
@@ -89,6 +94,7 @@ public class ClientController {
 
     /**
      * 查询商品一级分类
+     *
      * @param goodsFirstClassVO
      * @return
      */
@@ -105,6 +111,7 @@ public class ClientController {
 
     /**
      * 查询商品二级分类
+     *
      * @param goodsSecondClassVO
      * @param parentClassCode
      * @return
@@ -112,7 +119,7 @@ public class ClientController {
     @PostMapping("secondClassGoodsList")
     public AppResponse secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO, String parentClassCode) {
         try {
-            return clientService.secondClassGoodsList(goodsSecondClassVO,parentClassCode);
+            return clientService.secondClassGoodsList(goodsSecondClassVO, parentClassCode);
         } catch (Exception e) {
             logger.error("查询商品二级分类列表错误", e);
             System.out.println(e.toString());
@@ -122,6 +129,7 @@ public class ClientController {
 
     /**
      * 查询登录用户详情
+     *
      * @param userId
      * @return
      */
@@ -138,6 +146,7 @@ public class ClientController {
 
     /**
      * 修改密码
+     *
      * @return
      */
     @PostMapping("updatePassword")
@@ -153,16 +162,34 @@ public class ClientController {
 
     /**
      * 修改店铺邀请码
+     *
      * @param userId
      * @param storeInviteCode
      * @return
      */
     @PostMapping("updateStoreInviteCode")
-    public AppResponse updateStoreInviteCode(String userId,String storeInviteCode) {
+    public AppResponse updateStoreInviteCode(String userId, String storeInviteCode) {
         try {
-            return clientService.updateStoreInviteCode(userId,storeInviteCode);
+            return clientService.updateStoreInviteCode(userId, storeInviteCode);
         } catch (Exception e) {
             logger.error("修改错误", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+
+    /**
+     * 查询登录app人的角色
+     *
+     * @param roleInfo
+     * @return
+     */
+    @PostMapping("role")
+    public AppResponse role(RoleInfo roleInfo) {
+        try {
+            return clientService.role(roleInfo);
+        } catch (Exception e) {
+            logger.error("查询错误", e);
             System.out.println(e.toString());
             throw e;
         }

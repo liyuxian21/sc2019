@@ -13,14 +13,12 @@
             a.user_code userId,
             a.version       version
         FROM
-            t_sys_user a,
-            t_sys_client b,
-            t_sys_store c
+            t_sys_user a
+        LEFT JOIN t_sys_client b ON a.user_code = b.user_id
+        LEFT JOIN t_sys_store c ON b.invite_code = c.invite_code
         WHERE
             a.is_deleted = 0
         AND a.role = 3
-        AND a.user_code = b.user_id
-        AND b.invite_code = c.invite_code
         <if test="clientName != null and clientName != ''">
             and a.user_name like concat('%', #{clientName}, '%')
         </if>

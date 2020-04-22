@@ -177,7 +177,7 @@
             a.order_status,
             a.count,
             a.paid_time,
-            CONCAT_WS( ' ', c.dict_name, d.dict_name, e.dict_name, b.store_address ) AS address,
+            CONCAT_WS( '', c.dict_name, d.dict_name, e.dict_name, b.store_address ) AS address,
             b.store_name
         FROM
             t_sys_order a,

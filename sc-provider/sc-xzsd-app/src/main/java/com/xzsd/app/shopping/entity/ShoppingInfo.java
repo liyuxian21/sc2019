@@ -24,13 +24,9 @@ public class ShoppingInfo {
      */
     private String goodsShoppingNumber;
     /**
-     * 购买商品的总价
-     */
-    private String total;
-    /**
      * 商品在售价
      */
-    private String price;
+    private String inPrice;
     /**
      * 删除标记 0未删 1 已删
      */
@@ -56,20 +52,12 @@ public class ShoppingInfo {
      */
     private String version;
 
-    public String getTotal() {
-        return total;
+    public String getInPrice() {
+        return inPrice;
     }
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
+    public void setInPrice(String inPrice) {
+        this.inPrice = inPrice;
     }
 
     public String getShoppingId() {

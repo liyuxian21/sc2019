@@ -7,20 +7,24 @@ package com.xzsd.app.store.entity;
  */
 public class DriverInfo{
     /**
+     * 用户id
+     */
+    private String userId;
+    /**
      * 司机姓名
      */
-    private String driveName;
+    private String driverName;
     /**
      * 司机电话
      */
     private String driverPhone;
 
-    public String getDriveName() {
-        return driveName;
+    public String getDriverName() {
+        return driverName;
     }
 
-    public void setDriveName(String driveName) {
-        this.driveName = driveName;
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
     }
 
     public String getDriverPhone() {
@@ -29,5 +33,13 @@ public class DriverInfo{
 
     public void setDriverPhone(String driverPhone) {
         this.driverPhone = driverPhone;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

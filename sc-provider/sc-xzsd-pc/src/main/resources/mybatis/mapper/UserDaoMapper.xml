@@ -83,10 +83,10 @@
     <delete id="deleteUser" parameterType="com.xzsd.pc.user.entity.UserInfo">
         update t_sys_user
         set
-        is_deleted = 1,
-        update_time = now(),
-        update_people =#{userId1},
-        version = version+1
+            is_deleted = 1,
+            update_time = now(),
+            update_people =#{userId1},
+            version = version+1
         where user_code in
         <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
             #{item}
@@ -113,20 +113,22 @@
     </select>
     <!--用户列表查询-->
     <select id="listUserByPage" parameterType="com.xzsd.pc.user.entity.UserList" resultType="com.xzsd.pc.user.entity.UserList">
-        select
-            a.user_account  userAccount,
-            a.user_name     userName,
-            a.sex           userSex,
-            a.phone         phone,
-            a.email         email,
-            a.id_card       idCard,
-            a.role          role,
-            a.user_code     userId,
-            a.version       version
-        from
-            t_sys_user a
-        where
-            a.is_deleted=0 and a.role=0 or a.role=1
+        SELECT
+            user_account    userAccount,
+            user_name       userName,
+            sex             userSex,
+            phone           phone,
+            email           email,
+            id_card         idCard,
+            role            role,
+            user_code       userId,
+            version          version
+        FROM
+            t_sys_user
+        WHERE
+            is_deleted = 0
+        AND role = 0
+        OR role =1
         <if test="userName != null and userName != ''">
             and a.user_name like concat('%', #{userName}, '%')
         </if>

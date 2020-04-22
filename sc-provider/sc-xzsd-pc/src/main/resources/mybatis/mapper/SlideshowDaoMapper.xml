@@ -59,15 +59,17 @@
     </update>
 <!--    查询轮播图列表-->
     <select id="listSlideshowByPage" parameterType="com.xzsd.pc.slideshow.entity.SlideshowVO" resultType="com.xzsd.pc.slideshow.entity.SlideshowVO">
-        select
-            a.image_id      slideshowId,
-            a.image_url     slideshowUrl,
-            a.image_status  slideshowStatus,
-            a.start_time    startTime,
-            a.end_time       endTime,
-            a.sort           sort
-        from t_sys_slideshow a
-        where is_deleted=0
+        SELECT
+            image_id slideshowId,
+            image_url slideshowUrl,
+            image_status slideshowStatus,
+            start_time startTime,
+            end_time endTime,
+            sort sort
+        FROM
+            t_sys_slideshow
+        WHERE
+            is_deleted = 0
         <if test="slideshowStatus != null and slideshowStatus != ''">
             and a.image_status like concat('%', #{slideshowStatus}, '%')
         </if>
@@ -88,21 +90,20 @@
     </delete>
 <!--    查询商品-->
     <select id="goodsListVOyPage" parameterType="com.xzsd.pc.slideshow.entity.GoodsListVO" resultType="com.xzsd.pc.slideshow.entity.GoodsListVO">
-        select
-            a.product_id          goodsId,
-            b.class_name          classFirstName,
-            c.class_name          classSecondName,
-            a.product_name         goodsName,
-            a.product_code         goodsCode,
-            a.product_status       goodsStatus
-        from
-            t_sys_product a,
-            t_sys_product_class b,
-            t_sys_product_class c
-        where a.is_deleted=0
-        and a.product_status=1
-        and a.class_first_id=b.class_id
-        and a.class_second_id=c.class_id
+        SELECT
+            a.product_id goodsId,
+            b.class_name classFirstName,
+            c.class_name classSecondName,
+            a.product_name goodsName,
+            a.product_code goodsCode,
+            a.product_status goodsStatus
+        FROM
+            t_sys_product a
+            LEFT JOIN t_sys_product_class b ON a.class_first_id = b.class_id
+            LEFT JOIN t_sys_product_class c ON a.class_second_id = c.class_id
+        WHERE
+        a.is_deleted = 0
+        AND a.product_status = 1
         <if test="goodsName != null and goodsName != ''">
             and a.product_name like concat('%',#{goodsName},'%')
         </if>
@@ -111,5 +112,4 @@
         </if>
         order by a.update_time desc
     </select>
-
 </mapper>

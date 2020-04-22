@@ -221,4 +221,12 @@
             invite_code=#{storeInviteCode}
         where user_id=#{userId}
     </update>
+<!--    查询登录角色-->
+    <select id="roleById" parameterType="com.xzsd.app.client.entity.RoleInfo" resultType="com.xzsd.app.client.entity.RoleInfo">
+        select
+          role role
+        from t_sys_user
+        where user_code=#{userId}
+        and is_deleted=0
+    </select>
 </mapper>

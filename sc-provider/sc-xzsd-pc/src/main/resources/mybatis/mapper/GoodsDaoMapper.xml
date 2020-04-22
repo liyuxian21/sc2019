@@ -95,26 +95,26 @@
 
     <!--获取商品详情-->
     <select id="findGoodsById" parameterType="java.lang.String" resultType="com.xzsd.pc.goods.entity.GoodsDetail">
-        select
-           a.product_name  goodsName,
-           b.class_name    classFirstName,
-           c.class_name    classSecondName,
-           a.book_number   bookNumber,
-           a.message       adWords,
-           a.product_image  photoUrl,
-           a.press          press,
-           a.author         author,
-           a.price          costPrice,
-           a.stock          store,
-           a.price_now      inPrice,
-           a.product_idc    goodsIntroduction
-        from
-            t_sys_product a,
-            t_sys_product_class b,
-            t_sys_product_class c
-        where product_id=#{goodsId}
-        and a.is_deleted=0 and a.class_first_id=b.class_id and  a.class_second_id=c.class_id
-
+        SELECT
+            a.product_name goodsName,
+            b.class_name classFirstName,
+            c.class_name classSecondName,
+            a.book_number bookNumber,
+            a.message adWords,
+            a.product_image photoUrl,
+            a.press press,
+            a.author author,
+            a.price costPrice,
+            a.stock store,
+            a.price_now inPrice,
+            a.product_idc goodsIntroduction
+        FROM
+            t_sys_product a
+            LEFT JOIN t_sys_product_class b ON a.class_first_id = b.class_id
+            LEFT JOIN t_sys_product_class c ON a.class_second_id = c.class_id
+        WHERE
+            a.product_id = #{goodsId}
+            AND a.is_deleted = 0
     </select>
     <!--商品列表-->
     <select id="listGoodsByPage" parameterType="com.xzsd.pc.goods.entity.GoodsList" resultType="com.xzsd.pc.goods.entity.GoodsList">
@@ -185,7 +185,7 @@
             class_id classId,
             class_name className
         from t_sys_product_class
-            where parent_class_code=#{parentClassCode} and is_parent=1
+        where parent_class_code=#{parentClassCode} and is_parent=1
     </select>
 
 </mapper>

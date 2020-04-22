@@ -20,7 +20,7 @@
             b.store_name    storeName,
             b.store_num     storeCode,
             b.store_id      storeId,
-            CONCAT_WS( ' ', c.dict_name, d.dict_name, e.dict_name, b.store_address ) AS address
+            CONCAT_WS( '', c.dict_name, d.dict_name, e.dict_name, b.store_address ) AS address
         FROM
             t_sys_user a,
             t_sys_store b,
@@ -31,7 +31,7 @@
         WHERE
             f.user_id = #{userId}
             AND f.area_id=b.area_id
-						AND b.user_id=a.user_code
+			AND b.user_id=a.user_code
             AND b.provice_id = c.dictionaries_id
             AND b.city_id = d.dictionaries_id
             AND b.area_id = e.dictionaries_id

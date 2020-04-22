@@ -127,4 +127,11 @@ public interface ClientDao {
      * @return
      */
     List<GoodsHotVO> listGoodsHot(int number);
+
+    /**
+     * 查询登录角色
+     * @param roleInfo
+     * @return
+     */
+    RoleInfo roleById(RoleInfo roleInfo);
 }
