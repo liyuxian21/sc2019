@@ -22,7 +22,7 @@ public interface DriverDao {
      * @param driverId
      * @return
      */
-    DriverDetailVo findDriverDetailsById(String driverId);
+    List<DriverDetailVo> findDriverDetailsById(String driverId);
 
     /**
      * 新增司机
@@ -81,4 +81,6 @@ public interface DriverDao {
      * @return
      */
     int countUserPhone(DriverInfo driverInfo);
+
+
 }

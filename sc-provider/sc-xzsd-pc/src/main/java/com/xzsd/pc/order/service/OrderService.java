@@ -26,7 +26,7 @@ public class OrderService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findOrderDetailsById(String orderId) {
 //        获取订单详情
-        OrderAllVO orderAllVO=orderDao.findOrderDetailsById(orderId);
+        List<OrderAllVO> orderAllVO=orderDao.findOrderDetailsById(orderId);
         return AppResponse.success("查询成功",orderAllVO);
     }
 

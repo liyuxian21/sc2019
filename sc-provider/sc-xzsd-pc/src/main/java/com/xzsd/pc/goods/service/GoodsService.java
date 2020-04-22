@@ -48,6 +48,7 @@ public class GoodsService {
 //       给商品编码和商品id设置随机数
         goodsInfo.setGoodsCode(StringUtil.getCommonCode(2));
         goodsInfo.setGoodsId(StringUtil.getCommonCode(2));
+        goodsInfo.setSaleNum("0");
         // 新增商品
         int count = goodsDao.addGoods(goodsInfo);
         if (0 == count) {

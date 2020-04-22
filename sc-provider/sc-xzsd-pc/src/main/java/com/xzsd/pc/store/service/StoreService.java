@@ -97,7 +97,7 @@ public class StoreService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findStoreDetailsById(String storeId) {
 //        查询门店详情
-        StoreDetialVO storeDetialVO = storeDao.findStoreDetailsById(storeId);
+        List<StoreDetialVO> storeDetialVO = storeDao.findStoreDetailsById(storeId);
         return AppResponse.success("查询成功", storeDetialVO);
 
     }

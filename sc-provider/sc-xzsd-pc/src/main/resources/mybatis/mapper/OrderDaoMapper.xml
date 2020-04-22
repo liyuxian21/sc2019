@@ -16,7 +16,9 @@
             t_sys_order a,
             t_sys_order_detail b,
             t_sys_product c
-        where a.order_id=#{orderId} and a.order_id=b.order_id and b.product_id=c.product_id
+        where a.order_id=#{orderId}
+        and a.order_id=b.order_id
+        and b.product_id=c.product_id
     </select>
 
     <!--查询订单列表-->

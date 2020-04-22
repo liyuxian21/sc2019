@@ -14,8 +14,7 @@ public interface OrderDao {
      * @param orderId
      * @return
      */
-    OrderAllVO findOrderDetailsById(String orderId);
-
+    List<OrderAllVO> findOrderDetailsById(String orderId);
     /**
      * 查询订单列表
      * @param orderListVo

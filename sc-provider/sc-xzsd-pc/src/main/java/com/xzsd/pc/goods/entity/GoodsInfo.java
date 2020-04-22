@@ -37,6 +37,10 @@ public class GoodsInfo {
      */
     private String classSecondId;
     /**
+     * 销售数量
+     */
+    private String saleNum;
+    /**
      * 书号
      */
     private String bookNumber;
@@ -104,6 +108,14 @@ public class GoodsInfo {
      * 版本号
      */
     private String version;
+
+    public String getSaleNum() {
+        return saleNum;
+    }
+
+    public void setSaleNum(String saleNum) {
+        this.saleNum = saleNum;
+    }
 
     public String getGoodsName() {
         return goodsName;

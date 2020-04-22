@@ -58,8 +58,7 @@ public interface StoreDao {
      * @param storeId
      * @return
      */
-    StoreDetialVO findStoreDetailsById(String storeId);
-
+    List<StoreDetialVO> findStoreDetailsById(String storeId);
     /**
      * 修改门店
      * @param storeInfo
@@ -88,4 +87,6 @@ public interface StoreDao {
      * @return
      */
     int deleteStore(@Param("listId") List<String> listId, @Param("userId") String userId);
+
+
 }
