@@ -45,7 +45,7 @@ public class StoreService {
      * @return
      */
     public AppResponse listStoreOrder(OrderVO orderVO) {
-//        查询订单列表
+        //查询订单列表
         List<OrderVO> orderVOList = storeDao.listStoreOrderByPage(orderVO);
         return AppResponse.success("查询成功",getPageInfo(orderVOList));
     }
