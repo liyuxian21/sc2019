@@ -36,9 +36,21 @@ public class GoodsDetialVo {
      */
     private String storeId;
     /**
+     * 销售量
+     */
+    private String saleNum;
+    /**
      * 绑定门店名称
      */
     private String storeName;
+
+    public String getSaleNum() {
+        return saleNum;
+    }
+
+    public void setSaleNum(String saleNum) {
+        this.saleNum = saleNum;
+    }
 
     public String getUserId() {
         return userId;

@@ -125,6 +125,7 @@
             a.product_idc     goodsIntroduction,
             a.price           costPrice,
             a.price_now       inPrice,
+            a.sale_num        saleNum,
             a.product_image   photoUrl,
             b.store_id        storeId,
             b.store_name      storeName

@@ -52,14 +52,17 @@ public interface GoodsClassDao {
      * @return
      */
     List<GoodsClassList> selectAllMenus(GoodsClassList goodsClassList);
+    /**
+     * 统计删除分类下的二级分类
+     * @param classId
+     * @return
+     */
+    int countSecond(String classId);
 
     /**
      * 删除商品分类
-     *
-     * @param listId
-     * @param userId
+     * @param goodsClassInfo
      * @return
      */
-    int deleteGoodsClass(@Param("listId") List<String> listId, @Param("userId") String userId);
-
+    int deleteGoodsClass(GoodsClassInfo goodsClassInfo);
 }

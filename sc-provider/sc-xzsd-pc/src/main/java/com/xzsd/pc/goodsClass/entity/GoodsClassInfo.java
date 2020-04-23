@@ -1,6 +1,5 @@
 package com.xzsd.pc.goodsClass.entity;
 
-
 /**
  * 商品分类实体类
  *

@@ -94,33 +94,34 @@ public class GoodsClassService {
 
     /**
      * 查询商品分类
+     *
      * @param goodsClassList
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse selectAllMenus(GoodsClassList goodsClassList){
-        List<GoodsClassList> goodsClassListList=goodsClassDao.selectAllMenus(goodsClassList);
-        return AppResponse.success("查询成功",goodsClassListList);
+    public AppResponse selectAllMenus(GoodsClassList goodsClassList) {
+        List<GoodsClassList> goodsClassListList = goodsClassDao.selectAllMenus(goodsClassList);
+        return AppResponse.success("查询成功", goodsClassListList);
     }
+
     /**
      * 删除商品分类
      *
-     * @param classId
-     * @param userId
+     * @param goodsClassInfo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse deleteGoodsClass(String classId, String userId) {
-        List<String> listId = Arrays.asList(classId.split(","));
-//        删除商品
-        int count = goodsClassDao.deleteGoodsClass(listId, userId);
+    public AppResponse deleteGoodsClass(GoodsClassInfo goodsClassInfo) {
+        //判断分类下是否有二级分类
+        int countSecond=goodsClassDao.countSecond(goodsClassInfo.getClassId());
+        if (0 != countSecond){
+            return AppResponse.success("不能删除该商品分类，该分类下有二级分类！");
+        }
+        //删除商品分类
+        int count = goodsClassDao.deleteGoodsClass(goodsClassInfo);
         if (0 == count) {
-            return AppResponse.versionError("删除失败，请重试！");
+            return AppResponse.versionError("删除失败，所删除商品已经不存在，请重试！");
         }
         return AppResponse.success("删除成功！");
-
-
     }
-
-
 }

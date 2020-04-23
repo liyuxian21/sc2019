@@ -81,19 +81,23 @@
             <result column="name2" property="className"/>
         </collection>
     </resultMap>
-
+<!--统计一级分类下的二级分类数量-->
+    <select id="countSecond" parameterType="java.lang.String" resultType="int">
+        select count(class_id)
+        from
+            t_sys_product_class
+        where parent_class_code=#{classId}
+        and is_deleted=0
+    </select>
     <!--    删除商品分类-->
-    <delete id="deleteGoodsClass" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassDetail">
+    <update id="deleteGoodsClass" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassInfo">
         update t_sys_product_class
         set
-        is_deleted=1,
-        update_people = #{userId},
-        update_time = now(),
-        version =version+1
-        where class_id in
-        <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
-            #{item}
-        </foreach>
-    </delete>
-
+            is_deleted=1,
+            update_people = #{updatePeople},
+            update_time = now(),
+            version =version+1
+        where class_id =#{classId}
+        and is_deleted=0
+    </update>
 </mapper>

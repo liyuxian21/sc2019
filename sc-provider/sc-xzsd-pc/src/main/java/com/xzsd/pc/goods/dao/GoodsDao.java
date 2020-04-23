@@ -79,4 +79,8 @@ public interface GoodsDao {
      * @return
      */
     int countIsbn(GoodsInfo goodsInfo);
+
+    int countSlideshow(@Param("listId") List<String> listId);
+
+    int countHot(@Param("listId") List<String> listId);
 }

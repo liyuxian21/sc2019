@@ -2,6 +2,7 @@ package com.xzsd.pc.goodsClass.controller;
 
 import com.neusoft.core.restful.AppResponse;
 import com.neusoft.security.client.utils.SecurityUtils;
+import com.xzsd.pc.goods.entity.GoodsClass;
 import com.xzsd.pc.goodsClass.entity.GoodsClassInfo;
 import com.xzsd.pc.goodsClass.entity.GoodsClassList;
 import com.xzsd.pc.goodsClass.service.GoodsClassService;
@@ -108,11 +109,12 @@ public class GoodsClassController {
      * @return
      */
     @PostMapping("deleteGoodsClass")
-    public AppResponse deleteGoodsClass(String classId){
+    public AppResponse deleteGoodsClass(GoodsClassInfo goodsClassInfo){
         try{
             //获取用户id
             String userId = SecurityUtils.getCurrentUserId();
-            return goodsClassService.deleteGoodsClass(classId,userId);
+            goodsClassInfo.setUpdatePeople(userId);
+            return goodsClassService.deleteGoodsClass(goodsClassInfo);
         }catch(Exception e){
             logger.error("删除商品分类错误",e);
             System.out.println(e.toString());

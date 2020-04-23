@@ -41,7 +41,7 @@ public class GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addGoods(GoodsInfo goodsInfo) {
 //        统计书号是否存在
-        int countIsbn=goodsDao.countIsbn(goodsInfo);
+        int countIsbn = goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
             return AppResponse.success("书号已存在，请重新输入！");
         }
@@ -68,7 +68,7 @@ public class GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateGoodsById(GoodsInfo goodsInfo) {
         //        统计书号是否存在
-        int countIsbn=goodsDao.countIsbn(goodsInfo);
+        int countIsbn = goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
             return AppResponse.success("书号已存在，请重新输入！");
         }
@@ -84,8 +84,8 @@ public class GoodsService {
     /**
      * 删除商品
      *
-     * @param userId
-     * @param userId
+     * @param goodsId 商品id
+     * @param userId  操作人id
      * @return
      * @auhtor liyuxian
      * @time 2020-03-25
@@ -93,13 +93,19 @@ public class GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteGoods(String goodsId, String userId) {
         List<String> listId = Arrays.asList(goodsId.split(","));
-        AppResponse appResponse = AppResponse.success("删除成功");
+        int countSlideshow = goodsDao.countSlideshow(listId);
+        int countHot = goodsDao.countHot(listId);
+        if (countSlideshow != 0) {
+            return AppResponse.success("所删除商品存在轮播图或者热门商品图，不能删除！");
+        } else if (countHot != 0) {
+            return AppResponse.success("所删除商品存在轮播图或者热门商品图，不能删除！");
+        }
         //删除商品
         int count = goodsDao.deleteGoods(listId, userId);
         if (0 == count) {
             return AppResponse.versionError("删除失败，请重试！");
         }
-        return appResponse;
+        return AppResponse.success("删除成功");
     }
 
     /**
@@ -133,6 +139,7 @@ public class GoodsService {
         return AppResponse.success("查询成功", pageData);
 
     }
+
     /**
      * 设置商品 1上架、0下架
      *
@@ -140,11 +147,11 @@ public class GoodsService {
      * @time 020-03-26
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse status(String goodsId,String userId,String goodsStatus) {
+    public AppResponse status(String goodsId, String userId, String goodsStatus) {
         List<String> listId1 = Arrays.asList(goodsId.split(","));
         AppResponse appResponse = AppResponse.success("修改成功");
         //修改商品状态
-        int count = goodsDao.status(listId1, userId,goodsStatus);
+        int count = goodsDao.status(listId1, userId, goodsStatus);
         if (0 == count) {
             return AppResponse.versionError("修改失败，请重试！");
         }
@@ -160,21 +167,23 @@ public class GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse firstClassGoodsList(GoodsClass goodsClass) {
         List<GoodsClass> goodsClassList = goodsDao.firstClassGoodsList(goodsClass);
-        return AppResponse.success("查询成功！",goodsClassList);
+        return AppResponse.success("查询成功！", goodsClassList);
     }
+
     /**
      * 商品二级分类查询
+     *
      * @author liyuxian
      * @time 020-03-26
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse secondClassGoodsList(GoodsClass goodsClass,String parentClassCode) {
+    public AppResponse secondClassGoodsList(GoodsClass goodsClass, String parentClassCode) {
 //          判断是否有父类编码
-        if (parentClassCode == null){
+        if (parentClassCode == null) {
             return AppResponse.notFound("查询为空");
         }
-        List<GoodsClass> goodsClassList = goodsDao.secondClassGoodsList(goodsClass,parentClassCode);
-        return AppResponse.success("查询成功！",goodsClassList);
+        List<GoodsClass> goodsClassList = goodsDao.secondClassGoodsList(goodsClass, parentClassCode);
+        return AppResponse.success("查询成功！", goodsClassList);
     }
 }
 
