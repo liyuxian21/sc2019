@@ -127,8 +127,7 @@
             t_sys_user
         WHERE
             is_deleted = 0
-        AND role = 0
-        OR role =1
+        AND (role = 0 OR role =1)
         <if test="userName != null and userName != ''">
             and a.user_name like concat('%', #{userName}, '%')
         </if>

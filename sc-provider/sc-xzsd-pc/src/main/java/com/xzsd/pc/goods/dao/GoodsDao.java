@@ -56,6 +56,7 @@ public interface GoodsDao {
      * @return
      */
     List<GoodsList> listGoodsByPage(GoodsList goodsList);
+
     /**
      * 商品状态修改 0下架 1 上架
      *
@@ -64,23 +65,38 @@ public interface GoodsDao {
      * @return
      */
     int status(@Param("listId1") List<String> listId1, @Param("userId") String userId, @Param("goodsStatus") String goodsStatus);
+
     /**
      * 查询所有商品一级分类
      */
     List<GoodsClass> firstClassGoodsList(GoodsClass goodsClass);
+
     /**
      * 查询所有商品二级分类
      */
-    List<GoodsClass> secondClassGoodsList(GoodsClass goodsClass,@Param("parentClassCode") String parentClassCode);
+    List<GoodsClass> secondClassGoodsList(GoodsClass goodsClass, @Param("parentClassCode") String parentClassCode);
 
     /**
      * 统计isbn书号
+     *
      * @param goodsInfo
      * @return
      */
     int countIsbn(GoodsInfo goodsInfo);
 
+    /**
+     * 统计轮播图id
+     *
+     * @param listId
+     * @return
+     */
     int countSlideshow(@Param("listId") List<String> listId);
 
+    /**
+     * 统计热门商品id
+     *
+     * @param listId
+     * @return
+     */
     int countHot(@Param("listId") List<String> listId);
 }

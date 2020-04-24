@@ -93,6 +93,7 @@ public class GoodsService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteGoods(String goodsId, String userId) {
         List<String> listId = Arrays.asList(goodsId.split(","));
+        //统计轮播图和热门商品图的商品id
         int countSlideshow = goodsDao.countSlideshow(listId);
         int countHot = goodsDao.countHot(listId);
         if (countSlideshow != 0) {

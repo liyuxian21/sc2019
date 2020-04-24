@@ -71,7 +71,7 @@
         WHERE
             is_deleted = 0
         <if test="slideshowStatus != null and slideshowStatus != ''">
-            and a.image_status like concat('%', #{slideshowStatus}, '%')
+            and image_status like concat('%', #{slideshowStatus}, '%')
         </if>
         order by sort asc
     </select>

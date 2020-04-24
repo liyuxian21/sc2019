@@ -2,6 +2,7 @@ package com.xzsd.pc.order.entity;
 
 /**
  * 设计详情的所有实体类
+ *
  * @author liyuxian
  * @time 2020-04-08
  */
@@ -10,6 +11,10 @@ public class OrderAllVO {
      * 订单id
      */
     private String orderId;
+    /**
+     * 订单编码
+     */
+    private String orderCode;
     /**
      * 商品名称
      */
@@ -34,6 +39,14 @@ public class OrderAllVO {
      * 购买数量
      */
     private String buyNumber;
+
+    public String getOrderCode() {
+        return orderCode;
+    }
+
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
 
     public String getOrderId() {
         return orderId;
