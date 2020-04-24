@@ -129,10 +129,10 @@
             is_deleted = 0
         AND (role = 0 OR role =1)
         <if test="userName != null and userName != ''">
-            and a.user_name like concat('%', #{userName}, '%')
+            and user_name like concat('%', #{userName}, '%')
         </if>
         <if test="userAccount != null and userAccount != ''">
-            and a.user_account like concat('%',#{userAccount},'%')
+            and user_account like concat('%',#{userAccount},'%')
         </if>
         order by update_time desc
     </select>
