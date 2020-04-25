@@ -15,21 +15,23 @@ public class DriverService {
 
     /**
      * 查询司机个人信息详情
-     * @param userId
+     *
+     * @param currentUserId
      * @return
      */
-    public AppResponse driverShopPerson(String userId){
-        DriverPersonVO driverPersonVO=driverDao.findDriverById(userId);
-        return AppResponse.success("查询成功！",driverPersonVO);
+    public AppResponse driverShopPerson(String currentUserId) {
+        DriverPersonVO driverPersonVO = driverDao.findDriverById(currentUserId);
+        return AppResponse.success("查询成功！", driverPersonVO);
     }
 
     /**
      * 查询司机所负责门店信息
+     *
      * @param driverStoreVO
      * @return
      */
     public AppResponse findDriverStoreById(DriverStoreVO driverStoreVO) {
-        DriverStoreVO driver=driverDao.findDriverStoreById(driverStoreVO);
-        return AppResponse.success("查询成功！",driver);
+        DriverStoreVO driver = driverDao.findDriverStoreById(driverStoreVO);
+        return AppResponse.success("查询成功！", driver);
     }
 }

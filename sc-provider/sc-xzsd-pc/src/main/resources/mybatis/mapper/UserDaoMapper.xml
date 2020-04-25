@@ -8,7 +8,7 @@
             role        role,
             user_image  userPhoto
         from t_sys_user
-        where user_code=#{userId}
+        where user_code=#{currentUserId}
         and is_deleted=0
     </select>
     <!--统计用户账户数量-->
@@ -133,6 +133,9 @@
         </if>
         <if test="userAccount != null and userAccount != ''">
             and user_account like concat('%',#{userAccount},'%')
+        </if>
+        <if test="role != null and  role != ''">
+            and role = #{role}
         </if>
         order by update_time desc
     </select>

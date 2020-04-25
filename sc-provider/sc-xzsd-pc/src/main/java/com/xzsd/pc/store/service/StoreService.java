@@ -24,21 +24,21 @@ public class StoreService {
 
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addStore(StoreInfo storeInfo) {
-//             统计店长用户id
+        //统计店长用户id
         int countUserId = storeDao.countUserId(storeInfo);
-//              统计门店电话
+        //统计门店电话
         int countPhone = storeDao.countPhone(storeInfo);
         if (0 != countUserId) {
-            return AppResponse.success("新增店长用户已经存在，请重新选择！");
+            return AppResponse.versionError("新增店长用户已经存在，请重新选择！");
         } else if (0 != countPhone) {
-            return AppResponse.success("新增联系电话已经存在，请重新选择！");
+            return AppResponse.versionError("新增联系电话已经存在，请重新选择！");
         }
-//        给门店id和门店编号设置随机编号
+        //给门店id和门店编号设置随机编号
         storeInfo.setStoreId(StringUtil.getCommonCode(2));
         storeInfo.setStoreCode(StringUtil.getCommonCode(2));
-//        给门店邀请码设置6位随机数
+        //给门店邀请码设置6位随机数
         storeInfo.setInviteCode(RandomUtil.radmonkey(6));
-//               新增门店
+        //新增门店
         int count = storeDao.addStore(storeInfo);
         if (0 == count) {
             return AppResponse.versionError("新增失败，请重试！");
@@ -96,7 +96,7 @@ public class StoreService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findStoreDetailsById(String storeId) {
-//        查询门店详情
+        //查询门店详情
         StoreDetialVO storeDetialVO = storeDao.findStoreDetailsById(storeId);
         return AppResponse.success("查询成功", storeDetialVO);
 
@@ -110,12 +110,12 @@ public class StoreService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateStoreById(StoreInfo storeInfo) {
-//                    统计门店电话
+        //统计门店电话
         int countPhone2 = storeDao.countPhone2(storeInfo);
         if (0 != countPhone2) {
-            return AppResponse.success("修改电话已经存在，请重新选择！");
+            return AppResponse.versionError("修改电话已经存在，请重新选择！");
         }
-//        修改门店
+        //修改门店
         int count = storeDao.updateStoreById(storeInfo);
         if (0 == count) {
             return AppResponse.versionError("数据有变化，请刷新！");
@@ -147,14 +147,13 @@ public class StoreService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteStore(String storeId, String userId) {
-//        以逗号分隔开
+        //以逗号分隔开
         List<String> listId = Arrays.asList(storeId.split(","));
-//        删除门店
+        //删除门店
         int count = storeDao.deleteStore(listId, userId);
         if (0 == count) {
             return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功！");
     }
-
 }

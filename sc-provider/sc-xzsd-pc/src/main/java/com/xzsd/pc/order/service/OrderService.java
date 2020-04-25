@@ -25,7 +25,7 @@ public class OrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findOrderDetailsById(String orderId) {
-//        获取订单详情
+        //获取订单详情
         List<OrderAllVO> orderAllVO=orderDao.findOrderDetailsById(orderId);
         return AppResponse.success("查询成功",orderAllVO);
     }
@@ -53,9 +53,9 @@ public class OrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateOrderStatus(String orderId,String userId,String orderStatus){
-//        逗号分开
+        //逗号分开
         List<String> listId= Arrays.asList(orderId.split(","));
-//        修改订单状态
+        //修改订单状态
         int count = orderDao.updateOrderStatus(listId,userId,orderStatus);
         if (0 == count){
             return AppResponse.versionError("修改失败，请重试！");

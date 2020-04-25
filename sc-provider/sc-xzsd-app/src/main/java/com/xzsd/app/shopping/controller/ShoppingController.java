@@ -1,6 +1,7 @@
 package com.xzsd.app.shopping.controller;
 
 import com.neusoft.core.restful.AppResponse;
+import com.neusoft.security.client.utils.SecurityUtils;
 import com.xzsd.app.shopping.entity.ShoppingInfo;
 import com.xzsd.app.shopping.entity.ShoppingListVO;
 import com.xzsd.app.shopping.service.ShoppingService;
@@ -34,6 +35,9 @@ public class ShoppingController {
     @PostMapping("addShopping")
     public AppResponse addShopping(ShoppingInfo shoppingInfo) {
         try {
+            //获取用户id
+            String userId= SecurityUtils.getCurrentUserId();
+            shoppingInfo.setUserId(userId);
             return shoppingService.addShopping(shoppingInfo);
         } catch (Exception e) {
             logger.error("新增失败", e);
@@ -51,6 +55,9 @@ public class ShoppingController {
     @PostMapping("listShopping")
     public AppResponse listShopping(ShoppingListVO shoppingListVO) {
         try {
+            //获取用户id
+            String userId= SecurityUtils.getCurrentUserId();
+            shoppingListVO.setUserId(userId);
             return shoppingService.listShopping(shoppingListVO);
         } catch (Exception e) {
             logger.error("查询失败", e);
@@ -68,6 +75,9 @@ public class ShoppingController {
     @PostMapping("setShoppingNumber")
     public AppResponse setShoppingNumber(ShoppingInfo shoppingInfo) {
         try {
+            //获取用户id
+            String userId= SecurityUtils.getCurrentUserId();
+            shoppingInfo.setUserId(userId);
             return shoppingService.setShoppingNumber(shoppingInfo);
         } catch (Exception e) {
             logger.error("设置失败", e);
@@ -80,13 +90,12 @@ public class ShoppingController {
      * 删除购物车里的商品
      *
      * @param goodsId
-     * @param userId
      * @return
      */
     @PostMapping("deleteShopping")
-    public AppResponse deleteShopping(String goodsId, String userId) {
+    public AppResponse deleteShopping(String goodsId) {
         try {
-            return shoppingService.deleteShopping(goodsId, userId);
+            return shoppingService.deleteShopping(goodsId, SecurityUtils.getCurrentUserId());
         } catch (Exception e) {
             logger.error("删除失败", e);
             System.out.println(e.toString());

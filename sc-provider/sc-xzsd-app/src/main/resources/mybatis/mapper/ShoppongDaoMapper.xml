@@ -59,7 +59,7 @@
         set
             is_deleted=1,
             version=version+1
-        where user_id=#{userId}
+        where user_id=#{currentUserId}
         and product_id in
         <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
             #{item}

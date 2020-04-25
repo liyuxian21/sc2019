@@ -1,6 +1,7 @@
 package com.xzsd.pc.store.controller;
 
 import com.neusoft.core.restful.AppResponse;
+import com.neusoft.security.client.utils.SecurityUtils;
 import com.neusoft.util.AuthUtils;
 import com.xzsd.pc.store.entity.ChinaVo;
 import com.xzsd.pc.store.entity.StoreInfo;
@@ -128,6 +129,9 @@ public class StoreController {
     @PostMapping("listStore")
     public AppResponse listStore(StoreListVO storeListVO){
         try{
+            //获取登陆用户id
+            String userId= SecurityUtils.getCurrentUserId();
+            storeListVO.setUserId(userId);
             return storeService.listStore(storeListVO);
         }catch(Exception e){
             logger.error("查询失败",e);

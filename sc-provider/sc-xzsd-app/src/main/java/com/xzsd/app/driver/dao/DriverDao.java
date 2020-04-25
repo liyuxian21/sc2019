@@ -6,10 +6,10 @@ import com.xzsd.app.driver.entity.DriverStoreVO;
 public interface DriverDao {
     /**
      * 查询司机个人信息
-     * @param userId
+     * @param currentUserId
      * @return
      */
-    DriverPersonVO findDriverById(String userId);
+    DriverPersonVO findDriverById(String currentUserId);
 
     /**
      * 查询司机负责门店信息

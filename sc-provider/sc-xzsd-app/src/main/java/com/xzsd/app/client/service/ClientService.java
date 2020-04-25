@@ -86,13 +86,13 @@ public class ClientService {
     /**
      * 查询商品详情
      *
-     * @param goodsId
+     * @param goodsDetialVo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse findGoodsById(String goodsId, String userId) {
-        GoodsDetialVo goodsDetialVo = clientDao.findGoodsById(goodsId, userId);
-        return AppResponse.success("查询成功", goodsDetialVo);
+    public AppResponse findGoodsById(GoodsDetialVo goodsDetialVo) {
+        GoodsDetialVo goodsDetialVoList = clientDao.findGoodsById(goodsDetialVo);
+        return AppResponse.success("查询成功", goodsDetialVoList);
     }
 
     /**
@@ -127,13 +127,13 @@ public class ClientService {
     /**
      * 查询登录用户详情
      *
-     * @param userId
      * @return
+     * @param currentUserId
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse loginDetails(String userId) {
+    public AppResponse loginDetails(String currentUserId) {
         //获取用户详情
-        LoginUserVO loginUserVO = clientDao.loginDetails(userId);
+        LoginUserVO loginUserVO = clientDao.loginDetails(currentUserId);
         return AppResponse.success("查询成功!", loginUserVO);
     }
 
@@ -166,19 +166,19 @@ public class ClientService {
     /**
      * 修改店铺邀请码
      *
-     * @param userId
+     * @param currentUserId
      * @param storeInviteCode
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse updateStoreInviteCode(String userId, String storeInviteCode) {
+    public AppResponse updateStoreInviteCode(String currentUserId, String storeInviteCode) {
         //统计门店邀请码
         int countInviteCode = clientDao.countInviteCode(storeInviteCode);
         if (0 == countInviteCode) {
             return AppResponse.success("修改店铺邀请码不存在，请重新输入！");
         }
        //修改店铺邀请码
-        int count = clientDao.updateStoreInviteCode(userId, storeInviteCode);
+        int count = clientDao.updateStoreInviteCode(currentUserId, storeInviteCode);
         if (0 == count) {
             return AppResponse.versionError("修改失败请重试！");
         }

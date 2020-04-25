@@ -12,6 +12,10 @@ public class GoodsDetialVo {
      */
     private String userId;
     /**
+     * 商品id
+     */
+    private String goodsId;
+    /**
      * 商品名称
      */
     private String goodsName;
@@ -43,6 +47,14 @@ public class GoodsDetialVo {
      * 绑定门店名称
      */
     private String storeName;
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getSaleNum() {
         return saleNum;

@@ -84,6 +84,9 @@ public class DriverController {
     @PostMapping("listDriver")
     public AppResponse listDriver(DriverListVo driverListVo){
         try{
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            driverListVo.setStoreUserId(userId);
             return driverService.listDriver(driverListVo);
         }catch(Exception e){
             logger.error("查询失败",e);

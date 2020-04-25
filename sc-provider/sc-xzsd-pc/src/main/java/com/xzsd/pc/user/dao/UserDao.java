@@ -68,8 +68,7 @@ public interface UserDao {
 
     /**
      * 获取登录用户详情
-     * @param userId
      * @return
      */
-    LoginUserVo loginDetails(String userId);
+    LoginUserVo loginDetails(String currentUserId);
 }

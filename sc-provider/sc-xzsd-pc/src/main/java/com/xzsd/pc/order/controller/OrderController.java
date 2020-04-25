@@ -44,6 +44,9 @@ public class OrderController {
     @PostMapping("findOrderList")
     public AppResponse findOrderList(OrderListVo orderListVo) {
         try {
+            //获取登陆用户id
+            String userId= SecurityUtils.getCurrentUserId();
+            orderListVo.setUserId(userId);
             return orderService.findOrderList(orderListVo);
         } catch (Exception e) {
             logger.error("获取订单列表失败", e);

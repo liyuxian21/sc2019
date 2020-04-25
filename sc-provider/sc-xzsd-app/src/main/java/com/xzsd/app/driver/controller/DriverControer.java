@@ -1,6 +1,7 @@
 package com.xzsd.app.driver.controller;
 
 import com.neusoft.core.restful.AppResponse;
+import com.neusoft.security.client.utils.SecurityUtils;
 import com.xzsd.app.driver.entity.DriverStoreVO;
 import com.xzsd.app.driver.service.DriverService;
 import org.slf4j.Logger;
@@ -27,13 +28,12 @@ public class DriverControer {
     /**
      * 查询司机个人信息
      *
-     * @param userId
      * @return
      */
     @PostMapping("driverShopPerson")
-    public AppResponse driverShopPerson(String userId) {
+    public AppResponse driverShopPerson() {
         try {
-            return driverService.driverShopPerson(userId);
+            return driverService.driverShopPerson(SecurityUtils.getCurrentUserId());
         } catch (Exception e) {
             logger.error("查询个人信息失败", e);
             System.out.println(e.toString());
@@ -49,6 +49,9 @@ public class DriverControer {
     @PostMapping("findDriverStoreById")
     public AppResponse findDriverStoreById(DriverStoreVO driverStoreVO) {
         try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            driverStoreVO.setUserId(userId);
             return driverService.findDriverStoreById(driverStoreVO);
         } catch (Exception e) {
             logger.error("查询负责门店信息失败", e);

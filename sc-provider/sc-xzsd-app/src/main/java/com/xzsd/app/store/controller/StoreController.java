@@ -35,6 +35,9 @@ public class StoreController {
     @PostMapping("StoreShopPerson")
     public AppResponse StoreShopPerson(StoreInfo storeInfo) {
         try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            storeInfo.setUserId(userId);
             return storeService.StoreShopPerson(storeInfo);
         } catch (Exception e) {
             logger.error("查询店长个人信息失败", e);
@@ -51,6 +54,9 @@ public class StoreController {
     @PostMapping("driverPerson")
     public AppResponse driverPerson(DriverInfo driverInfo) {
         try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            driverInfo.setUserId(userId);
             return storeService.driverPerson(driverInfo);
         } catch (Exception e) {
             logger.error("查询失败", e);

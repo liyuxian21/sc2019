@@ -33,21 +33,18 @@ public class GoodsClassService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addGoodsClass(GoodsClassInfo goodsClassInfo, String parentClassCode) {
-
-//        统计分类名称
+        //统计分类名称
         int countClassName = goodsClassDao.countClassName(goodsClassInfo);
         if (0 != countClassName) {
-            return AppResponse.success("商品分类名称已存在，请重新输入！");
+            return AppResponse.versionError("商品分类名称已存在，请重新输入！");
         }
-
-//判断父类编码是否存在，存在isParent设置为1，代表二级分类；若不存在设置为0，代表一级分类
+        //判断父类编码是否存在，存在isParent设置为1，代表二级分类；若不存在设置为0，代表一级分类
         if (parentClassCode == null) {
             goodsClassInfo.setIsParent("0");
         } else {
             goodsClassInfo.setIsParent("1");
         }
-
-//       给商品分类id设置随机数
+        //给商品分类id设置随机数
         goodsClassInfo.setClassId(StringUtil.getCommonCode(2));
         // 新增商品分类
         int count = goodsClassDao.addGoodsClass(goodsClassInfo);
@@ -65,7 +62,7 @@ public class GoodsClassService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsClassById(String classId) {
-//        查询商品
+        //查询商品
         GoodsClassDetail goodsClassDetail = goodsClassDao.findGoodsClassById(classId);
         return AppResponse.success("查询成功", goodsClassDetail);
 
@@ -79,12 +76,12 @@ public class GoodsClassService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateGoodsClassById(GoodsClassInfo goodsClassInfo) {
-//              统计分类名称
+        //统计分类名称
         int countClassName = goodsClassDao.countClassName(goodsClassInfo);
         if (0 != countClassName) {
-            return AppResponse.success("商品分类名称已存在，请重新输入！");
+            return AppResponse.versionError("商品分类名称已存在，请重新输入！");
         }
-//        修改商品分类
+        //修改商品分类
         int count = goodsClassDao.updateGoodsClassById(goodsClassInfo);
         if (0 == count) {
             return AppResponse.versionError("数据有变化，请刷新");

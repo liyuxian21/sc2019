@@ -78,13 +78,16 @@ public class ClientController {
     /**
      * 查询商品详情
      *
-     * @param goodsId
+     * @param goodsDetialVo
      * @return
      */
     @PostMapping("findGoodsById")
-    public AppResponse findGoodsById(String goodsId, String userId) {
+    public AppResponse findGoodsById(GoodsDetialVo goodsDetialVo) {
         try {
-            return clientService.findGoodsById(goodsId, userId);
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            goodsDetialVo.setUserId(userId);
+            return clientService.findGoodsById(goodsDetialVo);
         } catch (Exception e) {
             logger.error("商品查询错误", e);
             System.out.println(e.toString());
@@ -130,13 +133,12 @@ public class ClientController {
     /**
      * 查询登录用户详情
      *
-     * @param userId
      * @return
      */
     @PostMapping("loginDetails")
-    public AppResponse loginDetails(String userId) {
+    public AppResponse loginDetails() {
         try {
-            return clientService.loginDetails(userId);
+            return clientService.loginDetails(SecurityUtils.getCurrentUserId());
         } catch (Exception e) {
             logger.error("查询错误", e);
             System.out.println(e.toString());
@@ -152,6 +154,9 @@ public class ClientController {
     @PostMapping("updatePassword")
     public AppResponse updatePassword(UserVO userVO) {
         try {
+            //获取用户id
+            String userId=SecurityUtils.getCurrentUserId();
+            userVO.setUserId(userId);
             return clientService.updatePassword(userVO);
         } catch (Exception e) {
             logger.error("修改错误", e);
@@ -163,14 +168,13 @@ public class ClientController {
     /**
      * 修改店铺邀请码
      *
-     * @param userId
      * @param storeInviteCode
      * @return
      */
     @PostMapping("updateStoreInviteCode")
-    public AppResponse updateStoreInviteCode(String userId, String storeInviteCode) {
+    public AppResponse updateStoreInviteCode(String storeInviteCode) {
         try {
-            return clientService.updateStoreInviteCode(userId, storeInviteCode);
+            return clientService.updateStoreInviteCode(SecurityUtils.getCurrentUserId(), storeInviteCode);
         } catch (Exception e) {
             logger.error("修改错误", e);
             System.out.println(e.toString());
@@ -187,6 +191,9 @@ public class ClientController {
     @PostMapping("role")
     public AppResponse role(RoleInfo roleInfo) {
         try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            roleInfo.setUserId(userId);
             return clientService.role(roleInfo);
         } catch (Exception e) {
             logger.error("查询错误", e);

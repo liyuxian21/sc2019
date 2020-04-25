@@ -38,10 +38,11 @@ public class OrderController {
     @PostMapping("addOrder")
     public AppResponse addOrder(OrderInfo orderInfo) {
         try {
-//            获取用户id
+            //获取用户id
             String userId = SecurityUtils.getCurrentUserId();
             orderInfo.setCreatePeople(userId);
             orderInfo.setUpdatePeople(userId);
+            orderInfo.setUserId(userId);
             return orderService.addOrder(orderInfo);
         } catch (Exception e) {
             logger.error("新增失败", e);
@@ -58,6 +59,9 @@ public class OrderController {
     @PostMapping("listOrderList")
     public AppResponse listOrderList(OrderListVO orderListVO) {
         try {
+            //获取用户id
+            String userId = SecurityUtils.getCurrentUserId();
+            orderListVO.setUserId(userId);
             return orderService.listOrderList(orderListVO);
         } catch (Exception e) {
             logger.error("查询失败", e);
@@ -113,6 +117,7 @@ public class OrderController {
             String userId = SecurityUtils.getCurrentUserId();
             orderAppraise.setCreatePeople(userId);
             orderAppraise.setUpdatePeople(userId);
+            orderAppraise.setUserId(userId);
             return orderService.addOrderAppraise(orderAppraise);
         } catch (Exception e) {
             logger.error("新增失败", e);

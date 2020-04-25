@@ -40,12 +40,12 @@ public class GoodsService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addGoods(GoodsInfo goodsInfo) {
-//        统计书号是否存在
+        //统计书号是否存在
         int countIsbn = goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
-            return AppResponse.success("书号已存在，请重新输入！");
+            return AppResponse.versionError("书号已存在，请重新输入！");
         }
-//       给商品编码和商品id设置随机数
+       //给商品编码和商品id设置随机数
         goodsInfo.setGoodsCode(StringUtil.getCommonCode(2));
         goodsInfo.setGoodsId(StringUtil.getCommonCode(2));
         goodsInfo.setSaleNum("0");
@@ -67,10 +67,10 @@ public class GoodsService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateGoodsById(GoodsInfo goodsInfo) {
-        //        统计书号是否存在
+        //统计书号是否存在
         int countIsbn = goodsDao.countIsbn(goodsInfo);
         if (0 != countIsbn) {
-            return AppResponse.success("书号已存在，请重新输入！");
+            return AppResponse.versionError("书号已存在，请重新输入！");
         }
         AppResponse appResponse = AppResponse.success("修改成功");
         // 商品修改
@@ -97,9 +97,9 @@ public class GoodsService {
         int countSlideshow = goodsDao.countSlideshow(listId);
         int countHot = goodsDao.countHot(listId);
         if (countSlideshow != 0) {
-            return AppResponse.success("所删除商品存在轮播图或者热门商品图，不能删除！");
+            return AppResponse.versionError("所删除商品存在轮播图或者热门商品图，不能删除！");
         } else if (countHot != 0) {
-            return AppResponse.success("所删除商品存在轮播图或者热门商品图，不能删除！");
+            return AppResponse.versionError("所删除商品存在轮播图或者热门商品图，不能删除！");
         }
         //删除商品
         int count = goodsDao.deleteGoods(listId, userId);
@@ -121,7 +121,6 @@ public class GoodsService {
     public AppResponse findGoodsById(String goodsId) {
         //查询商品
         GoodsDetail goodsDetail = goodsDao.findGoodsById(goodsId);
-
         return AppResponse.success("查询成功", goodsDetail);
     }
 
@@ -179,7 +178,7 @@ public class GoodsService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse secondClassGoodsList(GoodsClass goodsClass, String parentClassCode) {
-//          判断是否有父类编码
+        //判断是否有父类编码
         if (parentClassCode == null) {
             return AppResponse.notFound("查询为空");
         }

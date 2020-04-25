@@ -35,17 +35,17 @@ public class GoodsHotService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addGoodsHot(GoodsHotInfo goodsHotInfo) {
-//        统计商品id和排序
+        //统计商品id和排序
         int countProduct = goodsHotDao.countProduct(goodsHotInfo);
         int countSort = goodsHotDao.countSort(goodsHotInfo);
         if (0 != countProduct) {
-            return AppResponse.success("新增商品已经存在，请重新输入！");
+            return AppResponse.versionError("新增商品已经存在，请重新输入！");
         }else if (0 != countSort){
-            return AppResponse.success("新增序号已存在，请重新输入！");
+            return AppResponse.versionError("新增序号已存在，请重新输入！");
         }
-//        给热门商品设置随机编码
+        //给热门商品设置随机编码
         goodsHotInfo.setGoodsHotId(StringUtil.getCommonCode(2));
-//        新增热门商品
+        //新增热门商品
         int count = goodsHotDao.addGoodsHot(goodsHotInfo);
         if (0 == count) {
             return AppResponse.versionError("新增失败，请重试！");
@@ -61,7 +61,7 @@ public class GoodsHotService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsHotById(String goodsHotId) {
-//        查询热门商品
+        //查询热门商品
         GoodsHotDetailVO goodsHotDetailVO = goodsHotDao.findGoodsHotById(goodsHotId);
         return AppResponse.success("查询成功", goodsHotDetailVO);
     }
@@ -74,15 +74,15 @@ public class GoodsHotService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateGoodsHotById(GoodsHotInfo goodsHotInfo) {
-//               统计商品id和排序
+        //统计商品id和排序
         int countProduct = goodsHotDao.countProduct(goodsHotInfo);
         int countSort = goodsHotDao.countSort(goodsHotInfo);
         if (0 != countProduct) {
-            return AppResponse.success("新增商品已经存在，请重新输入！");
+            return AppResponse.versionError("新增商品已经存在，请重新输入！");
         }else if (0 != countSort){
-            return AppResponse.success("新增序号已存在，请重新输入！");
+            return AppResponse.versionError("新增序号已存在，请重新输入！");
         }
-//        修改商品
+        //修改商品
         int count = goodsHotDao.updateGoodsHotById(goodsHotInfo);
         if (0 == count) {
             return AppResponse.versionError("数据有变化，请刷新！");
@@ -99,7 +99,7 @@ public class GoodsHotService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteGoodsHot(String goodsHotId, String userId) {
-//        逗号分开，批量操作
+        //逗号分开，批量操作
         List<String> listId = Arrays.asList(goodsHotId.split(","));
         //删除商品
         int count = goodsHotDao.deleteGoodsHot(listId, userId);
@@ -132,7 +132,7 @@ public class GoodsHotService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse setGoodsHot(String number) {
-        //        修改商品展示数量
+        //修改商品展示数量
         int count = goodsHotDao.setGoodsHot(number);
         if (0 == count) {
             return AppResponse.versionError("修改失败！");

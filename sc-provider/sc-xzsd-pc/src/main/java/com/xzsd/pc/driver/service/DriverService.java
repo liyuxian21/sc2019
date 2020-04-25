@@ -28,21 +28,21 @@ public class DriverService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addDriver(DriverInfo driverInfo){
-//        判断用户账户和手机号是否存在
+        //判断用户账户和手机号是否存在
         int countUserAccount = driverDao.countUserAccount(driverInfo);
         int countUserPhone = driverDao.countUserPhone(driverInfo);
         if (0 != countUserAccount) {
-            return AppResponse.success("用户账户已存在，请重新输入！");
+            return AppResponse.versionError("用户账户已存在，请重新输入！");
         } else if (0 != countUserPhone) {
-            return AppResponse.success("手机号已存在，请重新输入！");
+            return AppResponse.versionError("手机号已存在，请重新输入！");
         }
-//        给司机id和司机编码和司机用户id设置随机数
+        //给司机id和司机编码和司机用户id设置随机数
         driverInfo.setDriverId(StringUtil.getCommonCode(2));
         driverInfo.setDriverCode(StringUtil.getCommonCode(2));
         driverInfo.setUserId(StringUtil.getCommonCode(2));
-//         密码加密
+        //密码加密
         driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
-//        新增司机
+        //新增司机
         int count = driverDao.addDriver(driverInfo);
         int count2 = driverDao.addDriver2(driverInfo);
         if (0 == count){
@@ -60,7 +60,7 @@ public class DriverService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findDriverDetailsById(String driverId) {
-//        查询司机详情
+        //查询司机详情
         DriverDetailVo driverDetailVo=driverDao.findDriverDetailsById(driverId);
         return AppResponse.success("查询成功",driverDetailVo);
 
@@ -73,12 +73,9 @@ public class DriverService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateDriverById(DriverInfo driverInfo) {
-//                 密码加密 默认为123456
-        String pwd = PasswordUtils.generatePassword("123456");
-        driverInfo.setPassword(pwd);
-//               修改密码
+        //修改密码
         driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
-//               修改司机
+        //修改司机
         int count = driverDao.updateDriverById(driverInfo);
         int count2 = driverDao.updateDriverById2(driverInfo);
         if (0 == count){
@@ -110,10 +107,10 @@ public class DriverService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteDriver(String userId,String userId1){
-//        以逗号分隔开
+        //以逗号分隔开
         List<String> listId= Arrays.asList(userId.split(","));
         List<String> listId2= Arrays.asList(userId.split(","));
-//        删除司机
+        //删除司机
         int count = driverDao.deleteDriver(listId,userId1);
         int count2 = driverDao.delete(listId2,userId1);
         if (0 == count){

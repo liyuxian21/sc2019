@@ -9,7 +9,7 @@
             user_image  userPhoto
         from
             t_sys_user
-        where user_code=#{userId}
+        where user_code=#{currentUserId}
         and is_deleted=0
     </select>
 <!--    查询司机负责门店信息-->

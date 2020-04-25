@@ -62,6 +62,7 @@
         select
             menu_id     menuId,
             menu_name   menuName,
+            menu_route  menuRouter,
             version     version
         from t_sys_menu
         where  is_deleted=0

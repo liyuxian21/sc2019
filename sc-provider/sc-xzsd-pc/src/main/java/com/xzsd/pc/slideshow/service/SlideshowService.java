@@ -32,16 +32,16 @@ public class SlideshowService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addSlideshow(SlideshowInfo slideshowInfo) {
-//      统计商品id和序号
+        //统计商品id和序号
         int countProduct = slideshowDao.countProduct(slideshowInfo);
         int countSort = slideshowDao.countSort(slideshowInfo);
         if (0 != countProduct) {
-            return AppResponse.success("新增商品已经存在，请重新输入！");
+            return AppResponse.versionError("新增商品已经存在，请重新输入！");
         } else if (0 != countSort) {
-            return AppResponse.success("新增序号已经存在，请重新输入！");
+            return AppResponse.versionError("新增序号已经存在，请重新输入！");
         }
         slideshowInfo.setSlideshowId(StringUtil.getCommonCode(2));
-//        新增轮播图
+        //新增轮播图
         int count = slideshowDao.addSlideshow(slideshowInfo);
         if (0 == count) {
             return AppResponse.versionError("新增失败，请重试");
@@ -58,10 +58,10 @@ public class SlideshowService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse enableDisable(String slideshowId, String slideshowStatus) {
-//        以逗号分隔开，批量选择
+        //以逗号分隔开，批量选择
         List<String> listId = Arrays.asList(slideshowId.split(","));
         AppResponse appResponse = AppResponse.success("修改成功！");
-//       修改状态
+        //修改状态
         int count = slideshowDao.enableDisable(listId, slideshowId, slideshowStatus);
         if (0 == count) {
             return AppResponse.versionError("修改失败，请重试");
@@ -79,7 +79,6 @@ public class SlideshowService {
     public AppResponse listSlideshow(SlideshowVO slideshowVO) {
         PageHelper.startPage(slideshowVO.getPageNum(), slideshowVO.getPageSize());
         List<SlideshowVO> slideshowVOList = slideshowDao.listSlideshowByPage(slideshowVO);
-//        包装对象
         PageInfo<SlideshowVO> pageData = new PageInfo<>(slideshowVOList);
         return AppResponse.success("查询成功！", pageData);
     }
@@ -92,10 +91,10 @@ public class SlideshowService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse deleteSlideshow(String slideshowId, String userId) {
-//        将轮播图id以逗号分隔开
+        //将轮播图id以逗号分隔开
         List<String> listId = Arrays.asList(slideshowId.split(","));
         AppResponse appResponse = AppResponse.success("删除成功！");
-//        删除轮播图
+        //删除轮播图
         int count = slideshowDao.deleteSlideshow(listId, userId);
         if (0 == count) {
             return AppResponse.versionError("删除失败，请重试！");
@@ -114,9 +113,7 @@ public class SlideshowService {
     public AppResponse listSlideshowGoods(GoodsListVO goodsListVO) {
         PageHelper.startPage(goodsListVO.getPageNum(), goodsListVO.getPageSize());
         List<SlideshowVO> goodsListVoList = slideshowDao.goodsListVOyPage(goodsListVO);
-//        包装对象
         PageInfo<SlideshowVO> pageData = new PageInfo<>(goodsListVoList);
         return AppResponse.success("查询成功！", pageData);
-
     }
 }

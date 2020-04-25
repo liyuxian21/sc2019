@@ -56,11 +56,9 @@ public interface ClientDao {
     /**
      * 查询商品详情
      *
-     * @param goodsId
-     * @param userId
      * @return
      */
-    GoodsDetialVo findGoodsById(@Param("goodsId") String goodsId, @Param("userId") String userId);
+    GoodsDetialVo findGoodsById(GoodsDetialVo goodsDetialVo);
 
     /**
      * 查询商品一级分类
@@ -82,10 +80,10 @@ public interface ClientDao {
     /**
      * 获取登录用户详情
      *
-     * @param userId
+     * @param currentUserId
      * @return
      */
-    LoginUserVO loginDetails(String userId);
+    LoginUserVO loginDetails(String currentUserId);
 
     /**
      * 统计店铺邀请码
@@ -96,11 +94,11 @@ public interface ClientDao {
 
     /**
      * 修改店铺邀请码
-     * @param userId
+     * @param currentUserId
      * @param storeInviteCode
      * @return
      */
-    int updateStoreInviteCode(@Param("userId") String userId, @Param("storeInviteCode") String storeInviteCode);
+    int updateStoreInviteCode(@Param("currentUserId") String currentUserId, @Param("storeInviteCode") String storeInviteCode);
 
     /**
      * 获取用户原密码密文

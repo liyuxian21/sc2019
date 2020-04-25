@@ -73,16 +73,16 @@ public class ShoppingService {
 
     /**
      * 删除购物车商品
-     * @param userId 更新人id
+     * @param currentUserId 更新人id
      * @param goodsId 商品id
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse deleteShopping(String goodsId, String userId) {
+    public AppResponse deleteShopping(String goodsId, String currentUserId) {
         //商品id逗号分隔
         List<String> listId = Arrays.asList(goodsId.split(","));
         //删除购物车商品
-        int count = shoppingDao.deleteShopping(listId, userId);
+        int count = shoppingDao.deleteShopping(listId, currentUserId);
         if (0 == count) {
             return AppResponse.versionError("删除失败！");
         }

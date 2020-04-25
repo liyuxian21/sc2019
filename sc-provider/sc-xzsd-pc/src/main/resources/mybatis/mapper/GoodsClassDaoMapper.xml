@@ -70,7 +70,9 @@
     from
         t_sys_product_class a,
         t_sys_product_class b
-    where a.class_id=b.parent_class_code and a.is_deleted=0
+    where a.class_id=b.parent_class_code
+    and a.is_deleted=0
+    and b.is_deleted=0
     </select>
 
     <resultMap id="ModuleResultMap" type="com.xzsd.pc.goodsClass.entity.GoodsClassList">

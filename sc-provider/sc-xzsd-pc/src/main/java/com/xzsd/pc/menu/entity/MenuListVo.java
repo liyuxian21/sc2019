@@ -15,6 +15,10 @@ public class MenuListVo {
      */
     private String menuName;
     /**
+     * 菜单路径
+     */
+    private String menuRouter;
+    /**
      * 版本号
      */
     private String version;
@@ -22,6 +26,14 @@ public class MenuListVo {
      * 角色编号
      */
     private int role;
+
+    public String getMenuRouter() {
+        return menuRouter;
+    }
+
+    public void setMenuRouter(String menuRouter) {
+        this.menuRouter = menuRouter;
+    }
 
     public int getRole() {
         return role;

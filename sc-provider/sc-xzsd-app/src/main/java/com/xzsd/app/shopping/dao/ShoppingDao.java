@@ -31,8 +31,8 @@ public interface ShoppingDao {
     /**
      * 删除购物商品
      * @param listId
-     * @param userId
+     * @param currentUserId
      * @return
      */
-    int deleteShopping(@Param("listId") List<String> listId, @Param("userId") String userId);
+    int deleteShopping(@Param("listId") List<String> listId, @Param("currentUserId") String currentUserId);
 }

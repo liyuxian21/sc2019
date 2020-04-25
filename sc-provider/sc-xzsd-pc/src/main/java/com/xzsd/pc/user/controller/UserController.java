@@ -29,13 +29,12 @@ public class UserController {
 
     /**
      * 查询顶部栏登录用户详情接口
-     * @param userId
      * @return
      */
     @PostMapping("loginDetails")
-    public AppResponse loginDetails(String userId) {
+    public AppResponse loginDetails() {
         try {
-            AppResponse appResponse = userService.loginDetails(userId);
+            AppResponse appResponse = userService.loginDetails(SecurityUtils.getCurrentUserId());
             return appResponse;
         } catch (Exception e) {
             logger.error("查询失败", e);
