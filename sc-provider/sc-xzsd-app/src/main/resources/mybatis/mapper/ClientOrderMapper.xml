@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.app.clientorder.dao.OrderDao">
+<!--    判断店铺是否绑定了邀请码-->
+    <select id="getStoreById" parameterType="java.lang.String" resultType="com.xzsd.app.clientorder.entity.StoreVO">
+        select
+            b.invite_code storeInviteCode
+        from
+            t_sys_user a,
+            t_sys_client b,
+            t_sys_store c
+        where a.user_code=#{userId}
+        and a.user_code=b.user_id
+        and b.invite_code=c.invite_code
+        and a.is_deleted=0
+    </select>
 <!--新增订单-->
     <insert id="addOrder" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
         insert into t_sys_order
@@ -92,11 +105,11 @@
         </foreach>
     </update>
 <!--    将商品从购物车移除-->
-    <delete id="deleteGoods" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
+    <delete id="deleteGoods" parameterType="java.lang.String">
        update t_sys_shopping
        set
         is_deleted =1
-       where product_id in
+       where shopping_id in
         <foreach collection="goodsIdList" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
@@ -211,7 +224,7 @@
         order by a.update_time desc
     </select>
 <!--    客户修改订单状态-->
-    <update id="updateOrder" parameterType="java.lang.String">
+    <update id="updateOrder" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
         update t_sys_order
         set
             order_status    =   #{orderStatus},
@@ -327,4 +340,13 @@
         ORDER BY
             a.sort asc
     </select>
+    <!--    更新商品评价等级-->
+    <update id="updateGoodsLevel" parameterType="com.xzsd.app.clientorder.entity.AppraiseInfo">
+        <foreach collection="appraiseList" item="item" open="" separator=";" close="" index="index">
+            update t_sys_product
+            set
+            satrt_level=(satrt_level+#{item.level})/2
+            where product_id=#{item.goodsId}
+        </foreach>
+    </update>
 </mapper>

@@ -33,6 +33,7 @@
     <select id="listShoppingByPage" parameterType="com.xzsd.app.shopping.entity.ShoppingListVO" resultType="com.xzsd.app.shopping.entity.ShoppingListVO">
         select
             a.number        goodsShoppingNumber,
+            a.shopping_id   shoppingId,
             b.product_name  goodsName,
             b.price_now     inPrice,
             b.product_image photoUrl,

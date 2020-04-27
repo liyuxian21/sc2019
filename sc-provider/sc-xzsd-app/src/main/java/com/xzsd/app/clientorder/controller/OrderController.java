@@ -88,16 +88,17 @@ public class OrderController {
 
     /**
      * 订单状态修改，客户点击确认收货和取消订单
-     * @param orderId
-     * @param orderStatus
+     * @param orderInfo
      * @return
      */
     @PostMapping("deleteConfirmOrder")
-    public AppResponse deleteConfirmOrder(String orderId,String orderStatus) {
+    public AppResponse deleteConfirmOrder(OrderInfo orderInfo) {
         try {
             //获取用户id
             String userId = SecurityUtils.getCurrentUserId();
-            return orderService.deleteConfirmOrder(orderId,orderStatus,userId);
+            orderInfo.setUserId(userId);
+            orderInfo.setUpdatePeople(userId);
+            return orderService.deleteConfirmOrder(orderInfo);
         } catch (Exception e) {
             logger.error("修改失败", e);
             System.out.println(e.toString());

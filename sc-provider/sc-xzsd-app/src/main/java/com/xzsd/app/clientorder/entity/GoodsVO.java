@@ -14,6 +14,18 @@ public class GoodsVO {
      * 商品价格
      */
     private float price;
+    /**
+     *购买商品数量
+     */
+    private int goodsShoppingNumber;
+
+    public int getGoodsShoppingNumber() {
+        return goodsShoppingNumber;
+    }
+
+    public void setGoodsShoppingNumber(int goodsShoppingNumber) {
+        this.goodsShoppingNumber = goodsShoppingNumber;
+    }
 
     public String getGoodsId() {
         return goodsId;

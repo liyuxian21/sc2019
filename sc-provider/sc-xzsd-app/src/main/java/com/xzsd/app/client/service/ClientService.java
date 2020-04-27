@@ -34,13 +34,16 @@ public class ClientService {
         int countUserAccount = clientDao.countUserAccount(registerInfo);
         int countUserPhone = clientDao.countUserPhone(registerInfo);
         //判断门店邀请码是否存在
-        int countInviteCode = clientDao.countInciteCode(registerInfo);
+        if (registerInfo.getStoreInviteCode() != null) {
+            int countInviteCode = clientDao.countInciteCode(registerInfo);
+            if (0 == countInviteCode) {
+                return AppResponse.versionError("你输入的门店邀请码不存在，请重新输入！");
+            }
+        }
         if (0 != countUserAccount) {
-            return AppResponse.success("用户账户已存在，请重新输入！");
+            return AppResponse.versionError("用户账户已存在，请重新输入！");
         } else if (0 != countUserPhone) {
-            return AppResponse.success("手机号已存在，请重新输入！");
-        }else if (0 == countInviteCode) {
-            return AppResponse.success("你输入的门店邀请码不存在，请重新输入！");
+            return AppResponse.versionError("手机号已存在，请重新输入！");
         }
         //给用户编码和司机id设置随机编号
         registerInfo.setUserId(StringUtil.getCommonCode(2));
@@ -91,8 +94,8 @@ public class ClientService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsById(GoodsDetialVo goodsDetialVo) {
-        GoodsDetialVo goodsDetialVoList = clientDao.findGoodsById(goodsDetialVo);
-        return AppResponse.success("查询成功", goodsDetialVoList);
+        GoodsDetialVo goodsDetailVoList = clientDao.findGoodsById(goodsDetialVo);
+        return AppResponse.success("查询成功", goodsDetailVoList);
     }
 
     /**
@@ -127,8 +130,8 @@ public class ClientService {
     /**
      * 查询登录用户详情
      *
-     * @return
      * @param currentUserId
+     * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse loginDetails(String currentUserId) {
@@ -151,7 +154,7 @@ public class ClientService {
             //判断原密码是否相同
             boolean password = PasswordUtils.Password(userVO.getStartPassword(), userDetail.getUserPassword());
             if (!password) {
-                return AppResponse.success("原密码不匹配，请重新输入！");
+                return AppResponse.versionError("原密码不匹配，请重新输入！");
             }
         }
         //修改密码并且加密
@@ -175,9 +178,9 @@ public class ClientService {
         //统计门店邀请码
         int countInviteCode = clientDao.countInviteCode(storeInviteCode);
         if (0 == countInviteCode) {
-            return AppResponse.success("修改店铺邀请码不存在，请重新输入！");
+            return AppResponse.versionError("修改店铺邀请码不存在，请重新输入！");
         }
-       //修改店铺邀请码
+        //修改店铺邀请码
         int count = clientDao.updateStoreInviteCode(currentUserId, storeInviteCode);
         if (0 == count) {
             return AppResponse.versionError("修改失败请重试！");
@@ -187,11 +190,12 @@ public class ClientService {
 
     /**
      * 查询登录角色
+     *
      * @param roleInfo
      * @return
      */
-    public AppResponse role(RoleInfo roleInfo){
-        RoleInfo role= clientDao.roleById(roleInfo);
-        return AppResponse.success("查询成功",role);
+    public AppResponse role(RoleInfo roleInfo) {
+        RoleInfo role = clientDao.roleById(roleInfo);
+        return AppResponse.success("查询成功", role);
     }
 }

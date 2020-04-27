@@ -12,6 +12,10 @@ public class ShoppingListVO {
      */
     private String userId;
     /**
+     * 购物车编号
+     */
+    private String shoppingId;
+    /**
      * 商品id
      */
     private String goodsId;
@@ -35,6 +39,14 @@ public class ShoppingListVO {
      * 购买商品的总价
      */
     private String total;
+
+    public String getShoppingId() {
+        return shoppingId;
+    }
+
+    public void setShoppingId(String shoppingId) {
+        this.shoppingId = shoppingId;
+    }
 
     public String getTotal() {
         return total;

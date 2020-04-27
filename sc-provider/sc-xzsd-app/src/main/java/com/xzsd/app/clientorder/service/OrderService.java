@@ -33,6 +33,11 @@ public class OrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addOrder(OrderInfo orderInfo) {
+        //判断客户是否绑定了店铺
+        StoreVO storeVO = orderDao.getStoreById(orderInfo.getUserId());
+        if (storeVO == null) {
+            return AppResponse.versionError("对不起，您还没绑定店铺邀请码，无法购买！");
+        }
         List<String> goodsList = Arrays.asList(orderInfo.getGoodsId().split(","));
         List<String> countList = Arrays.asList(orderInfo.getGoodsShoppingNumber().split(","));
         //生成订单信息
@@ -57,11 +62,14 @@ public class OrderService {
             //添加到list
             orderDetailVOList.add(orderDetailVO);
         }
-        //将下单对应的商品id移除购物车
-        List<String> goodsIdList = Arrays.asList(orderInfo.getGoodsId().split(","));
-        int shopDelete = orderDao.deleteGoods(goodsIdList);
-        if (0 == shopDelete) {
-            return AppResponse.versionError("移除购物车失败！");
+        //如果是在购物车结算，将商品移除购物车
+        if (orderInfo.getShoppingId() != null && !"".equals(orderInfo.getShoppingId())) {
+            //将下单对应的商品id移除购物车
+            List<String> goodsIdList = Arrays.asList(orderInfo.getShoppingId().split(","));
+            int shopDelete = orderDao.deleteGoods(goodsIdList);
+            if (0 == shopDelete) {
+                return AppResponse.versionError("移除购物车失败！");
+            }
         }
         //修改商品库存和销售量
         int update = orderDao.update(orderDetailVOList);
@@ -108,17 +116,32 @@ public class OrderService {
     /**
      * 订单状态修改，客户点击确认收货和取消订单
      *
-     * @param orderId
-     * @param orderStatus
-     * @param userId
+     * @param orderInfo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse deleteConfirmOrder(String orderId, String orderStatus, String userId) {
+    public AppResponse deleteConfirmOrder(OrderInfo orderInfo) {
         // 订单状态修改，客户点击确认收货或者取消订单
-        int count = orderDao.updateOrder(orderId, orderStatus, userId);
+        int count = orderDao.updateOrder(orderInfo);
         if (0 == count) {
             return AppResponse.versionError("修改失败！");
+        }
+        if (orderInfo.getOrderStatus().equals("5")) {
+            //获取订单详情信息
+            OrderStoreVO orderStoreVO = orderDao.findOrderById(orderInfo.getOrderId());
+            List<OrderDetailVO> goodsIdList = orderStoreVO.getGoodsList();
+            List<OrderDetailVO> orderDetailVOList = new ArrayList<>();
+            for (int i = 0; i < goodsIdList.size(); i++) {
+                OrderDetailVO orderDetailVOs = new OrderDetailVO();
+                orderDetailVOs.setGoodsId(goodsIdList.get(i).getGoodsId());
+                orderDetailVOs.setGoodsShoppingNumber(-goodsIdList.get(i).getGoodsShoppingNumber());
+                orderDetailVOList.add(orderDetailVOs);
+            }
+            //修改商品库存和销售量
+            int update = orderDao.update(orderDetailVOList);
+            if (0 == update) {
+                return AppResponse.versionError("修改失败");
+            }
         }
         return AppResponse.success("修改成功！");
     }
@@ -150,24 +173,30 @@ public class OrderService {
             }
         }
         //新增评价信息集合
-        int addAppraiseCount=orderDao.addAppraise(orderAppraise);
-        if (addAppraiseCount != orderAppraise.getAppraiseList().size()){
+        int addAppraiseCount = orderDao.addAppraise(orderAppraise);
+        if (addAppraiseCount != orderAppraise.getAppraiseList().size()) {
             return AppResponse.versionError("评价失败");
         }
         //新增评价图片信息集合
-        int addAppraiseImageCount=orderDao.addAppraiseImage(appraiseImageList);
-        if (addAppraiseImageCount != appraiseImageList.size()){
+        int addAppraiseImageCount = orderDao.addAppraiseImage(appraiseImageList);
+        if (addAppraiseImageCount != appraiseImageList.size()) {
             return AppResponse.versionError("评价失败");
+        }
+        //修改商品评价等级
+        int updateGoodsLevel = orderDao.updateGoodsLevel(orderAppraise.getAppraiseList());
+        if (0 == updateGoodsLevel) {
+            return AppResponse.versionError("更新商品等级失败，评价失败");
         }
         return AppResponse.success("评价成功！");
     }
 
     /**
      * 查询商品评价列表
+     *
      * @param appraiseList
      * @return
      */
-    public AppResponse listAppraiseGoods(AppraiseList appraiseList){
+    public AppResponse listAppraiseGoods(AppraiseList appraiseList) {
         // 查询商品评价列表
         List<AppraiseList> appraiseListList = orderDao.listAppraiseByPage(appraiseList);
         return AppResponse.success("查询成功", getPageInfo(appraiseListList));

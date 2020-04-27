@@ -44,9 +44,21 @@ public class GoodsDetialVo {
      */
     private String saleNum;
     /**
+     * 商品评价等级平均值
+     */
+    private String levelAvg;
+    /**
      * 绑定门店名称
      */
     private String storeName;
+
+    public String getLevelAvg() {
+        return levelAvg;
+    }
+
+    public void setLevelAvg(String levelAvg) {
+        this.levelAvg = levelAvg;
+    }
 
     public String getGoodsId() {
         return goodsId;

@@ -122,9 +122,11 @@
     <select id="findGoodsById" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.GoodsDetialVo">
         select
             a.product_name    goodsName,
+            a.product_id      goodsId,
             a.product_idc     goodsIntroduction,
             a.price           costPrice,
             a.price_now       inPrice,
+            a.satrt_level     levelAvg,
             a.sale_num        saleNum,
             a.product_image   photoUrl,
             b.store_id        storeId,

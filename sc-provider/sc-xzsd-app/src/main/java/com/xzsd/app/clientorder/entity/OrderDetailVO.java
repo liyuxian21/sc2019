@@ -1,4 +1,7 @@
 package com.xzsd.app.clientorder.entity;
+
+import java.util.List;
+
 /**
  * 订单详情和商品信息实体类
  *

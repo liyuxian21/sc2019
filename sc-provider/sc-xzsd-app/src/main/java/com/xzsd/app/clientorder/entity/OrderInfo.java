@@ -11,6 +11,10 @@ public class OrderInfo {
      */
     private String userId;
     /**
+     * 购物车编号
+     */
+    private String shoppingId;
+    /**
      * 订单id
      */
     private String orderId;
@@ -70,6 +74,13 @@ public class OrderInfo {
      * 版本号
      */
     private String version;
+
+    public String getShoppingId() {
+        return shoppingId;
+    }
+    public void setShoppingId(String shoppingId) {
+        this.shoppingId = shoppingId;
+    }
 
     public int getGoodsNumber() {
         return goodsNumber;

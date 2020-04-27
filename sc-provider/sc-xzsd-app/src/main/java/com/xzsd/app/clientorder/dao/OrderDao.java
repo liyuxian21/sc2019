@@ -30,12 +30,10 @@ public interface OrderDao {
 
     /**
      *客户确认收货或者取消订单
-     * @param orderId
-     * @param orderStatus
-     * @param userId
+     * @param orderInfo
      * @return
      */
-    int updateOrder(@Param("orderId") String orderId,@Param("orderStatus") String orderStatus, @Param("userId")String userId);
+    int updateOrder(OrderInfo orderInfo);
 
     /**
      * 新增订单详情
@@ -85,4 +83,18 @@ public interface OrderDao {
      * @return
      */
     List<AppraiseList> listAppraiseByPage(AppraiseList appraiseList);
+
+    /**
+     * 更新商品评价等级
+     * @param appraiseList
+     * @return
+     */
+    int updateGoodsLevel(@Param("appraiseList") List<AppraiseInfo> appraiseList);
+
+    /**
+     * 判断登陆用户是否绑定了邀请码
+     * @param userId
+     * @return
+     */
+    StoreVO getStoreById(String userId);
 }
