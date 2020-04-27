@@ -210,7 +210,9 @@
             class_id classId,
             class_name className
         from t_sys_product_class
-        where parent_class_code=#{parentClassCode} and is_parent=1
+        where parent_class_code=#{parentClassCode}
+        and is_parent=1
+        and is_deleted=0
     </select>
 
 </mapper>

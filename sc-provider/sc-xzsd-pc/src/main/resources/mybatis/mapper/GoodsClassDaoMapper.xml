@@ -62,19 +62,20 @@
     </update>
     <!--    查询分类列表-->
     <select id="selectAllMenus"  resultMap="ModuleResultMap">
-    select
-        a.class_id as id,
-        a.class_name as name,
-        b.class_id as id2,
-        b.class_name as name2
-    from
-        t_sys_product_class a,
-        t_sys_product_class b
-    where a.class_id=b.parent_class_code
-    and a.is_deleted=0
-    and b.is_deleted=0
+      SELECT
+        a.class_id AS id,
+        a.class_name AS name,
+        b.class_id AS id2,
+        b.class_name AS name2
+    FROM
+        t_sys_product_class a
+        LEFT JOIN t_sys_product_class b ON ( a.class_id = b.parent_class_code AND b.is_parent = 1 AND b.is_deleted = 0 )
+    WHERE
+        a.is_deleted = 0
+        AND a.is_parent = 0
+    ORDER BY
+        a.update_time DESC
     </select>
-
     <resultMap id="ModuleResultMap" type="com.xzsd.pc.goodsClass.entity.GoodsClassList">
         <id column="id" property="classId" />
         <result column="name" property="className"/>

@@ -7,6 +7,7 @@
         from
             t_sys_store
         where user_id=#{userId}
+        and is_deleted=0
     </select>
     <!--    统计门店联系电话-->
     <select id="countPhone" parameterType="com.xzsd.pc.store.entity.StoreInfo"  resultType="int">
@@ -14,6 +15,7 @@
         from
             t_sys_store
         where store_phone=#{phone}
+        and is_deleted=0
     </select>
     <!--    统计门店联系电话-->
     <select id="countPhone2" parameterType="com.xzsd.pc.store.entity.StoreInfo"  resultType="int">
@@ -21,6 +23,7 @@
         from
             t_sys_store
         where store_phone=#{phone}
+        and is_deleted=0
     </select>
 <!--    新增门店-->
     <insert id="addStore" parameterType="com.xzsd.pc.store.entity.StoreInfo">
