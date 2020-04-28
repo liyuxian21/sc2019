@@ -108,7 +108,7 @@
             and a.product_name like concat('%',#{goodsName},'%')
         </if>
         <if test="goodsCode != null and goodsCode != ''">
-            and a.product_code like concat('%',#{goodsCode},'%')
+            and a.product_id like concat('%',#{goodsId},'%')
         </if>
         order by a.update_time desc
     </select>

@@ -92,12 +92,11 @@ public class GoodsClassService {
     /**
      * 查询商品分类
      *
-     * @param goodsClassList
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse selectAllMenus(GoodsClassList goodsClassList) {
-        List<GoodsClassList> goodsClassListList = goodsClassDao.selectAllMenus(goodsClassList);
+    public AppResponse selectAllMenus() {
+        List<GoodsClassList> goodsClassListList = goodsClassDao.selectAllMenus();
         return AppResponse.success("查询成功", goodsClassListList);
     }
 

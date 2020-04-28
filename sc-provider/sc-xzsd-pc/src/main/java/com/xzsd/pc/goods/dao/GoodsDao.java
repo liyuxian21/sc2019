@@ -69,7 +69,7 @@ public interface GoodsDao {
     /**
      * 查询所有商品一级分类
      */
-    List<GoodsClass> firstClassGoodsList(GoodsClass goodsClass);
+    List<GoodsClass> firstClassGoodsList();
 
     /**
      * 查询所有商品二级分类

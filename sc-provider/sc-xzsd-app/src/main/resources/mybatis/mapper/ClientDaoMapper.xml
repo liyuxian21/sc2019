@@ -88,7 +88,7 @@
         )
     </insert>
 <!--    查询轮播图-->
-    <select id="listSlideshow" parameterType="com.xzsd.app.client.entity.SlideShowInfo" resultType="com.xzsd.app.client.entity.SlideShowInfo">
+    <select id="listSlideshow" resultType="com.xzsd.app.client.entity.SlideShowInfo">
         select
             image_id    slideshowId,
             product_id  goodsId,
@@ -139,7 +139,7 @@
         and b.invite_code=c.invite_code
     </select>
 <!--    查询商品一级分类-->
-    <select id="firstClassGoodsList" parameterType="com.xzsd.app.client.entity.GoodsFirstClassVO" resultType="com.xzsd.app.client.entity.GoodsFirstClassVO">
+    <select id="firstClassGoodsList" resultType="com.xzsd.app.client.entity.GoodsFirstClassVO">
         select
             class_id classId,
             class_name className

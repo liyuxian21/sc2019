@@ -45,13 +45,12 @@ public class ClientController {
     /**
      * 查询轮播图
      *
-     * @param slideShowInfo
      * @return
      */
     @PostMapping("listSlideshow")
-    public AppResponse listSlideshow(SlideShowInfo slideShowInfo) {
+    public AppResponse listSlideshow() {
         try {
-            return clientService.listSlideshow(slideShowInfo);
+            return clientService.listSlideshow();
         } catch (Exception e) {
             logger.error("查询失败", e);
             System.out.printf(e.toString());
@@ -98,13 +97,12 @@ public class ClientController {
     /**
      * 查询商品一级分类
      *
-     * @param goodsFirstClassVO
      * @return
      */
     @PostMapping("firstClassGoodsList")
-    public AppResponse firstClassGoodsList(GoodsFirstClassVO goodsFirstClassVO) {
+    public AppResponse firstClassGoodsList() {
         try {
-            return clientService.firstClassGoodsList(goodsFirstClassVO);
+            return clientService.firstClassGoodsList();
         } catch (Exception e) {
             logger.error("查询商品一级分类列表错误", e);
             System.out.println(e.toString());

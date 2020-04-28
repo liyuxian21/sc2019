@@ -49,10 +49,9 @@ public interface ClientDao {
     /**
      * 查询轮播图列表
      *
-     * @param slideShowInfo
      * @return
      */
-    List<SlideShowInfo> listSlideshow(SlideShowInfo slideShowInfo);
+    List<SlideShowInfo> listSlideshow();
     /**
      * 查询商品详情
      *
@@ -63,10 +62,9 @@ public interface ClientDao {
     /**
      * 查询商品一级分类
      *
-     * @param goodsFirstClassVO
      * @return
      */
-    List<GoodsFirstClassVO> firstClassGoodsList(GoodsFirstClassVO goodsFirstClassVO);
+    List<GoodsFirstClassVO> firstClassGoodsList();
 
     /**
      * 查询商品二级分类

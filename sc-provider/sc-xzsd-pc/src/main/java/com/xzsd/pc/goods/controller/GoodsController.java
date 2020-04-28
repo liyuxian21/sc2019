@@ -152,9 +152,9 @@ public class GoodsController {
      * @time 2020-03-26
      */
     @PostMapping("firstClassGoodsList")
-    public AppResponse firstClassGoodsList(GoodsClass goodsClass) {
+    public AppResponse firstClassGoodsList() {
         try {
-            return goodsService.firstClassGoodsList(goodsClass);
+            return goodsService.firstClassGoodsList();
         } catch (Exception e) {
             logger.error("查询商品一级分类列表错误", e);
             System.out.println(e.toString());

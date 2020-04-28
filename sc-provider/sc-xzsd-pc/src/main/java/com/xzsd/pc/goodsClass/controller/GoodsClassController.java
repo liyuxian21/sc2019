@@ -88,14 +88,13 @@ public class GoodsClassController {
     }
 
     /**
-     * 查询商品分类列表
-     * @param goodsClassList
+     * 查询商品分类列
      * @return
      */
     @PostMapping("listGoodsClass")
-    public  AppResponse listGoodsClass(GoodsClassList goodsClassList){
+    public  AppResponse listGoodsClass(){
         try{
-            return goodsClassService.selectAllMenus(goodsClassList);
+            return goodsClassService.selectAllMenus();
         }catch(Exception e){
             logger.error("查询列表错误我",e);
             System.out.println(e.toString());

@@ -64,12 +64,11 @@ public class ClientService {
     /**
      * 查询轮播图
      *
-     * @param slideShowInfo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse listSlideshow(SlideShowInfo slideShowInfo) {
-        List<SlideShowInfo> slideShowInfoList = clientDao.listSlideshow(slideShowInfo);
+    public AppResponse listSlideshow() {
+        List<SlideShowInfo> slideShowInfoList = clientDao.listSlideshow();
         return AppResponse.success("查询成功！", slideShowInfoList);
     }
 
@@ -101,12 +100,11 @@ public class ClientService {
     /**
      * 查询商品一级分类
      *
-     * @param goodsFirstClassVO
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse firstClassGoodsList(GoodsFirstClassVO goodsFirstClassVO) {
-        List<GoodsFirstClassVO> goodsFirstClassList = clientDao.firstClassGoodsList(goodsFirstClassVO);
+    public AppResponse firstClassGoodsList() {
+        List<GoodsFirstClassVO> goodsFirstClassList = clientDao.firstClassGoodsList();
         return AppResponse.success("查询成功！", goodsFirstClassList);
     }
 

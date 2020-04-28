@@ -61,13 +61,12 @@ public class StoreController {
 
     /**
      * 省份下拉查询
-     * @param chinaVo
      * @return
      */
     @PostMapping("provinceStoreList")
-    public AppResponse provinceStoreList(ChinaVo chinaVo) {
+    public AppResponse provinceStoreList() {
         try {
-            return storeService.provinceStoreList(chinaVo);
+            return storeService.provinceStoreList();
         } catch (Exception e) {
             logger.error("省份下拉查询错误", e);
             System.out.println(e.toString());

@@ -65,7 +65,7 @@
             0)
     </insert>
 <!--省份下拉查询-->
-    <select id="provinceStoreList" parameterType="com.xzsd.pc.store.entity.ChinaVo" resultType="com.xzsd.pc.store.entity.ChinaVo">
+    <select id="provinceStoreList" resultType="com.xzsd.pc.store.entity.ChinaVo">
         select
             a.dictionaries_id dictionariesId,
             a.dict_name dictionariesName

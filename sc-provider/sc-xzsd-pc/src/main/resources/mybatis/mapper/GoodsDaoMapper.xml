@@ -195,7 +195,7 @@
    </update>
 
     <!--商品一级分类列表-->
-    <select id="firstClassGoodsList" parameterType="com.xzsd.pc.goods.entity.GoodsClass" resultType="com.xzsd.pc.goods.entity.GoodsClass">
+    <select id="firstClassGoodsList" resultType="com.xzsd.pc.goods.entity.GoodsClass">
         select
             a.class_id classId,
             a.class_name className

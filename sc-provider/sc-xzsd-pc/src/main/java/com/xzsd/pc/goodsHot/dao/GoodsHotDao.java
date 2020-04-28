@@ -78,8 +78,7 @@ public interface GoodsHotDao {
 
     /**
      * 查询热门商品展示数量
-     * @param goodsHotNumberVO
      * @return
      */
-    GoodsHotNumberVO getGoodsHotNumber(GoodsHotNumberVO goodsHotNumberVO);
+    GoodsHotNumberVO getGoodsHotNumber();
 }

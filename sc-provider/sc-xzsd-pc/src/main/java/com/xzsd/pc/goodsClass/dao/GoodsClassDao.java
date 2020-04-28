@@ -48,10 +48,9 @@ public interface GoodsClassDao {
 
     /**
      * 查询商品列表
-     * @param goodsClassList
      * @return
      */
-    List<GoodsClassList> selectAllMenus(GoodsClassList goodsClassList);
+    List<GoodsClassList> selectAllMenus();
     /**
      * 统计删除分类下的二级分类
      * @param classId

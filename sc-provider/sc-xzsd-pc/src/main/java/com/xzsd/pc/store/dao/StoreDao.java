@@ -34,10 +34,9 @@ public interface StoreDao {
 
     /**
      * 省份下拉查询
-     * @param chinaVo
      * @return
      */
-    List<ChinaVo> provinceStoreList(ChinaVo chinaVo);
+    List<ChinaVo> provinceStoreList();
 
     /**
      * 城市下拉查询
@@ -48,6 +47,7 @@ public interface StoreDao {
 
     /**
      * 区下拉查询
+     *
      * @param chinaVo
      * @return
      */

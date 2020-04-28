@@ -134,13 +134,12 @@ public class GoodsHotController {
     /**
      * 查询热门商品展示数量
      *
-     * @param goodsHotNumberVO
      * @return
      */
     @PostMapping("getGoodsHotNumber")
-    public AppResponse getGoodsHotNumber(GoodsHotNumberVO goodsHotNumberVO) {
+    public AppResponse getGoodsHotNumber() {
         try {
-            return goodsHotService.getGoodsHotNumber(goodsHotNumberVO);
+            return goodsHotService.getGoodsHotNumber();
         } catch (Exception e) {
             logger.error("查询失败", e);
             System.out.printf(e.toString());

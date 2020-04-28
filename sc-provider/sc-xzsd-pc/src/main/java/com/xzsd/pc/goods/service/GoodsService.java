@@ -165,8 +165,8 @@ public class GoodsService {
      * @time 020-03-26
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse firstClassGoodsList(GoodsClass goodsClass) {
-        List<GoodsClass> goodsClassList = goodsDao.firstClassGoodsList(goodsClass);
+    public AppResponse firstClassGoodsList() {
+        List<GoodsClass> goodsClassList = goodsDao.firstClassGoodsList();
         return AppResponse.success("查询成功！", goodsClassList);
     }
 

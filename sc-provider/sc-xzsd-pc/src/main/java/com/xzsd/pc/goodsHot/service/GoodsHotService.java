@@ -143,12 +143,11 @@ public class GoodsHotService {
 
     /**
      * 查询热门商品展示数量
-     * @param goodsHotNumberVO
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse getGoodsHotNumber(GoodsHotNumberVO goodsHotNumberVO){
-        GoodsHotNumberVO goodsHotNumberVO1=goodsHotDao.getGoodsHotNumber(goodsHotNumberVO);
+    public AppResponse getGoodsHotNumber(){
+        GoodsHotNumberVO goodsHotNumberVO1=goodsHotDao.getGoodsHotNumber();
         return AppResponse.success("查询成功",goodsHotNumberVO1);
     }
 }

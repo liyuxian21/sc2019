@@ -101,7 +101,7 @@
          number=#{number}
     </update>
 <!--    查询热门商品展示数量-->
-    <select id="getGoodsHotNumber" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotNumberVO" resultType="com.xzsd.pc.goodsHot.entity.GoodsHotNumberVO">
+    <select id="getGoodsHotNumber" resultType="com.xzsd.pc.goodsHot.entity.GoodsHotNumberVO">
         select
             number number
         from t_sys_number
