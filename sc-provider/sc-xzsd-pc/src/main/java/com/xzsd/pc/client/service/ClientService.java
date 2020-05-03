@@ -24,11 +24,10 @@ public class ClientService {
      * @param clientInfo
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listClient(ClientInfo clientInfo) {
         PageHelper.startPage(clientInfo.getPageNum(), clientInfo.getPageSize());
         List<ClientInfo> clientInfoList = clientDao.listClient(clientInfo);
-//        包装对象
+        //包装对象
         PageInfo<ClientInfo> pageData = new PageInfo<>(clientInfoList);
         return AppResponse.success("查询成功", pageData);
     }

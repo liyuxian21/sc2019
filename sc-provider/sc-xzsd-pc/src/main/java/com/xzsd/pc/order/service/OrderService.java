@@ -23,7 +23,6 @@ public class OrderService {
      * @param orderId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findOrderDetailsById(String orderId) {
         //获取订单详情
         List<OrderAllVO> orderAllVO=orderDao.findOrderDetailsById(orderId);
@@ -35,7 +34,6 @@ public class OrderService {
      * @param orderListVo
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findOrderList(OrderListVo orderListVo){
         PageHelper.startPage(orderListVo.getPageNum(), orderListVo.getPageSize());
         List<OrderListVo> orderListVoList = orderDao.findOrderList(orderListVo);
@@ -46,9 +44,9 @@ public class OrderService {
 
     /**
      * 订单状态修改
-     * @param orderId
-     * @param userId
-     * @param orderStatus
+     * @param orderId 订单id
+     * @param userId 更新人
+     * @param orderStatus 订单状态 0 取消到货， 1 订单到货，取消已取货， 2 订单已取货 ， 5 订单已取消
      * @return
      */
     @Transactional(rollbackFor = Exception.class)

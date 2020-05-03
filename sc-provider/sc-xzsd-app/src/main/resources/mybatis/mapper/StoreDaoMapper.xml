@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.app.store.dao.StoreDao">
-<!--    查询店长个人信息-->
+    <!--查询店长个人信息-->
     <select id="storeByUserId" parameterType="com.xzsd.app.store.entity.StoreInfo" resultType="com.xzsd.app.store.entity.StoreInfo">
         SELECT
             a.user_name,
@@ -24,7 +24,7 @@
             AND b.area_id = e.dictionaries_id
             AND a.is_deleted =0
     </select>
-<!--    查询司机信息-->
+    <!--查询司机信息-->
     <select id="findDriver" parameterType="com.xzsd.app.store.entity.DriverInfo" resultType="com.xzsd.app.store.entity.DriverInfo">
         select
             a.user_name driverName,
@@ -38,7 +38,7 @@
         and b.area_id=c.area_id
         and a.is_deleted=0
     </select>
-<!--    查询本店订单列表-->
+    <!--查询本店订单列表-->
     <resultMap id="orderStoreMap" type="com.xzsd.app.store.entity.OrderVO">
         <id column="order_id" property="orderId"/>
         <result column="order_code" property="orderCode"/>
@@ -94,7 +94,7 @@
             and a.is_deleted=0
         order by a.update_time desc
     </select>
-<!--    获取店长端订单详情-->
+    <!--获取店长端订单详情-->
     <resultMap id="orderDetailMap" type="com.xzsd.app.store.entity.OrderStoreDetailVO">
         <id column="order_id" property="orderId"/>
         <result column="order_code" property="orderCode"/>
@@ -160,7 +160,7 @@
             and a.is_deleted=0
         order by a.update_time desc
     </select>
-<!--    店长修改订单状态-->
+    <!--店长修改订单状态-->
     <update id="updateShopStatus" parameterType="java.lang.String">
         update t_sys_order
         set

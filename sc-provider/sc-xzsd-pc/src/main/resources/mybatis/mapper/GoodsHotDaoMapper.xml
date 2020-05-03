@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.pc.goodsHot.dao.GoodsHotDao">
-    <!--    统计商品id-->
+    <!--统计商品id-->
     <select id="countProduct" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotInfo" resultType="int">
         select count(product_id)
         from
             t_sys_product_hot
         where product_id=#{goodsId} and is_deleted=0
     </select>
-    <!--    统计新增序号-->
+    <!--统计新增序号-->
     <select id="countSort" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotInfo" resultType="int">
         select count(hot_sort)
         from t_sys_product_hot
@@ -38,16 +38,17 @@
             0)
 
     </insert>
-    <!--    查询热门商品详情-->
+    <!--查询热门商品详情-->
     <select id="findGoodsHotById" parameterType="java.lang.String" resultType="com.xzsd.pc.goodsHot.entity.GoodsHotDetailVO">
         select
             product_id goodsId,
-            hot_sort   sort
+            hot_sort   sort,
+            version    version
         from t_sys_product_hot
         where product_hot_id=#{goodsHotId}
         and   is_deleted=0
     </select>
-    <!--    修改热门商品-->
+    <!--修改热门商品-->
     <update id="updateGoodsHotById" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotInfo">
         update t_sys_product_hot
         set
@@ -59,30 +60,30 @@
         where product_hot_id = #{goodsHotId}
         and version = #{version}
     </update>
-    <!--    删除热门商品-->
+    <!--删除热门商品-->
     <delete id="deleteGoodsHot" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotInfo">
         update t_sys_product_hot
         set
-        is_deleted=1,
-        update_people=#{userId},
-        update_time=now(),
-        version = version+1
+            is_deleted=1,
+            update_people=#{userId},
+            update_time=now(),
+            version = version+1
         where product_hot_id in
         <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
             #{item}
         </foreach>
 
     </delete>
-    <!--    查询热门商品列表-->
+    <!--查询热门商品列表-->
     <select id="listGoodsHot" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotListVo" resultType="com.xzsd.pc.goodsHot.entity.GoodsHotListVo">
         select
-        a.product_hot_id    goodsHotId,
-        a.hot_sort          sort,
-        b.product_code      goodsCode,
-        b.product_name      goodsName,
-        b.product_idc       goodsIntroduction,
-        b.price             costPrice,
-        a.version           version
+            a.product_hot_id    goodsHotId,
+            a.hot_sort          sort,
+            b.product_code      goodsCode,
+            b.product_name      goodsName,
+            b.product_idc       goodsIntroduction,
+            b.price             costPrice,
+            a.version           version
         from t_sys_product_hot a
         left join t_sys_product b on a.product_id=b.product_id
         where a.is_deleted=0
@@ -94,13 +95,13 @@
         </if>
         order by a.hot_sort asc
     </select>
-    <!--   展示商品数量设置-->
+    <!--  展示商品数量设置-->
     <update id="setGoodsHot" parameterType="com.xzsd.pc.goodsHot.entity.GoodsHotInfo">
         update t_sys_number
         set
          number=#{number}
     </update>
-<!--    查询热门商品展示数量-->
+    <!--查询热门商品展示数量-->
     <select id="getGoodsHotNumber" resultType="com.xzsd.pc.goodsHot.entity.GoodsHotNumberVO">
         select
             number number

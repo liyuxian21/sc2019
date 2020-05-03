@@ -95,8 +95,8 @@ public class UserController {
     public AppResponse deleteUser(String userId) {
         try {
             //获取用户id
-            String userId1 = SecurityUtils.getCurrentUserId();
-            AppResponse appResponse = userService.deleteUser(userId, userId1);
+            String userIdPeople = SecurityUtils.getCurrentUserId();
+            AppResponse appResponse = userService.deleteUser(userId, userIdPeople);
             return appResponse;
         } catch (Exception e) {
             logger.error("用户删除失败", e);

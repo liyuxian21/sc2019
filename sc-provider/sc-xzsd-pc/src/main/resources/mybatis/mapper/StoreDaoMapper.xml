@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.pc.store.dao.StoreDao">
-    <!--    统计店长用户id-->
+    <!--统计店长用户id-->
     <select id="countUserId" parameterType="com.xzsd.pc.store.entity.StoreInfo" resultType="int">
         select count(user_id)
         from
@@ -9,7 +9,7 @@
         where user_id=#{userId}
         and is_deleted=0
     </select>
-    <!--    统计门店联系电话-->
+    <!--统计门店联系电话-->
     <select id="countPhone" parameterType="com.xzsd.pc.store.entity.StoreInfo"  resultType="int">
         select count(store_phone)
         from
@@ -17,15 +17,7 @@
         where store_phone=#{phone}
         and is_deleted=0
     </select>
-    <!--    统计门店联系电话-->
-    <select id="countPhone2" parameterType="com.xzsd.pc.store.entity.StoreInfo"  resultType="int">
-        select count(store_phone)
-        from
-            t_sys_store
-        where store_phone=#{phone}
-        and is_deleted=0
-    </select>
-<!--    新增门店-->
+    <!--新增门店-->
     <insert id="addStore" parameterType="com.xzsd.pc.store.entity.StoreInfo">
         insert into t_sys_store
             (store_id,
@@ -64,7 +56,7 @@
             now(),
             0)
     </insert>
-<!--省份下拉查询-->
+    <!--省份下拉查询-->
     <select id="provinceStoreList" resultType="com.xzsd.pc.store.entity.ChinaVo">
         select
             a.dictionaries_id dictionariesId,
@@ -88,7 +80,7 @@
         from dictionaries a
         where a.dict_type='区' and parent_code=#{parentCode}
     </select>
-<!--    查询门店详情-->
+    <!--查询门店详情-->
     <select id="findStoreDetailsById" parameterType="java.lang.String" resultType="com.xzsd.pc.store.entity.StoreDetialVO">
         select
             a.store_id        storeId,
@@ -99,13 +91,20 @@
             a.store_address   address,
             b.dict_name       provienceName,
             c.dict_name       cityName,
-            d.dict_name       areaName
-        from t_sys_store a,dictionaries b,dictionaries c,dictionaries d
-        where a.store_id=#{storeId} and a.provice_id=b.dictionaries_id
-        and a.city_id=c.dictionaries_id and a.area_id=d.dictionaries_id
+            d.dict_name       areaName,
+            a.version         version
+        from
+            t_sys_store a,
+            dictionaries b,
+            dictionaries c,
+            dictionaries d
+        where a.store_id=#{storeId}
+        and a.provice_id=b.dictionaries_id
+        and a.city_id=c.dictionaries_id
+        and a.area_id=d.dictionaries_id
         and a.is_deleted=0
     </select>
-<!--    修改门店-->
+    <!--修改门店-->
     <update id="updateStoreById" parameterType="com.xzsd.pc.store.entity.StoreInfo">
         update t_sys_store
         set
@@ -122,7 +121,7 @@
         where store_id      =#{storeId}
         and   version       =#{version}
     </update>
-<!--    查询门店列表-->
+    <!--查询门店列表-->
     <select id="listStore" parameterType="com.xzsd.pc.store.entity.StoreListVO" resultType="com.xzsd.pc.store.entity.StoreListVO">
         select
             a.store_name storeName,
@@ -163,7 +162,7 @@
         </if>
         order by a.update_time desc
     </select>
-<!--    删除门店-->
+    <!--删除门店-->
     <delete id="deleteStore" parameterType="com.xzsd.pc.store.entity.StoreInfo">
         update t_sys_store
         set

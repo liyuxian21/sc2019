@@ -2,6 +2,7 @@ package com.xzsd.pc.driver.entity;
 
 /**
  * 司机实体类
+ *
  * @author liyuxian
  * @time 2020-04-06
  */
@@ -19,15 +20,15 @@ public class DriverInfo {
      */
     private String driverCode;
     /**
-     *司机账户
+     * 司机账户
      */
-        private String driverAccount;
+    private String driverAccount;
     /**
      * 司机姓名
      */
     private String driverName;
     /**
-     *联系电话
+     * 联系电话
      */
     private String phone;
     /**

@@ -59,7 +59,6 @@ public class GoodsHotService {
      * @param goodsHotId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsHotById(String goodsHotId) {
         //查询热门商品
         GoodsHotDetailVO goodsHotDetailVO = goodsHotDao.findGoodsHotById(goodsHotId);
@@ -94,7 +93,8 @@ public class GoodsHotService {
     /**
      * 删除热门商品
      *
-     * @param goodsHotId
+     * @param goodsHotId 热门商品id
+     * @param userId  更新人
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -115,7 +115,6 @@ public class GoodsHotService {
      * @param goodsHotListVo
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listGoodsHot(GoodsHotListVo goodsHotListVo) {
         PageHelper.startPage(goodsHotListVo.getPageNum(), goodsHotListVo.getPageSize());
         List<GoodsHotListVo> goodsHotList = goodsHotDao.listGoodsHot(goodsHotListVo);
@@ -138,14 +137,12 @@ public class GoodsHotService {
             return AppResponse.versionError("修改失败！");
         }
         return AppResponse.success("修改成功！");
-
     }
 
     /**
      * 查询热门商品展示数量
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse getGoodsHotNumber(){
         GoodsHotNumberVO goodsHotNumberVO1=goodsHotDao.getGoodsHotNumber();
         return AppResponse.success("查询成功",goodsHotNumberVO1);

@@ -36,7 +36,7 @@ public interface ClientDao {
      * @param registerInfo
      * @return
      */
-    int register2(RegisterInfo registerInfo);
+    int registerClient(RegisterInfo registerInfo);
 
     /**
      * 统计门店邀请码

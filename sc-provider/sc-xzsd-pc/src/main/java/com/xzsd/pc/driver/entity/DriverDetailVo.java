@@ -26,6 +26,10 @@ public class DriverDetailVo {
      */
     private String provienceName;
     /**
+     * 用户密码
+     */
+    private String password;
+    /**
      * 市名称
      */
     private String cityName;
@@ -33,6 +37,26 @@ public class DriverDetailVo {
      * 区名称
      */
     private String areaName;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getDriverCode() {
         return driverCode;

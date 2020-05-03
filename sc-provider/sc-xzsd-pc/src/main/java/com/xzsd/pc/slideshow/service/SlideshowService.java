@@ -52,8 +52,8 @@ public class SlideshowService {
     /**
      * 轮播图启用、禁用修改 0禁用 1启用
      *
-     * @param slideshowId
-     * @param slideshowStatus
+     * @param slideshowId 轮播图id
+     * @param slideshowStatus 轮播图状态 0禁用 1启用
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -75,7 +75,6 @@ public class SlideshowService {
      * @param slideshowVO
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listSlideshow(SlideshowVO slideshowVO) {
         PageHelper.startPage(slideshowVO.getPageNum(), slideshowVO.getPageSize());
         List<SlideshowVO> slideshowVOList = slideshowDao.listSlideshowByPage(slideshowVO);
@@ -86,7 +85,8 @@ public class SlideshowService {
     /**
      * 删除轮播图
      *
-     * @param slideshowId
+     * @param slideshowId 轮播图id
+     * @param userId 更新人
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -100,7 +100,6 @@ public class SlideshowService {
             return AppResponse.versionError("删除失败，请重试！");
         }
         return appResponse;
-
     }
 
     /**
@@ -109,7 +108,6 @@ public class SlideshowService {
      * @param goodsListVO
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listSlideshowGoods(GoodsListVO goodsListVO) {
         PageHelper.startPage(goodsListVO.getPageNum(), goodsListVO.getPageSize());
         List<SlideshowVO> goodsListVoList = slideshowDao.goodsListVOyPage(goodsListVO);

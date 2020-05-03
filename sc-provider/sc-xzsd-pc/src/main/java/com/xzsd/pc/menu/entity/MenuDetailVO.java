@@ -18,6 +18,18 @@ public class MenuDetailVO {
      * 菜单备注
      */
     private String menuComment;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getMenuName() {
         return menuName;

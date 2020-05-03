@@ -97,4 +97,18 @@ public interface OrderDao {
      * @return
      */
     StoreVO getStoreById(String userId);
+
+    /**
+     * 查询订单商品评价信息
+     * @param orderId
+     * @return
+     */
+    OrderStoreVO findOrderGoodsById(String orderId);
+
+    /**
+     * 将订单状态修改为已经完成已经评价
+     * @param orderInfo
+     * @return
+     */
+    int updateOrderStatus(OrderInfo orderInfo);
 }

@@ -7,6 +7,7 @@ import com.xzsd.app.driver.entity.DriverStoreVO;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class DriverService {
@@ -31,7 +32,7 @@ public class DriverService {
      * @return
      */
     public AppResponse findDriverStoreById(DriverStoreVO driverStoreVO) {
-        DriverStoreVO driver = driverDao.findDriverStoreById(driverStoreVO);
-        return AppResponse.success("查询成功！", driver);
+        List<DriverStoreVO> driverList = driverDao.findDriverStoreById(driverStoreVO);
+        return AppResponse.success("查询成功！", driverList);
     }
 }

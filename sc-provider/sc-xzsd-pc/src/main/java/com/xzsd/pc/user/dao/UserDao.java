@@ -50,7 +50,7 @@ public interface UserDao {
      *
      * @return
      */
-    int deleteUser(@Param("listId") List<String> listId, @Param("userId1") String userId1);
+    int deleteUser(@Param("listId") List<String> listId, @Param("userIdPeople") String userIdPeople);
 
     /**
      * 查询用户详情

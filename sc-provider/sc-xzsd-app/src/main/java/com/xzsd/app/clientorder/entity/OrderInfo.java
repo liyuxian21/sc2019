@@ -74,7 +74,12 @@ public class OrderInfo {
      * 版本号
      */
     private String version;
-
+    public OrderInfo() {
+    }
+    public OrderInfo(String orderId, String userId){
+        this.orderId=orderId;
+        this.userId=userId;
+    }
     public String getShoppingId() {
         return shoppingId;
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.pc.user.dao.UserDao">
-<!--    获取登录用户详情-->
+    <!--获取登录用户详情-->
     <select id="loginDetails" parameterType="java.lang.String" resultType="com.xzsd.pc.user.entity.LoginUserVo">
         select
             user_name   userName,
@@ -85,7 +85,7 @@
         set
             is_deleted = 1,
             update_time = now(),
-            update_people =#{userId1},
+            update_people =#{userIdPeople},
             version = version+1
         where user_code in
         <foreach item="item" index="index" collection="listId" open="(" separator="," close=")">
@@ -104,7 +104,8 @@
             id_card       idCard,
             user_pwd     password,
             user_image   userPhoto,
-            role          role
+            role          role,
+            version       version
         from t_sys_user
         where
             user_code =#{userId}
@@ -122,7 +123,7 @@
             id_card         idCard,
             role            role,
             user_code       userId,
-            version          version
+            version         version
         FROM
             t_sys_user
         WHERE

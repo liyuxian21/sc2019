@@ -15,14 +15,14 @@
         where phone=#{phone}
         and is_deleted=0
     </select>
-<!--    统计门店邀请码-->
+    <!--统计门店邀请码-->
     <select id="countInciteCode" parameterType="com.xzsd.app.client.entity.RegisterInfo" resultType="int">
         select count(invite_code)
         from t_sys_store
         where invite_code=#{storeInviteCode}
         and is_deleted=0
     </select>
-<!--    注册用户-->
+    <!--注册用户-->
     <insert id="register" parameterType="com.xzsd.app.client.entity.RegisterInfo">
         insert into t_sys_user
         (
@@ -62,7 +62,7 @@
             0
         )
     </insert>
-    <insert id="register2" parameterType="com.xzsd.app.client.entity.RegisterInfo">
+    <insert id="registerClient" parameterType="com.xzsd.app.client.entity.RegisterInfo">
         insert into t_sys_client
         (
             client_id,
@@ -87,7 +87,7 @@
             0
         )
     </insert>
-<!--    查询轮播图-->
+    <!--查询轮播图-->
     <select id="listSlideshow" resultType="com.xzsd.app.client.entity.SlideShowInfo">
         select
             image_id    slideshowId,
@@ -95,15 +95,16 @@
             image_url   slideshowUrl
         from t_sys_slideshow
         where is_deleted=0
+		and   image_status=1
         order by sort asc
     </select>
-<!--    查询热门商品展示数量-->
+    <!--查询热门商品展示数量-->
     <select id="getNumber" resultType="java.lang.Integer">
           select
             number number
         from t_sys_number
     </select>
-<!--    查询热门商品-->
+    <!--查询热门商品-->
     <select id="listGoodsHot" parameterType="java.lang.Integer" resultType="com.xzsd.app.client.entity.GoodsHotVO">
         select
         a.product_hot_id    goodsHotId,
@@ -118,27 +119,30 @@
         order by a.hot_sort asc
         LIMIT 0,#{number}
     </select>
-<!--    查询商品详情-->
+    <!--查询商品详情-->
     <select id="findGoodsById" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.GoodsDetialVo">
-        select
-            a.product_name    goodsName,
-            a.product_id      goodsId,
-            a.product_idc     goodsIntroduction,
-            a.price           costPrice,
-            a.price_now       inPrice,
-            a.satrt_level     levelAvg,
-            a.sale_num        saleNum,
-            a.product_image   photoUrl,
-            b.store_id        storeId,
-            b.store_name      storeName
-        from
-            t_sys_product a,
-            t_sys_store b,
-            t_sys_client c
-        where a.product_id=#{goodsId} and c.user_id=#{userId}
-        and b.invite_code=c.invite_code
+      SELECT
+        a.product_name goodsName,
+        a.product_id goodsId,
+        a.product_idc goodsIntroduction,
+        a.price costPrice,
+        a.price_now inPrice,
+        ROUND( AVG( d.start_level ), 1 ) levelAvg,
+        a.sale_num saleNum,
+        a.product_image photoUrl,
+        b.store_id storeId,
+        b.store_name storeName
+    FROM
+        t_sys_product a
+        LEFT JOIN t_sys_store b ON a.product_id = #{goodsId}
+        LEFT JOIN t_sys_client c ON b.invite_code = c.invite_code
+        LEFT JOIN t_sys_appraise d ON d.product_id = #{goodsId}
+    WHERE
+        c.user_id = #{userId}
+        AND a.is_deleted = 0
+    GROUP BY d.product_id
     </select>
-<!--    查询商品一级分类-->
+    <!--查询商品一级分类-->
     <select id="firstClassGoodsList" resultType="com.xzsd.app.client.entity.GoodsFirstClassVO">
         select
             class_id classId,
@@ -147,8 +151,7 @@
         where is_deleted=0
         and   is_parent=0
     </select>
-
-<!--    查询商品二级分类-->
+    <!--查询商品二级分类-->
     <select id="secondClassGoodsList" parameterType="java.lang.String" resultMap="goodsClassResultMap">
         SELECT
             a.class_id,
@@ -159,18 +162,18 @@
             b.price_now,
             b.product_image
         FROM
-	        t_sys_product_class a left join
-	        t_sys_product b on 	a.class_id=b.class_second_id
+            t_sys_product_class a
+            LEFT JOIN t_sys_product b ON ( a.class_id = b.class_second_id AND b.is_deleted = 0 )
         WHERE
-	        a.is_deleted = 0
-	    AND a.is_parent =1
+            a.is_deleted = 0
+        AND a.is_parent = 1
 	    AND a.parent_class_code=#{parentClassCode}
     </select>
-<!--    查询分类下的商品信息-->
+    <!--查询分类下的商品信息-->
     <resultMap id="goodsClassResultMap" type="com.xzsd.app.client.entity.GoodsSecondClassVO">
         <id column="class_id" property="classId"/>
         <result column="class_name" property="className"/>
-<!--        一个分类下多个商品，使用collection映射-->
+        <!--一个分类下多个商品，使用collection映射-->
         <collection property="goodsList" ofType="com.xzsd.app.client.entity.GoodsVO">
             <id column="product_id" property="goodsId"/>
             <result column="product_name" property="goodsName"/>
@@ -179,7 +182,7 @@
             <result column="product_image" property="photoUrl"/>
         </collection>
     </resultMap>
-<!--    获取登录用户详情-->
+    <!--获取登录用户详情-->
     <select id="loginDetails" parameterType="java.lang.String" resultType="com.xzsd.app.client.entity.LoginUserVO">
         select
             a.user_name   userName,
@@ -194,7 +197,7 @@
         and b.invite_code=c.invite_code
         and a.is_deleted=0 and role=3
     </select>
-<!--    获取用户详情-->
+    <!--获取用户详情-->
     <select id="findUserById" parameterType="com.xzsd.app.client.entity.UserVO" resultType="com.xzsd.app.client.entity.UserVO">
         select
                 user_pwd userPassword
@@ -203,28 +206,28 @@
         where user_code=#{userId}
         and is_deleted=0
     </select>
-<!--    修改密码-->
+    <!--修改密码-->
     <update id="updatePassword" parameterType="com.xzsd.app.client.entity.UserVO">
         update t_sys_user
         set
             user_pwd   = #{newPassword}
         where user_code=#{userId}
     </update>
-<!--    统计店铺邀请码-->
+    <!--统计店铺邀请码-->
     <select id="countInviteCode" parameterType="com.xzsd.app.client.entity.UserVO" resultType="int">
         select count(invite_code)
         from t_sys_store
         where invite_code=#{storeInviteCode}
         and is_deleted=0
     </select>
-<!--    修改店铺邀请码-->
+    <!--修改店铺邀请码-->
     <update id="updateStoreInviteCode" parameterType="java.lang.String">
         update t_sys_client
         set
             invite_code=#{storeInviteCode}
         where user_id=#{currentUserId}
     </update>
-<!--    查询登录角色-->
+    <!--查询登录角色-->
     <select id="roleById" parameterType="com.xzsd.app.client.entity.RoleInfo" resultType="com.xzsd.app.client.entity.RoleInfo">
         select
           role role

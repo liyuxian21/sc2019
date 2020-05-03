@@ -22,6 +22,12 @@ public class StoreService {
     @Resource
     private StoreDao storeDao;
 
+    /**
+     * 新增门店
+     *
+     * @param storeInfo
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     public AppResponse addStore(StoreInfo storeInfo) {
         //统计店长用户id
@@ -51,7 +57,6 @@ public class StoreService {
      *
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse provinceStoreList() {
         List<ChinaVo> chinaVoList = storeDao.provinceStoreList();
         return AppResponse.success("查询成功！", chinaVoList);
@@ -61,14 +66,14 @@ public class StoreService {
      * 城市下拉查询
      *
      * @param chinaVo
+     * @param parentCode 一级分类id
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse cityStoreList(ChinaVo chinaVo, String parentCode) {
         if (parentCode == null) {
             return AppResponse.notFound("查询为空");
         }
-        List<ChinaVo> chinaVoList = storeDao.cityStoreList(chinaVo,parentCode);
+        List<ChinaVo> chinaVoList = storeDao.cityStoreList(chinaVo, parentCode);
         return AppResponse.success("查询成功！", chinaVoList);
     }
 
@@ -76,14 +81,14 @@ public class StoreService {
      * 区下拉查询
      *
      * @param chinaVo
+     * @param parentCode 一级分类id
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
-    public AppResponse areaStoreList(ChinaVo chinaVo,String parentCode) {
+    public AppResponse areaStoreList(ChinaVo chinaVo, String parentCode) {
         if (parentCode == null) {
             return AppResponse.notFound("查询为空");
         }
-        List<ChinaVo> chinaVoList = storeDao.areaStoreList(chinaVo,parentCode);
+        List<ChinaVo> chinaVoList = storeDao.areaStoreList(chinaVo, parentCode);
         return AppResponse.success("查询成功！", chinaVoList);
     }
 
@@ -93,7 +98,6 @@ public class StoreService {
      * @param storeId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findStoreDetailsById(String storeId) {
         //查询门店详情
         StoreDetialVO storeDetialVO = storeDao.findStoreDetailsById(storeId);
@@ -110,8 +114,8 @@ public class StoreService {
     @Transactional(rollbackFor = Exception.class)
     public AppResponse updateStoreById(StoreInfo storeInfo) {
         //统计门店电话
-        int countPhone2 = storeDao.countPhone2(storeInfo);
-        if (0 != countPhone2) {
+        int countPhone = storeDao.countPhone(storeInfo);
+        if (0 != countPhone) {
             return AppResponse.versionError("修改电话已经存在，请重新选择！");
         }
         //修改门店
@@ -128,7 +132,6 @@ public class StoreService {
      * @param storeListVO
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listStore(StoreListVO storeListVO) {
         PageHelper.startPage(storeListVO.getPageNum(), storeListVO.getPageSize());
         List<StoreListVO> storeListVOList = storeDao.listStore(storeListVO);
@@ -140,8 +143,8 @@ public class StoreService {
     /**
      * 删除门店
      *
-     * @param storeId
-     * @param userId
+     * @param storeId 门店id
+     * @param userId 更新人
      * @return
      */
     @Transactional(rollbackFor = Exception.class)

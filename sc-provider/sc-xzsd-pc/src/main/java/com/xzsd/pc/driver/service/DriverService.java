@@ -23,11 +23,12 @@ public class DriverService {
 
     /**
      * 新增司机
+     *
      * @param driverInfo
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse addDriver(DriverInfo driverInfo){
+    public AppResponse addDriver(DriverInfo driverInfo) {
         //判断用户账户和手机号是否存在
         int countUserAccount = driverDao.countUserAccount(driverInfo);
         int countUserPhone = driverDao.countUserPhone(driverInfo);
@@ -44,10 +45,10 @@ public class DriverService {
         driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
         //新增司机
         int count = driverDao.addDriver(driverInfo);
-        int count2 = driverDao.addDriver2(driverInfo);
-        if (0 == count){
+        int countUser = driverDao.addDriverUser(driverInfo);
+        if (0 == count) {
             return AppResponse.versionError("新增失败，请重试！");
-        }else if (0 == count2){
+        } else if (0 == countUser) {
             return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
@@ -55,19 +56,20 @@ public class DriverService {
 
     /**
      * 查询司机详情
+     *
      * @param driverId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findDriverDetailsById(String driverId) {
         //查询司机详情
-        DriverDetailVo driverDetailVo=driverDao.findDriverDetailsById(driverId);
-        return AppResponse.success("查询成功",driverDetailVo);
+        DriverDetailVo driverDetailVo = driverDao.findDriverDetailsById(driverId);
+        return AppResponse.success("查询成功", driverDetailVo);
 
     }
 
     /**
      * 修改司机信息
+     *
      * @param driverInfo
      * @return
      */
@@ -77,10 +79,10 @@ public class DriverService {
         driverInfo.setPassword(PasswordUtils.generatePassword(driverInfo.getPassword()));
         //修改司机
         int count = driverDao.updateDriverById(driverInfo);
-        int count2 = driverDao.updateDriverById2(driverInfo);
-        if (0 == count){
+        int countUser = driverDao.updateDriverByIdUser(driverInfo);
+        if (0 == count) {
             return AppResponse.versionError("数据有变化，请刷新！");
-        }else if (0 == count2){
+        } else if (0 == countUser) {
             return AppResponse.versionError("数据有变化，请刷新！");
         }
         return AppResponse.success("修改成功");
@@ -88,11 +90,11 @@ public class DriverService {
 
     /**
      * 查询司机列表
+     *
      * @param driverListVo
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
-    public AppResponse listDriver(DriverListVo driverListVo){
+    public AppResponse listDriver(DriverListVo driverListVo) {
         PageHelper.startPage(driverListVo.getPageNum(), driverListVo.getPageSize());
         List<DriverListVo> driverListVOList = driverDao.listDriver(driverListVo);
         //包装对象
@@ -102,20 +104,21 @@ public class DriverService {
 
     /**
      * 删除司机
-     * @param userId
+     *
+     * @param userId 司机用户id
+     * @param userIdPeople 更新人
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse deleteDriver(String userId,String userId1){
-        //以逗号分隔开
-        List<String> listId= Arrays.asList(userId.split(","));
-        List<String> listId2= Arrays.asList(userId.split(","));
+    public AppResponse deleteDriver(String userId, String userIdPeople) {
+        List<String> listId = Arrays.asList(userId.split(","));
+        List<String> listIdUser = Arrays.asList(userId.split(","));
         //删除司机
-        int count = driverDao.deleteDriver(listId,userId1);
-        int count2 = driverDao.delete(listId2,userId1);
-        if (0 == count){
+        int count = driverDao.deleteDriver(listId, userIdPeople);
+        int countUser = driverDao.deleteUser(listIdUser, userIdPeople);
+        if (0 == count) {
             return AppResponse.versionError("删除失败，请重试！");
-        }else if (0 == count2){
+        } else if (0 == countUser) {
             return AppResponse.versionError("删除失败，请重试！");
         }
         return AppResponse.success("删除成功！");

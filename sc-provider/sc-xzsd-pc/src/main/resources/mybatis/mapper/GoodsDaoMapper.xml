@@ -81,7 +81,7 @@
     where product_id  = #{goodsId}
         and version   = #{version}
    </update>
-<!--统计热门商品里的商品id-->
+    <!--统计热门商品里的商品id-->
     <select id="countHot" parameterType="com.xzsd.pc.goods.entity.GoodsInfo" resultType="int">
         select count(product_id)
         from
@@ -92,7 +92,7 @@
         </foreach>
         and is_deleted=0
     </select>
-<!--统计轮播图里的商品id-->
+    <!--统计轮播图里的商品id-->
     <select id="countSlideshow" parameterType="com.xzsd.pc.goods.entity.GoodsInfo" resultType="int">
         select count(product_id)
         from
@@ -117,7 +117,6 @@
         </foreach>
         and is_deleted=0
     </delete>
-
     <!--获取商品详情-->
     <select id="findGoodsById" parameterType="java.lang.String" resultType="com.xzsd.pc.goods.entity.GoodsDetail">
         SELECT
@@ -132,7 +131,8 @@
             a.price costPrice,
             a.stock store,
             a.price_now inPrice,
-            a.product_idc goodsIntroduction
+            a.product_idc goodsIntroduction,
+            a.version version
         FROM
             t_sys_product a
             LEFT JOIN t_sys_product_class b ON a.class_first_id = b.class_id
@@ -178,22 +178,20 @@
         </if>
         order by update_time desc
     </select>
-
     <!--修改商品状态 0 下架 1 上架-->
     <update id="status" parameterType="java.lang.String">
-    update t_sys_product
-    set
-        product_status = #{goodsStatus},
-        update_time    = now(),
-        update_people  = #{userId},
-        version        = version+1
-    where
-        product_id  in
-     <foreach item="item" index="index" collection="listId1" open="(" separator="," close=")">
-        #{item}
-     </foreach>
+        update t_sys_product
+        set
+            product_status = #{goodsStatus},
+            update_time    = now(),
+            update_people  = #{userId},
+            version        = version+1
+        where
+            product_id  in
+         <foreach item="item" index="index" collection="listId1" open="(" separator="," close=")">
+            #{item}
+         </foreach>
    </update>
-
     <!--商品一级分类列表-->
     <select id="firstClassGoodsList" resultType="com.xzsd.pc.goods.entity.GoodsClass">
         select
@@ -202,8 +200,8 @@
         from t_sys_product_class a
         where a.is_deleted=0
         and  a.is_parent=0
+        ORDER BY a.update_time DESC
     </select>
-
     <!--商品二级分类列表-->
     <select id="secondClassGoodsList" parameterType="java.lang.String" resultType="com.xzsd.pc.goods.entity.GoodsClass">
         select
@@ -213,6 +211,6 @@
         where parent_class_code=#{parentClassCode}
         and is_parent=1
         and is_deleted=0
+        ORDER BY a.update_time DESC
     </select>
-
 </mapper>

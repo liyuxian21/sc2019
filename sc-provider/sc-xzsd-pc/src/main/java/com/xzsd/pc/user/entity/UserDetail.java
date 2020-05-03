@@ -37,6 +37,18 @@ public class UserDetail {
      * 用户头像
      */
     private String userPhoto;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getUserPhoto() {
         return userPhoto;

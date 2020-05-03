@@ -39,6 +39,18 @@ public class OrderAllVO {
      * 购买数量
      */
     private String buyNumber;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getOrderCode() {
         return orderCode;

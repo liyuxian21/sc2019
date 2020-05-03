@@ -29,7 +29,7 @@ public interface DriverDao {
      * @param driverInfo
      * @return
      */
-    int addDriver2(DriverInfo driverInfo);
+    int addDriverUser(DriverInfo driverInfo);
 
     /**
      * 修改司机
@@ -43,7 +43,7 @@ public interface DriverDao {
      * @param driverInfo
      * @return
      */
-    int updateDriverById2(DriverInfo driverInfo);
+    int updateDriverByIdUser(DriverInfo driverInfo);
 
     /**
      * 查询司机列表
@@ -55,18 +55,18 @@ public interface DriverDao {
     /**
      * 删除司机
      * @param listId
-     * @param userId1
+     * @param userIdPeople
      * @return
      */
-    int deleteDriver(@Param("listId") List<String> listId, @Param("userId1") String userId1);
+    int deleteDriver(@Param("listId") List<String> listId, @Param("userIdPeople") String userIdPeople);
 
     /**
      * 删除司机
-     * @param listId2
-     * @param userId1
+     * @param listIdUser
+     * @param userIdPeople
      * @return
      */
-    int delete(@Param("listId2") List<String> listId2, @Param("userId1") String userId1);
+    int deleteUser(@Param("listIdUser") List<String> listIdUser, @Param("userIdPeople") String userIdPeople);
 
     /**
      * 统计司机用户账户
@@ -81,6 +81,4 @@ public interface DriverDao {
      * @return
      */
     int countUserPhone(DriverInfo driverInfo);
-
-
 }

@@ -67,13 +67,6 @@ public interface StoreDao {
     int updateStoreById(StoreInfo storeInfo);
 
     /**
-     * 统计电话
-     * @param storeInfo
-     * @return
-     */
-    int countPhone2(StoreInfo storeInfo);
-
-    /**
      * 查询门店列表
      * @param storeListVO
      * @return

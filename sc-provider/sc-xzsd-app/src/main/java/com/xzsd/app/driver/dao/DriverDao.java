@@ -3,6 +3,8 @@ package com.xzsd.app.driver.dao;
 import com.xzsd.app.driver.entity.DriverPersonVO;
 import com.xzsd.app.driver.entity.DriverStoreVO;
 
+import java.util.List;
+
 public interface DriverDao {
     /**
      * 查询司机个人信息
@@ -16,5 +18,5 @@ public interface DriverDao {
      * @param driverStoreVO
      * @return
      */
-    DriverStoreVO findDriverStoreById(DriverStoreVO driverStoreVO);
+    List<DriverStoreVO> findDriverStoreById(DriverStoreVO driverStoreVO);
 }

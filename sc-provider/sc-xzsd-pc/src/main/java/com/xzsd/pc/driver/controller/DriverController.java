@@ -103,13 +103,12 @@ public class DriverController {
     public AppResponse deleteDriver(String userId){
         try{
             //获取用户id
-            String userId1 = SecurityUtils.getCurrentUserId();
-            return driverService.deleteDriver(userId,userId1);
+            String userIdPeople = SecurityUtils.getCurrentUserId();
+            return driverService.deleteDriver(userId,userIdPeople);
         }catch(Exception e){
             logger.error("删除失败",e);
             System.out.printf(e.toString());
             throw e;
         }
     }
-
 }

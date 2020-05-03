@@ -3,7 +3,6 @@ package com.xzsd.pc.goods.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.neusoft.core.restful.AppResponse;
-import com.neusoft.util.RandomUtil;
 import com.neusoft.util.StringUtil;
 import com.xzsd.pc.goods.dao.GoodsDao;
 import com.xzsd.pc.goods.entity.GoodsClass;
@@ -23,10 +22,8 @@ import java.util.List;
  * @author liyuxian
  * @time 020-03-24
  */
-
 @Service
 public class GoodsService {
-
     @Resource
     private GoodsDao goodsDao;
 
@@ -45,7 +42,7 @@ public class GoodsService {
         if (0 != countIsbn) {
             return AppResponse.versionError("书号已存在，请重新输入！");
         }
-       //给商品编码和商品id设置随机数
+        //给商品编码和商品id设置随机数
         goodsInfo.setGoodsCode(StringUtil.getCommonCode(2));
         goodsInfo.setGoodsId(StringUtil.getCommonCode(2));
         goodsInfo.setSaleNum("0");
@@ -117,7 +114,6 @@ public class GoodsService {
      * @auhtor liyuxian
      * @time 2020-03-25
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsById(String goodsId) {
         //查询商品
         GoodsDetail goodsDetail = goodsDao.findGoodsById(goodsId);
@@ -130,7 +126,6 @@ public class GoodsService {
      * @author liyuxian
      * @time 020-03-24
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listGoods(GoodsList goodsList) {
         PageHelper.startPage(goodsList.getPageNum(), goodsList.getPageSize());
         List<GoodsList> goodsListList = goodsDao.listGoodsByPage(goodsList);
@@ -143,6 +138,9 @@ public class GoodsService {
     /**
      * 设置商品 1上架、0下架
      *
+     * @param goodsId 商品id
+     * @param userId 操作人id
+     * @param goodsStatus 商品状态 0 下架 1 上架
      * @author liyuxian
      * @time 020-03-26
      */
@@ -164,7 +162,6 @@ public class GoodsService {
      * @author liyuxian
      * @time 020-03-26
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse firstClassGoodsList() {
         List<GoodsClass> goodsClassList = goodsDao.firstClassGoodsList();
         return AppResponse.success("查询成功！", goodsClassList);
@@ -176,7 +173,6 @@ public class GoodsService {
      * @author liyuxian
      * @time 020-03-26
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse secondClassGoodsList(GoodsClass goodsClass, String parentClassCode) {
         //判断是否有父类编码
         if (parentClassCode == null) {

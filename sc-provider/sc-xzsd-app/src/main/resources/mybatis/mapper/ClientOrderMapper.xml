@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.app.clientorder.dao.OrderDao">
-<!--    判断店铺是否绑定了邀请码-->
+    <!--判断店铺是否绑定了邀请码-->
     <select id="getStoreById" parameterType="java.lang.String" resultType="com.xzsd.app.clientorder.entity.StoreVO">
         select
             b.invite_code storeInviteCode
@@ -14,7 +14,7 @@
         and b.invite_code=c.invite_code
         and a.is_deleted=0
     </select>
-<!--新增订单-->
+    <!--新增订单-->
     <insert id="addOrder" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
         insert into t_sys_order
         (
@@ -50,7 +50,7 @@
             0
         )
     </insert>
-<!--    查询商品详情-->
+    <!--查询商品详情-->
     <select id="getGoods" parameterType="java.lang.String" resultType="com.xzsd.app.clientorder.entity.GoodsVO">
         select
             product_id      goodsId,
@@ -60,7 +60,7 @@
         where product_id=#{goodsId}
         and is_deleted=0
     </select>
-<!--    新增订单明细-->
+    <!--新增订单明细-->
     <insert id="addOrderDetail" parameterType="java.util.List">
         insert into t_sys_order_detail (
             order_clear_id,
@@ -93,28 +93,28 @@
         )
         </foreach>
     </insert>
-    <!--    更新商品库存和数量-->
+    <!--更新商品库存和数量-->
     <update id="update" parameterType="java.util.List">
         <foreach collection="orderDetailVOList" index="index" item="item" open="" separator=";" close="">
-            update t_sys_product
-            set
+        update t_sys_product
+        set
             sale_num = sale_num + #{item.goodsShoppingNumber},
             stock = stock - #{item.goodsShoppingNumber}
-            where product_id=#{item.goodsId}
-            and is_deleted=0
+        where product_id=#{item.goodsId}
+        and is_deleted=0
         </foreach>
     </update>
-<!--    将商品从购物车移除-->
+    <!--将商品从购物车移除-->
     <delete id="deleteGoods" parameterType="java.lang.String">
        update t_sys_shopping
        set
-        is_deleted =1
+            is_deleted =1
        where shopping_id in
         <foreach collection="goodsIdList" index="index" item="item" open="(" separator="," close=")">
             #{item}
         </foreach>
     </delete>
-<!--    查询订单列表-->
+    <!--查询订单列表-->
     <resultMap id="orderListResultMap" type="com.xzsd.app.clientorder.entity.OrderListVO">
         <id column="order_id" property="orderId"/>
         <result column="order_code" property="orderCode"/>
@@ -163,7 +163,7 @@
             and a.is_deleted=0
         order by a.update_time desc
     </select>
-<!--    获取订单详情-->
+    <!--获取订单详情-->
     <resultMap id="orderMap" type="com.xzsd.app.clientorder.entity.OrderStoreVO">
         <id column="order_id" property="orderId"/>
         <result column="order_code" property="orderCode"/>
@@ -223,7 +223,39 @@
             and a.is_deleted=0
         order by a.update_time desc
     </select>
-<!--    客户修改订单状态-->
+    <!--查询订单评价商品信息-->
+    <resultMap id="orderGoodsMap" type="com.xzsd.app.clientorder.entity.OrderStoreVO">
+        <id column="order_id" property="orderId"/>
+        <collection property="goodsList" ofType="com.xzsd.app.clientorder.entity.OrderDetailVO" select="selectOrderGoods" column="order_id">
+            <id column="order_clear_id" property="orderClearId"/>
+            <result column="product_id" property="goodsId"/>
+            <result column="product_image" property="photoUrl"/>
+        </collection>
+    </resultMap>
+    <select id="findOrderGoodsById" parameterType="java.lang.String" resultMap="orderGoodsMap">
+         SELECT
+            order_id
+        FROM
+            t_sys_order
+        WHERE
+            order_id = #{orderId}
+        and is_deleted = 0
+    </select>
+    <select id="selectOrderGoods" parameterType="com.xzsd.app.clientorder.entity.OrderDetailVO" resultType="com.xzsd.app.clientorder.entity.OrderDetailVO">
+          select
+            a.order_clear_id orderClearId,
+            a.product_id    goodsId,
+            b.product_image photoUrl
+        from
+            t_sys_order_detail a,
+            t_sys_product b
+        where
+            a.order_id=#{orderId}
+            and a.product_id=b.product_id
+            and a.is_deleted=0
+        order by a.update_time desc
+    </select>
+    <!-- 客户修改订单状态-->
     <update id="updateOrder" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
         update t_sys_order
         set
@@ -232,7 +264,16 @@
         where order_id=#{orderId}
         and   is_deleted=0
     </update>
-<!--   新增评价信息-->
+    <!--评价完成后修改订单状态，将订单修改为已经完成已经评价-->
+    <update id="updateOrderStatus" parameterType="com.xzsd.app.clientorder.entity.OrderInfo">
+        update t_sys_order
+        set
+            order_status    =   '4',
+            update_people   =   #{userId}
+        where order_id=#{orderId}
+        and   is_deleted=0
+    </update>
+    <!--新增评价信息-->
     <insert id="addAppraise" parameterType="com.xzsd.app.clientorder.entity.OrderAppraise">
         insert  into t_sys_appraise
         (
@@ -262,7 +303,7 @@
          )
         </foreach>
     </insert>
-<!--    新增评价图片信息-->
+    <!--新增评价图片信息-->
     <insert id="addAppraiseImage" parameterType="com.xzsd.app.clientorder.entity.AppraiseImage">
         insert  into t_sys_appraise_image
         (
@@ -288,7 +329,7 @@
         )
         </foreach>
     </insert>
-<!--    查询商品评价列表-->
+    <!--查询商品评价列表-->
     <resultMap id="appraiseResultMap" type="com.xzsd.app.clientorder.entity.AppraiseList">
         <id column="appraise_id" property="appraiseId"/>
         <result column="product_id" property="goodsId"/>
@@ -315,13 +356,13 @@
         WHERE
             a.product_id = #{goodsId}
             AND a.is_deleted =0
-        <if test="appraiseGoodsLevel == 0">
+        <if test="appraiseGoodsLevel == 1">
             and a.start_level in(1,2)
         </if>
-        <if test="appraiseGoodsLevel == 1">
+        <if test="appraiseGoodsLevel == 2">
             and a.start_level in(3,4)
         </if>
-        <if test="appraiseGoodsLevel == 2">
+        <if test="appraiseGoodsLevel == 3">
             and a.start_level = 5
         </if>
         order by a.update_time desc
@@ -340,12 +381,12 @@
         ORDER BY
             a.sort asc
     </select>
-    <!--    更新商品评价等级-->
+    <!--更新商品评价等级-->
     <update id="updateGoodsLevel" parameterType="com.xzsd.app.clientorder.entity.AppraiseInfo">
         <foreach collection="appraiseList" item="item" open="" separator=";" close="" index="index">
             update t_sys_product
             set
-            satrt_level=(satrt_level+#{item.level})/2
+            satrt_level=(satrt_level+#{item.level})
             where product_id=#{item.goodsId}
         </foreach>
     </update>

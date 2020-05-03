@@ -62,8 +62,9 @@ public class StoreService {
 
     /**
      * 店长修改订单状态
-     * @param orderId
-     * @param orderStatus
+     * @param orderId 订单id
+     * @param orderStatus 订单状态
+     * @param userId 更新人
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
@@ -75,7 +76,6 @@ public class StoreService {
         }
         return AppResponse.success("修改成功！");
     }
-
 }
 
 

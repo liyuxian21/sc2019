@@ -128,6 +128,21 @@ public class OrderController {
     }
 
     /**
+     * 查询订单评价商品信息
+     * @param orderId
+     * @return
+     */
+    @PostMapping("findOrderGoodsById")
+    public AppResponse findOrderGoodsById(String orderId) {
+        try {
+            return orderService.findOrderGoodsById(orderId);
+        } catch (Exception e) {
+            logger.error("获取失败", e);
+            System.out.println(e.toString());
+            throw e;
+        }
+    }
+    /**
      * 查询商品评价列表
      * @param appraiseList
      * @return

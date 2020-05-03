@@ -96,7 +96,7 @@ public class OrderService {
      * @return
      */
     public AppResponse listOrderList(OrderListVO orderListVO) {
-//        查询订单列表
+        //查询订单列表
         List<OrderListVO> orderList = orderDao.listOrderByPage(orderListVO);
         return AppResponse.success("查询成功", getPageInfo(orderList));
     }
@@ -107,12 +107,20 @@ public class OrderService {
      * @param orderId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findOrderById(String orderId) {
         OrderStoreVO orderStoreVO = orderDao.findOrderById(orderId);
         return AppResponse.success("查询成功", orderStoreVO);
     }
 
+    /**
+     * 查询订单评价商品信息
+     * @param orderId
+     * @return
+     */
+    public AppResponse findOrderGoodsById(String orderId){
+        OrderStoreVO orderStoreVO = orderDao.findOrderGoodsById(orderId);
+        return AppResponse.success("查询成功", orderStoreVO);
+    }
     /**
      * 订单状态修改，客户点击确认收货和取消订单
      *
@@ -182,11 +190,18 @@ public class OrderService {
         if (addAppraiseImageCount != appraiseImageList.size()) {
             return AppResponse.versionError("评价失败");
         }
-        //修改商品评价等级
+        //将订单状态修改为已经完成已经评价
+        OrderInfo orderInfo=new OrderInfo(orderAppraise.getOrderId(),orderAppraise.getUserId());
+        // 订单状态修改
+        int count = orderDao.updateOrderStatus(orderInfo);
+        if (0 == count) {
+            return AppResponse.versionError("修改失败！");
+        }
+      /*  //修改商品评价等级
         int updateGoodsLevel = orderDao.updateGoodsLevel(orderAppraise.getAppraiseList());
         if (0 == updateGoodsLevel) {
             return AppResponse.versionError("更新商品等级失败，评价失败");
-        }
+        }*/
         return AppResponse.success("评价成功！");
     }
 

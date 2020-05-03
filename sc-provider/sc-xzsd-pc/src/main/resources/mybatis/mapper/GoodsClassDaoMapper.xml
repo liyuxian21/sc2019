@@ -40,7 +40,8 @@
             resultType="com.xzsd.pc.goodsClass.entity.GoodsClassDetail">
         select
             class_name className,
-            comment    comment
+            comment    comment,
+            version    version
         from
             t_sys_product_class
         where
@@ -84,7 +85,7 @@
             <result column="name2" property="className"/>
         </collection>
     </resultMap>
-<!--统计一级分类下的二级分类数量-->
+    <!--统计一级分类下的二级分类数量-->
     <select id="countSecond" parameterType="java.lang.String" resultType="int">
         select count(class_id)
         from
@@ -92,7 +93,7 @@
         where parent_class_code=#{classId}
         and is_deleted=0
     </select>
-    <!--    删除商品分类-->
+    <!--删除商品分类-->
     <update id="deleteGoodsClass" parameterType="com.xzsd.pc.goodsClass.entity.GoodsClassInfo">
         update t_sys_product_class
         set

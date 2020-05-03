@@ -37,6 +37,18 @@ public class StoreDetialVO {
      * 详细地址
      */
     private String address;
+    /**
+     * 版本号
+     */
+    private String version;
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getStoreId() {
         return storeId;

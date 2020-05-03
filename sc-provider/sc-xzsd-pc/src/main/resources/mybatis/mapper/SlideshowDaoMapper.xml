@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xzsd.pc.slideshow.dao.SlideshowDao">
-<!--新增轮播图片-->
+    <!--新增轮播图片-->
     <insert id="addSlideshow" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo">
         insert into t_sys_slideshow
             (image_id,
@@ -33,19 +33,19 @@
             now(),
             0)
     </insert>
-<!--统计新增商品id数量-->
+    <!--统计新增商品id数量-->
     <select id="countProduct" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo" resultType="int">
         select count(product_id)
         from t_sys_slideshow
         where product_id=#{goodsId} and is_deleted=0
     </select>
-<!--    统计新增序号-->
+    <!--统计新增序号-->
     <select id="countSort" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo" resultType="int">
         select count(sort)
         from t_sys_slideshow
         where sort=#{sort} and is_deleted=0
     </select>
-<!--    修改轮播图状态-->
+    <!--修改轮播图状态-->
     <update id="enableDisable" parameterType="java.lang.String">
         update t_sys_slideshow
         set
@@ -57,7 +57,7 @@
             #{item}
         </foreach>
     </update>
-<!--    查询轮播图列表-->
+    <!--查询轮播图列表-->
     <select id="listSlideshowByPage" parameterType="com.xzsd.pc.slideshow.entity.SlideshowVO" resultType="com.xzsd.pc.slideshow.entity.SlideshowVO">
         SELECT
             image_id slideshowId,
@@ -75,7 +75,7 @@
         </if>
         order by sort asc
     </select>
-<!--    删除轮播图-->
+    <!--删除轮播图-->
     <delete id="deleteSlideshow" parameterType="com.xzsd.pc.slideshow.entity.SlideshowInfo">
         update t_sys_slideshow
         set
@@ -88,7 +88,7 @@
             #{item}
         </foreach>
     </delete>
-<!--    查询商品-->
+    <!--查询商品-->
     <select id="goodsListVOyPage" parameterType="com.xzsd.pc.slideshow.entity.GoodsListVO" resultType="com.xzsd.pc.slideshow.entity.GoodsListVO">
         SELECT
             a.product_id goodsId,
@@ -107,7 +107,7 @@
         <if test="goodsName != null and goodsName != ''">
             and a.product_name like concat('%',#{goodsName},'%')
         </if>
-        <if test="goodsCode != null and goodsCode != ''">
+        <if test="goodsId != null and goodsId != ''">
             and a.product_id like concat('%',#{goodsId},'%')
         </if>
         order by a.update_time desc

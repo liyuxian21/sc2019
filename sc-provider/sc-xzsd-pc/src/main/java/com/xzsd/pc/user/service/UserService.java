@@ -55,7 +55,6 @@ public class UserService {
             return AppResponse.versionError("新增失败，请重试！");
         }
         return AppResponse.success("新增成功！");
-
     }
 
     /**
@@ -87,15 +86,17 @@ public class UserService {
     /**
      * 删除用户
      *
+     * @param userId 用户id
+     * @param userIdPeople 更新人
      * @author liyuxian
      * @time 020-03-25
      */
     @Transactional(rollbackFor = Exception.class)
-    public AppResponse deleteUser(String userId, String userId1) {
+    public AppResponse deleteUser(String userId, String userIdPeople) {
         List<String> listId = Arrays.asList(userId.split(","));
         AppResponse appResponse = AppResponse.success("删除成功！");
         //删除用户
-        int count = userDao.deleteUser(listId, userId1);
+        int count = userDao.deleteUser(listId, userIdPeople);
         if (0 == count) {
             return AppResponse.versionError("删除失败，请重试！");
         }
@@ -109,7 +110,6 @@ public class UserService {
      * @author liyuxian
      * @time 020-03-26
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findUserById(String userId) {
         //查询用户
         UserDetail userInfo = userDao.findUserById(userId);
@@ -122,14 +122,12 @@ public class UserService {
      * @author liyuxian
      * @time 020-03-26
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listUser(UserList userList) {
         PageHelper.startPage(userList.getPageNum(), userList.getPageSize());
         List<UserList> userListList = userDao.listUserByPage(userList);
         //包装对象
         PageInfo<UserList> pageData = new PageInfo<>(userListList);
         return AppResponse.success("查询成功", pageData);
-
     }
 
     /**

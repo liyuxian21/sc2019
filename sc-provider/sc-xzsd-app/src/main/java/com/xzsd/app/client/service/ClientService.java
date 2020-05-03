@@ -51,11 +51,11 @@ public class ClientService {
         //密码加密
         registerInfo.setUserPassword(PasswordUtils.generatePassword(registerInfo.getUserPassword()));
         // 新增用户
-        int count = clientDao.register(registerInfo);
-        int count2 = clientDao.register2(registerInfo);
-        if (0 == count) {
+        int countUser = clientDao.register(registerInfo);
+        int countClient = clientDao.registerClient(registerInfo);
+        if (0 == countUser) {
             return AppResponse.versionError("注册失败，请重试！");
-        } else if (0 == count2) {
+        } else if (0 == countClient) {
             return AppResponse.versionError("注册失败，请重试！");
         }
         return AppResponse.success("注册成功！");
@@ -77,7 +77,6 @@ public class ClientService {
      *
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse listGoodsHot() {
         //查询热门商品展示数量
         int number = Integer.valueOf(clientDao.getNumber());
@@ -91,7 +90,6 @@ public class ClientService {
      * @param goodsDetialVo
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse findGoodsById(GoodsDetialVo goodsDetialVo) {
         GoodsDetialVo goodsDetailVoList = clientDao.findGoodsById(goodsDetialVo);
         return AppResponse.success("查询成功", goodsDetailVoList);
@@ -102,7 +100,6 @@ public class ClientService {
      *
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse firstClassGoodsList() {
         List<GoodsFirstClassVO> goodsFirstClassList = clientDao.firstClassGoodsList();
         return AppResponse.success("查询成功！", goodsFirstClassList);
@@ -115,7 +112,6 @@ public class ClientService {
      * @param parentClassCode
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse secondClassGoodsList(GoodsSecondClassVO goodsSecondClassVO, String parentClassCode) {
         //判断是否有父类编码
         if (parentClassCode == null) {
@@ -131,7 +127,6 @@ public class ClientService {
      * @param currentUserId
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     public AppResponse loginDetails(String currentUserId) {
         //获取用户详情
         LoginUserVO loginUserVO = clientDao.loginDetails(currentUserId);
