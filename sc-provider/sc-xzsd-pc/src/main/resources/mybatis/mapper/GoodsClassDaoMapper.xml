@@ -74,8 +74,7 @@
     WHERE
         a.is_deleted = 0
         AND a.is_parent = 0
-    ORDER BY
-        a.update_time DESC
+    ORDER BY a.update_time DESC
     </select>
     <resultMap id="ModuleResultMap" type="com.xzsd.pc.goodsClass.entity.GoodsClassList">
         <id column="id" property="classId" />

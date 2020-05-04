@@ -211,6 +211,6 @@
         where parent_class_code=#{parentClassCode}
         and is_parent=1
         and is_deleted=0
-        ORDER BY a.update_time DESC
+        ORDER BY update_time DESC
     </select>
 </mapper>
