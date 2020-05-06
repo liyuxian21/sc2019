@@ -1,5 +1,11 @@
 package com.xzsd.pc.goodsClass.entity;
 
+/**
+ * 商品分类详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-26
+ */
 public class GoodsClassDetail {
     /**
      * 商品分类名称

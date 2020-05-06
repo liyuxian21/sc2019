@@ -197,11 +197,6 @@ public class OrderService {
         if (0 == count) {
             return AppResponse.versionError("修改失败！");
         }
-      /*  //修改商品评价等级
-        int updateGoodsLevel = orderDao.updateGoodsLevel(orderAppraise.getAppraiseList());
-        if (0 == updateGoodsLevel) {
-            return AppResponse.versionError("更新商品等级失败，评价失败");
-        }*/
         return AppResponse.success("评价成功！");
     }
 

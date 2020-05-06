@@ -6,7 +6,6 @@ package com.xzsd.pc.goods.entity;
  * @author liyuxian
  * @time 2020-03-24
  */
-
 public class GoodsInfo {
     /**
      * 页码

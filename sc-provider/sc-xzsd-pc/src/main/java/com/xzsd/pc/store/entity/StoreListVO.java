@@ -1,5 +1,10 @@
 package com.xzsd.pc.store.entity;
-
+/**
+ * 门店列表实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-08
+ */
 public class StoreListVO {
     /**
      * 每页显示多少条

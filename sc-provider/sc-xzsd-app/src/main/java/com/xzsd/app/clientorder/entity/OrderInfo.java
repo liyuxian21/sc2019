@@ -2,6 +2,7 @@ package com.xzsd.app.clientorder.entity;
 
 /**
  * 客户端订单实体类
+ *
  * @author liyuxian
  * @time 2020-04-14
  */
@@ -43,7 +44,7 @@ public class OrderInfo {
      */
     private String goodsId;
     /**
-     *购买商品数量
+     * 购买商品数量
      */
     private String goodsShoppingNumber;
     /**
@@ -74,15 +75,19 @@ public class OrderInfo {
      * 版本号
      */
     private String version;
+
     public OrderInfo() {
     }
-    public OrderInfo(String orderId, String userId){
-        this.orderId=orderId;
-        this.userId=userId;
+
+    public OrderInfo(String orderId, String userId) {
+        this.orderId = orderId;
+        this.userId = userId;
     }
+
     public String getShoppingId() {
         return shoppingId;
     }
+
     public void setShoppingId(String shoppingId) {
         this.shoppingId = shoppingId;
     }

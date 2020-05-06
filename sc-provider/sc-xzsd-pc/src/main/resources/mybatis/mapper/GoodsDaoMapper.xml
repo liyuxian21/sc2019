@@ -132,6 +132,8 @@
             a.stock store,
             a.price_now inPrice,
             a.product_idc goodsIntroduction,
+            a.class_first_id classFirstId,
+            a.class_second_id classSecondId,
             a.version version
         FROM
             t_sys_product a
@@ -147,6 +149,8 @@
             a.product_id goodsId,
             a.class_first_id classFirstId,
             a.class_second_id classSecondId,
+            b.class_name classFirstName,
+            c.class_name classSecondName,
             a.product_name goodsName,
             a.message adWords,
             a.press press,
@@ -157,9 +161,11 @@
             a.price          costPrice,
             a.price_now      inPrice,
             a.stock          store,
-            a.update_time       upTime,
+            a.update_time    upTime,
             a.version version
         from t_sys_product a
+        LEFT JOIN t_sys_product_class b ON a.class_first_id = b.class_id
+        LEFT JOIN t_sys_product_class c ON a.class_second_id = c.class_id
         where a.is_deleted=0
         <if test="goodsName != null and goodsName != ''">
         and a.product_name like concat('%', #{goodsName}, '%')
@@ -176,7 +182,7 @@
         <if test="adWords != null and adWords != ''">
             and a.message like concat('%', #{adWords}, '%')
         </if>
-        order by update_time desc
+        order by a.update_time desc
     </select>
     <!--修改商品状态 0 下架 1 上架-->
     <update id="status" parameterType="java.lang.String">

@@ -2,6 +2,12 @@ package com.xzsd.pc.goodsClass.entity;
 
 import java.util.List;
 
+/**
+ * 商品列表实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-26
+ */
 public class GoodsClassList {
     /**
      * 商品分类id

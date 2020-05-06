@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * 店长端 订单实体类
+ *
  * @author liyuxian
  * @time 2020-04-17
  */

@@ -2,6 +2,7 @@ package com.xzsd.pc.order.entity;
 
 /**
  * 查询订单列表实体类
+ *
  * @author liyuxian
  * @time 2020-04-09
  */

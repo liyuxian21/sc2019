@@ -2,6 +2,7 @@ package com.xzsd.pc.slideshow.entity;
 
 /**
  * 轮播图列表数据传输实体类
+ *
  * @author liyuxian
  * @time 2020-04-04
  */

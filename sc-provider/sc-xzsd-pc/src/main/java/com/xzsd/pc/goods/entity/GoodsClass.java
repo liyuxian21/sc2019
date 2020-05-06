@@ -1,5 +1,11 @@
 package com.xzsd.pc.goods.entity;
 
+/**
+ * 商品一二级分类实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-29
+ */
 public class GoodsClass {
     /**
      * 商品分类id

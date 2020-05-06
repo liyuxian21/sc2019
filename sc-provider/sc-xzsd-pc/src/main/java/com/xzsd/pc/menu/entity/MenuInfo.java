@@ -1,5 +1,10 @@
 package com.xzsd.pc.menu.entity;
-
+/**
+ * 菜单实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-08
+ */
 public class MenuInfo{
     /**
      * 菜单id

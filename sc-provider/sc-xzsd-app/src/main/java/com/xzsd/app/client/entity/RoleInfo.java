@@ -1,5 +1,11 @@
 package com.xzsd.app.client.entity;
 
+/**
+ * 登录用角色实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-20
+ */
 public class RoleInfo {
     /**
      * 登录用户id

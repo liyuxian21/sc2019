@@ -1,5 +1,10 @@
 package com.xzsd.pc.store.entity;
-
+/**
+ * 门店详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-08
+ */
 public class StoreDetialVO {
     /**
      *门店id
@@ -38,9 +43,45 @@ public class StoreDetialVO {
      */
     private String address;
     /**
+     * 省份id
+     */
+    private String provienceId;
+    /**
+     * 市id
+     */
+    private String cityId;
+    /**
+     * 区id
+     */
+    private String areaId;
+    /**
      * 版本号
      */
     private String version;
+
+    public String getProvienceId() {
+        return provienceId;
+    }
+
+    public void setProvienceId(String provienceId) {
+        this.provienceId = provienceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
 
     public String getVersion() {
         return version;

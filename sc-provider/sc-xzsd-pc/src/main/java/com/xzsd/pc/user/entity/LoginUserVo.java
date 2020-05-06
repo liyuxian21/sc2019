@@ -2,6 +2,7 @@ package com.xzsd.pc.user.entity;
 
 /**
  * 登录用户详情实体类
+ *
  * @author liyuxian
  * @time 2020-04-09
  */

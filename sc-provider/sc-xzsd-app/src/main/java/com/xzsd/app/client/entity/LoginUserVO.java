@@ -2,6 +2,7 @@ package com.xzsd.app.client.entity;
 
 /**
  * 登录用户实体类
+ *
  * @author liyuxian
  * @time 2020-04-13
  */

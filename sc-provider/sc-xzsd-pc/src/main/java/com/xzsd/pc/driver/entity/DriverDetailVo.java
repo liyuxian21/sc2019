@@ -1,12 +1,18 @@
 package com.xzsd.pc.driver.entity;
 
+/**
+ * 司机详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-29
+ */
 public class DriverDetailVo {
     /**
      * 司机编号
      */
     private String driverCode;
     /**
-     *司机账户
+     * 司机账户
      */
     private String driverAccount;
     /**
@@ -14,7 +20,7 @@ public class DriverDetailVo {
      */
     private String driverName;
     /**
-     *联系电话
+     * 联系电话
      */
     private String phone;
     /**
@@ -38,9 +44,45 @@ public class DriverDetailVo {
      */
     private String areaName;
     /**
+     * 省份id
+     */
+    private String provienceId;
+    /**
+     * 市id
+     */
+    private String cityId;
+    /**
+     * 区id
+     */
+    private String areaId;
+    /**
      * 版本号
      */
     private String version;
+
+    public String getProvienceId() {
+        return provienceId;
+    }
+
+    public void setProvienceId(String provienceId) {
+        this.provienceId = provienceId;
+    }
+
+    public String getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getAreaId() {
+        return areaId;
+    }
+
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
+    }
 
     public String getVersion() {
         return version;

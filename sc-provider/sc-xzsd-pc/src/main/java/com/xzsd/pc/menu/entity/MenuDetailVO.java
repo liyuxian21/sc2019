@@ -2,6 +2,7 @@ package com.xzsd.pc.menu.entity;
 
 /**
  * 菜单详情实体类
+ *
  * @author liyuxian
  * @time 2020-04-08
  */

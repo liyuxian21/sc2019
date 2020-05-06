@@ -383,13 +383,4 @@
         ORDER BY
             a.sort asc
     </select>
-    <!--更新商品评价等级-->
-    <update id="updateGoodsLevel" parameterType="com.xzsd.app.clientorder.entity.AppraiseInfo">
-        <foreach collection="appraiseList" item="item" open="" separator=";" close="" index="index">
-            update t_sys_product
-            set
-            satrt_level=(satrt_level+#{item.level})
-            where product_id=#{item.goodsId}
-        </foreach>
-    </update>
 </mapper>

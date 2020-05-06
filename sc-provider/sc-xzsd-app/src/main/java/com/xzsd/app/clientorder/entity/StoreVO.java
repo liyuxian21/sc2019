@@ -2,6 +2,9 @@ package com.xzsd.app.clientorder.entity;
 
 /**
  * 校验登陆用户是否绑定了门店实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-15
  */
 public class StoreVO {
     /**

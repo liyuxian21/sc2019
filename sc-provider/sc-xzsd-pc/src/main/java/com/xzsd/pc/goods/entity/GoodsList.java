@@ -1,5 +1,11 @@
 package com.xzsd.pc.goods.entity;
 
+/**
+ * 商品列表实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-29
+ */
 public class GoodsList {
     /**
      * 页码
@@ -62,6 +68,14 @@ public class GoodsList {
      */
     private String classFirstId;
     /**
+     * 一级分类名称
+     */
+    private String classFirstName;
+    /**
+     * 二级分类名称
+     */
+    private String classSecondName;
+    /**
      * 二级分类名称
      */
     private String classSecondId;
@@ -73,6 +87,22 @@ public class GoodsList {
      * 版本号
      */
     private String version;
+
+    public String getClassFirstName() {
+        return classFirstName;
+    }
+
+    public void setClassFirstName(String classFirstName) {
+        this.classFirstName = classFirstName;
+    }
+
+    public String getClassSecondName() {
+        return classSecondName;
+    }
+
+    public void setClassSecondName(String classSecondName) {
+        this.classSecondName = classSecondName;
+    }
 
     public int getPageSize() {
         return pageSize;

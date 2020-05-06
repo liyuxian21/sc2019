@@ -1,5 +1,10 @@
 package com.xzsd.pc.store.entity;
-
+/**
+ * 省市区字典表实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-08
+ */
 public class ChinaVo {
     /**
      * 字典id

@@ -82,14 +82,17 @@
         select
             a.driver_id     driverId,
             a.driver_num    driverCode,
+            a.provice_id    provienceId,
+            a.city_id       cityId,
+            a.area_id       areaId,
             b.user_name     driverName,
             b.user_account  driverAccount,
             b.user_pwd      password,
             b.phone         phone,
             b.id_card       idCard,
-            e.dict_name       provienceName,
-            c.dict_name       cityName,
-            d.dict_name       areaName,
+            e.dict_name     provienceName,
+            c.dict_name     cityName,
+            d.dict_name      areaName,
             a.version        version
         from
             t_sys_driver a,

@@ -1,5 +1,10 @@
 package com.xzsd.pc.user.entity;
-
+/**
+ * 用户详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-026
+ */
 public class UserDetail {
     /**
      * 用户姓名

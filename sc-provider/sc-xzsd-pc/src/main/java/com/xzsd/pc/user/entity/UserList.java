@@ -1,5 +1,10 @@
 package com.xzsd.pc.user.entity;
-
+/**
+ * 用户详列表实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-026
+ */
 public class UserList {
     /**
      * 每页显示多少条

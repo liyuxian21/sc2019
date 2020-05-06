@@ -1,5 +1,11 @@
 package com.xzsd.pc.goods.entity;
 
+/**
+ * 商品详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-29
+ */
 public class GoodsDetail {
     /**
      * 商品名称
@@ -9,6 +15,14 @@ public class GoodsDetail {
      * 一级分类名称
      */
     private String classFirstName;
+    /**
+     * 一级分类名称
+     */
+    private String classFirstId;
+    /**
+     * 二级分类名称
+     */
+    private String classSecondId;
     /**
      * 二级分类名称
      */
@@ -53,6 +67,22 @@ public class GoodsDetail {
      * 版本号
      */
     private String version;
+
+    public String getClassFirstId() {
+        return classFirstId;
+    }
+
+    public void setClassFirstId(String classFirstId) {
+        this.classFirstId = classFirstId;
+    }
+
+    public String getClassSecondId() {
+        return classSecondId;
+    }
+
+    public void setClassSecondId(String classSecondId) {
+        this.classSecondId = classSecondId;
+    }
 
     public String getVersion() {
         return version;

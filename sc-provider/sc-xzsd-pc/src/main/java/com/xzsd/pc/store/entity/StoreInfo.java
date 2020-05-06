@@ -2,6 +2,9 @@ package com.xzsd.pc.store.entity;
 
 /**
  * 门店实体类
+ *
+ * @author liyuxian
+ * @time 2020-04-08
  */
 public class StoreInfo {
     /**

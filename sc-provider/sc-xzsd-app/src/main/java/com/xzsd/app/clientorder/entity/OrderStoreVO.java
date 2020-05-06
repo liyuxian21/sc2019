@@ -1,7 +1,12 @@
 package com.xzsd.app.clientorder.entity;
 
 import java.util.List;
-
+/**
+ * 订单和门店详情实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-026
+ */
 public class OrderStoreVO {
     /**
      * 订单id

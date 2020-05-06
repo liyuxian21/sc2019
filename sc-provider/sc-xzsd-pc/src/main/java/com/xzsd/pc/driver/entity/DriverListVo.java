@@ -1,5 +1,11 @@
 package com.xzsd.pc.driver.entity;
 
+/**
+ * 司机列表实体类
+ *
+ * @author liyuxian
+ * @time 2020-03-29
+ */
 public class DriverListVo {
     /**
      * 每页显示多少条
@@ -22,7 +28,7 @@ public class DriverListVo {
      */
     private String driverCode;
     /**
-     *司机账户
+     * 司机账户
      */
     private String driverAccount;
     /**
@@ -30,7 +36,7 @@ public class DriverListVo {
      */
     private String driverName;
     /**
-     *联系电话
+     * 联系电话
      */
     private String phone;
     /**
